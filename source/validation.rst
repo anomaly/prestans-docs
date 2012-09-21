@@ -54,8 +54,55 @@ You can reuse your ``RequestParser`` across multiple handlers. If your handler d
 Parameter Sets
 ==============
 
-``self.request.parameter_set``
+REST handlers accept defined sets of URL parameters to allow the client to configure that way it responds. A popular use case is accepting values like `offset`, and `limit` which tells the handler the number of results to send down the wire.
 
+Like ``Models`` prestans provides a well defined pattern to describe sets of Parameters (called ParameterSets), a set of which can be associated to a handler method. prestans evaluates parameters sent as part of the URL and attempts to match them to the provided templates. If a set of parameters match, they are made available as an instance of your ParameterSet subclass.
+
+The request handler can access the parsed parameter set using ``self.request.parameter_set``. By default this is set to None.
+
+``ParameterSets`` are matched on a first come best dressed principal. If you find that yourself defining sets that with one too many overlapping instances variables, you might want to re-think the design of your API call.
+
+ParameterSets are defined by sub-classing ``prestans.parsers.ParameterSet``. Since data provided in a URL are name value pairs, prestans only allows the use of basic types `(String, Integer, Float)` in ParameterSets.
+
+Consider the following two ParameterSet definitions, one of them allows searching by Keywords, the other by an unread flag, both of them have the common parameters ``offset`` and ``limit``.
+
+.. code-block:: python
+
+    class KeywordSearchParameterSet(prestans.parsers.ParameterSet):
+
+        keyword = types.String(required=True)
+        offset = types.Integer(required=False, default=0)
+        limit = types.Integer(required=False, default=10)
+
+    class UnreadParameterSet(prestans.parsers.ParameterSet):
+
+        unread = types.Boolean(required=True, default=False)
+        offset = types.Integer(required=False, default=0)
+        limit = types.Integer(required=False, default=10)
+
+
+Parameter Sets are defined in a handler method's ``ParserRuleSet`` which in turn is associated to the handler. prestans follows this design principle throughout the framework to ensure you can reuse as many definitions as possible across handlers in your application.
+
+.. code-block:: python
+
+    class MyRequestParser(prestans.parsers.RequestParser):
+
+        GET = prestans.parsers.ParserRuleSet(
+            parameter_sets = [
+                KeywordSearchParameterSet(),
+                UnreadParameterSet()
+            ]
+        )
+
+If the client was to call the following URL (assuming you are running a local development server)::
+
+    http://localhost/api/myhandler?keyword=something
+
+this would result in prestans assigning an instance of ``KeywordSearchParameterSet`` to the request handler's ``self.request.parameter_set`` attribute, and likewise for the ``UnreadParameterSet`` if the parameter unread was passed. Since neither requests provide the ``offset`` or ``limit`` parameters the default values would be assigned to the attributes.
+
+All raw URL parameters can be access using the ``set.request.get(key_name)`` method. This would make available any parameter that do not belong to Parameter Sets.
+
+.. note: Raw URL parameters are always strings, you will have to explicitly convert types.
 
 Request Body
 ============
