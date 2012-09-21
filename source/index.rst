@@ -10,7 +10,7 @@ prestans is a WSGI (PEP-333) complaint micro-framework that allows you to rapidl
 
 .. toctree::
    :numbered:
-   :maxdepth: 2
+   :maxdepth: 3
 
    quickstart
    concepts

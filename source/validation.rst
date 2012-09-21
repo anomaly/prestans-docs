@@ -98,7 +98,9 @@ If the client was to call the following URL (assuming you are running a local de
 
     http://localhost/api/myhandler?keyword=something
 
-this would result in prestans assigning an instance of ``KeywordSearchParameterSet`` to the request handler's ``self.request.parameter_set`` attribute, and likewise for the ``UnreadParameterSet`` if the parameter unread was passed. Since neither requests provide the ``offset`` or ``limit`` parameters the default values would be assigned to the attributes.
+this would result in prestans assigning an instance of ``KeywordSearchParameterSet`` to the request handler's ``self.request.parameter_set`` attribute with values from the URL request parsed as the expected types, and likewise for the ``UnreadParameterSet`` if the parameter unread was passed. Since neither requests provide the ``offset`` or ``limit`` parameters the default values would be assigned to the attributes.
+
+If the client provides values that violates the validation rules defined by the ParameterSet, prestans will reject that request.
 
 All raw URL parameters can be access using the ``set.request.get(key_name)`` method. This would make available any parameter that do not belong to Parameter Sets.
 
@@ -106,6 +108,8 @@ All raw URL parameters can be access using the ``set.request.get(key_name)`` met
 
 Request Body
 ============
+
+Clients accessing REST APIs are expected to send messages 
 
 ``self.request.parsed_body``
 
