@@ -37,7 +37,7 @@ The above parser description, if assigned to a request handler would ensure that
 
 GET requests however will have option of providing a combination of name, value pairs that match any or none of these sets. Parameter Set matching is forgiving, your GET handler will be executed regardless of the result of the matching process. Parameter Sets work on the *first in, best dressed** rule, the first set that matches the request satisfies the validation process.
 
-.. note: All parameters accepted in RequestParsers are instances.
+.. note:: All parameters accepted in RequestParsers are instances.
 
 By default all validation rules are set to ``None``, this tells prestans to ignore validation.
 
@@ -70,15 +70,15 @@ Consider the following two ParameterSet definitions, one of them allows searchin
 
     class KeywordSearchParameterSet(prestans.parsers.ParameterSet):
 
-        keyword = types.String(required=True)
-        offset = types.Integer(required=False, default=0)
-        limit = types.Integer(required=False, default=10)
+        keyword = prestans.types.String(required=True)
+        offset = prestans.types.Integer(required=False, default=0)
+        limit = prestans.types.Integer(required=False, default=10)
 
     class UnreadParameterSet(prestans.parsers.ParameterSet):
 
-        unread = types.Boolean(required=True, default=False)
-        offset = types.Integer(required=False, default=0)
-        limit = types.Integer(required=False, default=10)
+        unread = prestans.types.Boolean(required=True, default=False)
+        offset = prestans.types.Integer(required=False, default=0)
+        limit = prestans.types.Integer(required=False, default=10)
 
 
 Parameter Sets are defined in a handler method's ``ParserRuleSet`` which in turn is associated to the handler. prestans follows this design principle throughout the framework to ensure you can reuse as many definitions as possible across handlers in your application.
@@ -104,14 +104,34 @@ If the client provides values that violates the validation rules defined by the 
 
 All raw URL parameters can be access using the ``set.request.get(key_name)`` method. This would make available any parameter that do not belong to Parameter Sets.
 
-.. note: Raw URL parameters are always strings, you will have to explicitly convert types.
+.. note:: Raw URL parameters are always strings, you will have to explicitly convert types.
 
 Request Body
 ============
 
-Clients accessing REST APIs are expected to send messages 
+Clients accessing REST APIs are expected to send messages in an agreed serialization format. prestans supports a range of serialization methods and provides infrastructure for you to write your own. JSON is probably the most popular serialization format for Ajax Web applications.
 
-``self.request.parsed_body``
+.. note:: Our examples assume JSON as the serialization format in use.
+
+Your handler can define strict rules using prestans Models for this incoming data. ``Models`` is one of prestans's major feature and is discussed in great detail in it's own dedicated section. Models in a prestans application can be use to parse and serialize strongly validated data.
+
+This section focuses on how you can use Models to parse incoming data. Assume you have a very simple Model defined as follows::
+
+    class Album(prestans.types.Model):
+
+        title = prestans.types.String(required=True)
+        release_year = prestans.types.Integer(required=True, min_value=1200, max_value=2012)
+        genre = prestans.types.String(required=True, choices=['rock', 'blues', 'pop'])
+
+your REST handler can use a ParserRuleSet to indicate that it wishes to use this model as the template for data sent via the request body. Remember that the serializer chosen as part of your URL router definition is responsible for unserializing the input before Model it's parsed. If unserialization fails prestans will reject the request. An example could look like::
+
+    class MyRequestParser(prestans.parsers.RequestParser):
+
+        POST = prestans.parsers.ParserRuleSet(
+            body_template=Album(),
+        )
+
+If the body is successfully parsed, an instance of the Model class (with values parsed from the request) is assigned to ``self.request.parsed_body``. On failing to parse the body prestans will reject the request providing the client meaningful information about the failure.
 
 .. _exceptions-to-the-rule:
 

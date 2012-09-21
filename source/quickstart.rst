@@ -4,7 +4,7 @@ Getting Started
 
 prestans is a WSGI compliant REST server framework, best suited for use with applications that nearly their entire interface using JavaScript (using frameworks like `Google Closure <https://developers.google.com/closure/>`_) or a bespoke Mobile client. Although prestans is a standalone framework, it provides hooks (called Providers) to integrate with your application's authentication, caching and other such core services.
 
-We have battle tested prestans under Apache (using mod_wsgi) and Google's AppEngine platform. 
+We have battle tested prestans under Apache (using mod_wsgi) and Google's AppEngine platform.
 
 Code samples used throughout our documentation is available as a `Google AppEngine project <https://code.google.com/p/prestans-demo/>`_, we highly recommend you grab a copy so you can see how it all fits in.
 
