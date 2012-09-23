@@ -113,9 +113,9 @@ Clients accessing REST APIs are expected to send messages in an agreed serializa
 
 .. note:: Our examples assume JSON as the serialization format in use.
 
-Your handler can define strict rules using prestans Models for this incoming data. ``Models`` is one of prestans's major feature and is discussed in great detail in it's own dedicated section. Models in a prestans application can be use to parse and serialize strongly validated data.
+Your handler can define strict rules using prestans :doc:`models` for this incoming data. ``Models`` is one of prestans's major feature and is discussed in great detail in it's own dedicated section. :doc:`models` in a prestans application can be use to parse and serialize strongly validated data.
 
-This section focuses on how you can use Models to parse incoming data. Assume you have a very simple Model defined as follows::
+This section focuses on how you can use :doc:`models` to parse incoming data. Assume you have a very simple Model defined as follows::
 
     class Album(prestans.types.Model):
 
@@ -145,7 +145,7 @@ There are times that you need to make an exception to the rule, consider the fol
 * You have full text description in a Model which you do not want included in the default response. The client has to exclusively request the full text description
 * In reverse you might want a service that a client can send only the textual description for update.
 
-One of the ways you can handle this is by writing numerous models that each REST service uses, this works at first but for large applications you'll find yourself maintaining a one too many REST models. If you wish to use DataAdapters to build responses, you have to ensure that you register each defined model, and so on.
+One of the ways you can handle this is by writing numerous :doc:`models` that each REST service uses, this works at first but for large applications you'll find yourself maintaining a one too many REST models. If you wish to use DataAdapters to build responses, you have to ensure that you register each defined model, and so on.
 
 prestans offers an easy, clearly defined way per handler to make exceptions to the parsing rules while accepting requests or building responses. This is done assigning ``AttributeFilter`` instances to your ``ParserRuleSet`` or the handler's response.
 
@@ -230,7 +230,7 @@ Your REST handler must provide a template prestans can match this input, if the 
             ]
         )
 
-Your handler end point can get access to this ``AttributeFilter`` at ``self.response.attribute_filter``. Responses are filtered while prestans is serializing output. Keys of the object being serialized must match the attribute filter's list. If you are serializing models it's recommended you create your attribute filter using the model.
+Your handler end point can get access to this ``AttributeFilter`` at ``self.response.attribute_filter``. Responses are filtered while prestans is serializing output. Keys of the object being serialized must match the attribute filter's list. If you are serializing :doc:`models` it's recommended you create your attribute filter using the model.
 
 You can also manually set an ``AttributeFilter``, here an example of an ``AttributeFilter`` that turns the ``notes`` field off set inside the handler.
 

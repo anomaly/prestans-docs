@@ -1,6 +1,6 @@
-==================
-Thoughts on design
-==================
+======================
+Thoughts on API design
+======================
 
 prestans was a result of our careful study into the REST standards, frameworks and appraoches that were popular at the time. The following are a few useful lessons we've learnt along the way.
 
@@ -29,8 +29,8 @@ The second would deal with a specific entity of that kind of resource. So get a 
 
 As a design principle we recommend you handle collections and entities in two seaprate handlers.
 
-Size does matter
-================
+Response Size does matter
+=========================
 
 Database, Web Servers, prestans your handlers, servers are generally pretty quick (if you have written most things well). Network latency is still a killer for REST applications. 
 
