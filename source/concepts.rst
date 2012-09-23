@@ -2,19 +2,7 @@
 Concepts
 ========
 
-Before you begin building REST services with prestans, it's important that you understand it's key concepts and the life cycle of a REST API call.
-
-From the outset prestans will handle all trivial cases of validation, non matching URLs, authentication and convey an appropriate error message to the client. The following is the life cycle of a prestans API request:
-
-* URL Routers checks for a handler mapping
-* Router checks to see if the handler implements the requested method (GET, PUT, POST, PATCH, DELETE)
-* If required checks to see if the user is allowed to access
-* Unserializes input from the client
-* Runs validation on URL parameters, body models and makes them available via the request object
-* Runs pre-hook methods for handlers (use this for establishing DB connections, environment setup)
-* **Runs your handler implementation, where you place your API logic**
-* Runs post-hook methods for handlers (use this to perform your tear down)
-* Serializes your output
+Before you begin building REST services with prestans, it's important that you understand it's key concepts.
 
 Serializers
 ===========
