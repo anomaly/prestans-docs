@@ -207,13 +207,13 @@ Clients can ask prestans to modify the response by providing a JSON serialized c
 .. code-block:: json
 
      { 
-       field_name0: True, 
-       field_name1: False, 
-       collection_name0: True, 
-       collection_name1: False,
+       field_name0: true, 
+       field_name1: false, 
+       collection_name0: true, 
+       collection_name1: false,
        collection_name2: {
-           sub_field_name0: True,
-           sub_field_name1: False 
+           sub_field_name0: true,
+           sub_field_name1: false 
        }
      }
 
