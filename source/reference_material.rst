@@ -4,7 +4,7 @@ Reference Material
 
 We found the following references useful while writing prestans, they cover a variety of advanced Python programming and Web development topics.
 
-It's important that you understand the basic concepts of Python Web Programming. All our documentation and support is based around the assumption that you are familiar with Python Web development using `WSGI <http://wsgi.readthedocs.org/en/latest/index.html>`_ and are writing Ajax Web apps.
+It's important that you understand the basic concepts of Python Web Programming. All our documentation and support is based around the assumption that you are familiar with Python Web development using WSGI and are writing Ajax Web apps.
 
 WSGI
 ====

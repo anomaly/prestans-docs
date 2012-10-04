@@ -2,10 +2,10 @@
 Routing & Handling Requests
 ===========================
 
-First order of business is mapping URLs back to your code. prestans comes with an inbuilt router to help you achieve this, the router is paired with a serializer and manages the lifecycle of the REST API request. Out of the box prestans provides support for:
+First order of business is mapping URLs back to your code. prestans comes with an inbuilt router to help you achieve this, the router is paired with a serializer and manages the lifecycle of the REST API request. Currently prestans provides support for:
 
-* JSON
-* YAML
+* JSON provided by ``prestans.rest.JSONRESTApplication``
+* YAML provided by ``prestans.rest.YAMLRESTApplication``
 
 We plan to support other formats as we need them. You can also write your own for formats you wish to support in your application. Read the section on :doc:`serializers` to learn more about how serailziers work and how you can write your own. Our examples assume the use of JSON as the serialization format.
 
@@ -28,24 +28,36 @@ From the outset prestans will handle all trivial cases of validation, non matchi
 * Runs post-hook methods for handlers (use this to perform your tear down)
 * Serializes your output
 
-Regex refresher
-===============
+Regex & URL design primer
+-------------------------
 
-URL patterns are described using Regular expression, this chapter is a quick overview on handy regex patterns. If you are fulent Regex feel free to skip this chapter.
+URL patterns are described using Regular expression, this section provides a quick reference to handy regex patterns for writing REST services. If you are fulent Regex speaker, feel free to skip this chapter.
 
 Most URL patters either refer to collections or entities, consider the following URL scheme requirements:
 
 * /api/album/ - refers to a collection of type album
 * /api/album/{id} - refers to a specific album entity
 
-Notice no trailing slashes at the end of the entity URL, this denotes an signle API
+Notice no trailing slashes at the end of the entity URL. Collection URLs may or may not have a URL slash. The above patterns can would be represented in like Regex as: 
 
-* /api/product/([0-9]+)
-* /api/album/([0-9]+)/track/
+* /api/album/* - For collection of albums
+* /api/album/([0-9]+) - For a specific album
+
+If you have entities that exclusively belong to a parent object, e.g. Albums have Tracks, we suggest prefixing their URLs with a parent entity id. This will ensure your handler has access to the {id} of the parent object, easing operations like:
+
+* Does referenced parent object exists?
+* When creating a new child object, which parent object would you like to add it to? 
+* Does the child belong to the intended parent (Works particularly well with ORM layers like SQLAlchemy)
+
+A Regex example of these URL patterns would look like:
+
+* /api/album/([0-9]+)/track/*
 * /api/album/([0-9]+)/track/([0-9]+)
 
 Defining your REST Application
-==============================
+------------------------------
+
+Our documentation
 
 * url_map
 * application_name
