@@ -2,7 +2,7 @@
 Securing your API
 =================
 
-In our experience each project has very different requirements for authentication and more importantly each developer likes to implement each scenario differently. The Python Web world is a world of micro frameworks that work toegether in harmony. prestans does not implement any authentication mechanisms, in turn it implements a set of patterns called ``Providers`` (refer to our :doc:`concepts` chapter) that assist in making prestans application respect your application's chosen authentication method. 
+Each project has very different requirements for authentication and more importantly each developer likes to implement each scenario differently. The Python Web world is a world of micro frameworks that work toegether in harmony. prestans does not implement any authentication mechanisms, in turn it implements a set of patterns called ``Providers`` (refer to our :doc:`concepts` chapter) that assist in making prestans application respect your application's chosen authentication method. 
 
 What this means is prestans provides you the opportunity to tell it what your application considers, authenticated and authorized. Your prestans REST handlers use a set of predefine decorators to communicate with your prestans application's authentication provider to secure REST end points.
 
@@ -73,21 +73,46 @@ The ``__init__`` method is not used by the parent class, so if you need to pass 
 Working with Google AppEngine
 -----------------------------
 
-prestans ships with an inbuilt provider for Google AppEngine. AppEngine is a WSGI environment and has a very fixed authentication mechanism. This is encapsulated ``prestans.ext.appengine.AppEngineAuthContextProvider``. The AppEngine AuthContextProvider implements support for OAuth and Google account authentication.
+prestans ships with an inbuilt provider for Google AppEngine. AppEngine is a WSGI environment and has a very fixed authentication lifecycle encapsulated by ``prestans.ext.appengine.AppEngineAuthContextProvider``. The AppEngine AuthContextProvider implements support for OAuth and Google account authentication.
 
-Obviously this does not implement the ``current_user_has_role``, if you wish to support role based authorization you must extend ``prestans.ext.appengine.AppEngineAuthContextProvider`` and implement this method.
+Obviously this does not implement the ``current_user_has_role``. If you wish to support role based authorization you must extend this class and implement this function.
 
-Joining AuthContextProvider to Handlers
-=======================================
+Attaching AuthContextProvider to Handlers
+=========================================
 
-Authentication
-==============
+Like all things prestans, attaching a auth context provider to a handler is as simple as assigning an instance of your ``AuthContextProvider`` to your ``RESTRequestHandler``'s auth_context property::
 
-@prestans.auth.login_required
+    class MyHandler(prestans.handlers.RESTRequestHandler):
 
-Authorisation
-=============
+        auth_context = myapp.auth.MyAuthContextProvider()
+        
+This tells your handler which ``AuthContextProvider`` to use. Remember that authentication configuration is per HTTP method supported by your request handler:
 
-To use Authorization you must ensure that a user is authenticated.
+* If your handler method just wants to ensure that a user is logged in, all you need to do is decorate your HTTP method with ``@prestans.auth.login_required``.
 
-@prestans.auth.role_required(role_names)
+* If your handler method wants to test final grained roles use the ``@prestans.auth.role_required`` decorator. This implies that a user is already logged in.
+
+The following example allows any logged in user to get resources, users with role authors to create and update resources, but only users with role admin to delete resources.
+
+.. code-block:: python
+
+    class MyRESTHandler(prestans.handlers.RESTRequestHandler):
+
+        auth_context = myapp.auth.MyAuthContextProvider()
+
+        @prestans.auth.login_required
+        def get(self):
+            .... do what you need to here
+
+        @prestans.auth.role_required(role_name=['authors'])
+        def post(self):
+            .... do what you need to here
+
+        @prestans.auth.role_required(role_name=['authors'])
+        def put(self):
+            .... do what you need to here
+
+        @prestans.auth.role_required(role_name=['admin'])
+        def delete(self):
+            .... do what you need to here
+

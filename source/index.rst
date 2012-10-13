@@ -6,7 +6,7 @@
 prestans, a Python REST micro-framework
 =======================================
 
-prestans is a WSGI (PEP-333) complaint micro-framework that allows you to rapidly build quality REST services by introducing a pattern of models, parsers and handlers and in turn taking care of boilerplate code.
+prestans is a WSGI (PEP-333) complaint micro-framework that allows you to rapidly build quality REST services by introducing a pattern of models, parsers and handlers and in turn taking care of boilerplate code. prestans is currently hosted on `Google Code <http://prestans.googlecode.com>`_ and distributed under the terms defined by the `New BSD license <http://opensource.org/licenses/bsd-license.php>`_.
 
 .. toctree::
    :numbered:
@@ -23,11 +23,11 @@ prestans is a WSGI (PEP-333) complaint micro-framework that allows you to rapidl
    reference_material
 
 
-Requirements
-============
+Software Requirements
+=====================
 
 * Python 2.6+
-* WSGI compliant environment (Apache + mod_wsgi, Google AppEngine, etc).
+* WSGI compliant server environment (Apache + mod_wsgi, Google AppEngine, etc).
 * Python Paste components
 
 Basic `Subversion <http://svn.tigris.org>`_ knowledge will come in handy, if you are going to follow our tutorial and code samples.
