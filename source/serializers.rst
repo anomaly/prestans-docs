@@ -73,7 +73,14 @@ You can instantiate this class and test it works on the Python interactive inter
 Pairing it with your REST Application
 -------------------------------------
 
-Once you have 
+Nearly all of the ``RESTApplication`` logic and the prestans API lifecycle is encapsulate in ``prestans.rest.RESTApplication`` (this class is not paired with a serializer and never meant to be used directly). All custom implementations extend from ``prestans.rest.RESTApplication`` and expect them to construct a ``Request`` and ``Response`` to be used by the API lifecycle. These objects expect the serializer ``class`` they are meant to use.
+
+REST Application implementations are required to override the following class methods:
+
+* ``make_request`` expected to return an instance of ``prestans.rest.Request``, and is passed in a reference to the WSGI environ
+* ``make_response`` expected to return an instance of ``prestans.rest.Response``
+
+The following example is of the commonly used ``JSONRESTApplication`` taken from the ``prestans.rest`` package:
 
 .. code-block:: python
 
@@ -91,3 +98,5 @@ Once you have
         def make_response(self):
             rest_response = Response(serializer=prestans.serializers.JSONSerializer)
             return rest_response
+
+.. note:: While it's possible, it's considered to be against the prestans design principles to pair a serializer with multiple RESTApplication implementations. 
