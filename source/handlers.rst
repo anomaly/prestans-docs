@@ -35,13 +35,13 @@ URL patterns are described using Regular expression, this section provides a qui
 
 Most URL patters either refer to collections or entities, consider the following URL scheme requirements:
 
-* /api/album/ - refers to a collection of type album
-* /api/album/{id} - refers to a specific album entity
+* ``/api/album/`` - refers to a collection of type album
+* ``/api/album/{id}`` - refers to a specific album entity
 
 Notice no trailing slashes at the end of the entity URL. Collection URLs may or may not have a URL slash. The above patterns can would be represented in like Regex as: 
 
-* /api/album/* - For collection of albums
-* /api/album/([0-9]+) - For a specific album
+* ``/api/album/*`` - For collection of albums
+* ``/api/album/([0-9]+)`` - For a specific album
 
 If you have entities that exclusively belong to a parent object, e.g. Albums have Tracks, we suggest prefixing their URLs with a parent entity id. This will ensure your handler has access to the {id} of the parent object, easing operations like:
 
@@ -51,17 +51,35 @@ If you have entities that exclusively belong to a parent object, e.g. Albums hav
 
 A Regex example of these URL patterns would look like:
 
-* /api/album/([0-9]+)/track/*
-* /api/album/([0-9]+)/track/([0-9]+)
+* ``/api/album/([0-9]+)/track/*``
+* ``/api/album/([0-9]+)/track/([0-9]+)``
 
 Defining your REST Application
 ------------------------------
 
-Our documentation
+You must use a ``RESTApplication`` subclass (one that ships with prestans or a custom implementation) to create map URLs to REST Handlers. Each application requires the following parameters:
 
-* url_map
-* application_name
-* debug
+* ``url_map`` a list of regex to REST handler maps
+* ``application_name`` optional name for your API, this will show up in the logs.
+* ``debug`` set to ``True`` by default, turn this off in production. This status is made available as ``self.request.debug`` 
+
+
+.. code-block:: python
+
+    import prestans.rest
+
+    import pdemo.handlers
+    import pdemo.rest.handlers.album
+    import pdemo.rest.handlers.band
+    import pdemo.rest.handlers.track
+
+    api = prestans.rest.JSONRESTApplication(url_handler_map=[
+        (r'/api/band', pdemo.rest.handlers.band.Collection),
+        (r'/api/band/([0-9]+)', pdemo.rest.handlers.band.Entity),
+        (r'/api/band/([0-9]+)/album', pdemo.rest.handlers.album.Collection),
+        (r'/api/band/([0-9]+)/album/([0-9]+)/track', pdemo.rest.handlers.track.Collection)
+    ], application_name="prestans-demo")
+
 
 Building your Response
 ======================
