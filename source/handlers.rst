@@ -63,6 +63,18 @@ You must use a ``RESTApplication`` subclass (one that ships with prestans or a c
 * ``application_name`` optional name for your API, this will show up in the logs.
 * ``debug`` set to ``True`` by default, turn this off in production. This status is made available as ``self.request.debug`` 
 
+url_map requires pairs of URL patterns and REST Handler end points. This URL accepts two numeric IDs which are passed on to the handlers::
+
+        (r'/api/band/([0-9]+)/album/([0-9]+)/track', pdemo.rest.handlers.track.Collection)
+
+Would map the ``Collection`` class defined in the package ``pdemo.rest.handlers.track``, if you were to define a GET method which returned all the tracks for a band's album, it would look like::
+
+        class Collection(prestans.rest.RESTHandler):
+
+            def get(self, band_id, album_id):
+                ... return all tracks for band_id and album_id
+
+If you don't wish to support an HTTP method for a URL, just ignore implementing the appropriate method and prestans does the rest.  An application API definition would be a collection of these URL to Handler pairs. The following is an extract from our demo application:
 
 .. code-block:: python
 
@@ -78,7 +90,20 @@ You must use a ``RESTApplication`` subclass (one that ships with prestans or a c
         (r'/api/band/([0-9]+)', pdemo.rest.handlers.band.Entity),
         (r'/api/band/([0-9]+)/album', pdemo.rest.handlers.album.Collection),
         (r'/api/band/([0-9]+)/album/([0-9]+)/track', pdemo.rest.handlers.track.Collection)
-    ], application_name="prestans-demo")
+    ], application_name="prestans-demo", debug=False)
+
+
+You now have to point your WSGI environment to the defiendThe corresponding Google AppEngine, app.yaml entry would look like::
+
+    - url: /api/.*
+      script: entry.api
+
+If you were using prestans under Apache with mod_wsgi::
+
+    application = prestans.rest.JSONRESTApplication(url_handler_map=[
+        ... rules go here
+    ], application_name="prestans-demo", debug=False)
+
 
 
 Building your Response
