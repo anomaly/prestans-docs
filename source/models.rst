@@ -14,20 +14,17 @@ Each type has configurable properties that prestans uses to validate data. It's 
 
 This chapter will introduce the various data types supported by prestans, and then demonstrate how you can write and use Models in your prestans application. It is possible to write custom ``DataType``.
 
-Supported Data Types
-====================
-
 All prestas types are wrappers on Pythonic data types, expect that you get a chance to define strict rules for each attribute. These rules ensure that the data you exchange with a client is sane, ensures the integrity of your busines logic and minimizes issues when persisting data. All of this happens even before your handler is even called.
 
 *Most importantly* it cuts out the need for writing trivial boilerplate code to validate incoming and outgoing data. If your handler is called you can trust the data is sane and safe to use.
 
 Basic Types
------------
+===========
 
 Basic prestans types extend from ``prestans.types.DataType``, these are the building blocks of all data represented in systems, e.g Strings, Numbers, Booleans, Date and Times.
 
 String
-^^^^^^
+------
 
 .. note:: Extends ``prestans.types.DateType``
 
@@ -42,7 +39,7 @@ Strings
 * ``utf_encoding`` set to ``utf-8`` by default is the confiurable UTF encoding setting for the String.
 
 Integer
-^^^^^^^
+-------
 
 .. note:: Extends ``prestans.types.DateType``
 
@@ -53,7 +50,7 @@ Integer
 * ``choices`` a list of choices that the Integer value can be set to, if using default ensure the value is set to of the choices.
 
 Float
-^^^^^
+-----
 
 .. note:: Extends ``prestans.types.DateType``
 
@@ -65,7 +62,7 @@ Float
 
 
 Boolean
-^^^^^^^
+-------
 
 .. note:: Extends ``prestans.types.DateType``
 
@@ -73,7 +70,7 @@ Boolean
 * ``default`` specifies the value to be assigned to the attribute if one isn't provided on instantiation, this must be a Boolean.
 
 DataURLFile
-^^^^^^^^^^^
+-----------
 
 .. note:: Extends ``prestans.types.DateType``
 
@@ -81,7 +78,7 @@ DataURLFile
 * ``allowed_mime_types``
 
 DateTime
-^^^^^^^^
+--------
 
 .. note:: Extends ``prestans.types.DateStructure``
 
@@ -90,12 +87,12 @@ DateTime
 * ``format`` default format  ``%Y-%m-%d %H:%M:%S``
 
 Collections
------------
+===========
 
 At the moment prestans provides two
 
 Array
-^^^^^
+-----
 
 .. note:: Extends ``prestans.types.DateCollection``
 
@@ -108,7 +105,7 @@ prestans Arrays are itterable.
 * ``max_length``
 
 Model
-^^^^^
+-----
 
 .. note:: Extends ``prestans.types.DateCollection``
 
