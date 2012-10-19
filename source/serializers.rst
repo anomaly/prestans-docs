@@ -10,7 +10,7 @@ Many frameworks expect the REST handler to choose how each response should be se
 
 To make exceptions to the rule it's recommended you create a separate URL scheme that fits the serialization format, mapped to appropriate and often exclusive REST handlers. Not all your business logic work should be done in your REST handlers, if they are reusable consider pushing the code into a common class or if you are using ORM layers consider distributing it based on the persistent models you are working with.
 
-Serializers follow the prestans Provider (see :doc:`concepts`) paragradim. A serializer provides a wrapper on a pair of functions to write and read a data exchange format. It's recommended you use standard Python functions to perform the serialize and unserialize operations for performance. However if you need to you can write a pure Python implementation of your serializer.
+Serializers follow the prestans Provider (see :doc:`quickstart`) paragradim. A serializer provides a wrapper on a pair of functions to write and read a data exchange format. It's recommended you use standard Python functions to perform the serialize and unserialize operations for performance. However if you need to you can write a pure Python implementation of your serializer.
 
 Serializers are never used directly, it's always paired with a RESTApplication. We current provide support for the following serialization formats:
 

@@ -111,7 +111,7 @@ Model
 
 * ``required`` flags if this is a mandatory field, accepts ``True`` or ``False`` and is set to ``True`` by default
 * ``default``
-* ``**kwargs``
+* ``**kwargs`` a set of key value arguments 
 
 
 Writing Models

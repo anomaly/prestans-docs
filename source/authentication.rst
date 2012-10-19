@@ -2,7 +2,7 @@
 Securing your API
 =================
 
-Each project has very different requirements for authentication and more importantly each developer likes to implement each scenario differently. The Python Web world is a world of micro frameworks that work toegether in harmony. prestans does not implement any authentication mechanisms, in turn it implements a set of patterns called ``Providers`` (refer to our :doc:`concepts` chapter) that assist in making prestans application respect your application's chosen authentication method. 
+Each project has very different requirements for authentication and more importantly each developer likes to implement each scenario differently. The Python Web world is a world of micro frameworks that work toegether in harmony. prestans does not implement any authentication mechanisms, in turn it implements a set of patterns called ``Providers`` (refer to our :doc:`quickstart` chapter) that assist in making prestans application respect your application's chosen authentication method. 
 
 What this means is prestans provides you the opportunity to tell it what your application considers, authenticated and authorized. Your prestans REST handlers use a set of predefine decorators to communicate with your prestans application's authentication provider to secure REST end points.
 
