@@ -1,4 +1,7 @@
 =================
-Introduction
+Closure Library
 =================
-Client side prestans for google closure framework.
+
+Introduction
+=============================
+Prestans contains a client side library designed to work with the google closure framework.

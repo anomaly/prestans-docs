@@ -19,6 +19,7 @@ prestans is a WSGI (PEP-333) complaint micro-framework that allows you to rapidl
    models
    authentication
    design_notes
+   closure
    reference_material
 
 
