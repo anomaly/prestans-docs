@@ -89,8 +89,6 @@ DateTime
 Collections
 ===========
 
-At the moment prestans provides two
-
 Array
 -----
 
@@ -99,10 +97,10 @@ Array
 prestans Arrays are itterable.
 
 * ``required`` flags if this is a mandatory field, accepts ``True`` or ``False`` and is set to ``True`` by default
-* ``default``
-* ``element_template``
-* ``min_length``
-* ``max_length``
+* ``default`` a default object of type ``prestans.types.Array`` to be used if a value is not provided
+* ``element_template`` a instance of a ``prestans.types`` subclass that's use to validate each element. prestans does not allow arrays of mixed types because it does not form valid URL responses.
+* ``min_length`` minimum length of an array, if using default it must conform to this constraint
+* ``max_length`` maximum length of an array, 
 
 Model
 -----

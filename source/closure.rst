@@ -2,8 +2,6 @@
 Closure Library
 =================
 
-Introduction
-=============================
 Prestans contains a client side library designed to work with the `Google Closure <https://developers.google.com/closure/library/>`_ framework.
 
 It contains the following features:
