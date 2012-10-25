@@ -80,7 +80,7 @@ DataURLFile
 DateTime
 --------
 
-.. note:: Extends ``prestans.types.DateStructure``
+.. note:: Extends ``prestans.types.DataStructure``
 
 * ``required`` flags if this is a mandatory field, accepts ``True`` or ``False`` and is set to ``True`` by default
 * ``default`` specifies the value to be assigned to the attribute if one isn't provided on instantiation, this must be a date.
@@ -89,12 +89,14 @@ DateTime
 Collections
 ===========
 
+Collections are formalised representations
+
 Array
 -----
 
-.. note:: Extends ``prestans.types.DateCollection``
+Arrays are collections of any prestans type. To ensure the integrity of RESTful responses, ``Array`` elements must always be of the same kind, this is defined by specifying an ``element_template``. prestans Arrays are itterable.
 
-prestans Arrays are itterable.
+.. note:: Extends ``prestans.types.DataCollection``
 
 * ``required`` flags if this is a mandatory field, accepts ``True`` or ``False`` and is set to ``True`` by default
 * ``default`` a default object of type ``prestans.types.Array`` to be used if a value is not provided
@@ -105,22 +107,24 @@ prestans Arrays are itterable.
 Model
 -----
 
-.. note:: Extends ``prestans.types.DateCollection``
+.. note:: Extends ``prestans.types.DataCollection``
 
 * ``required`` flags if this is a mandatory field, accepts ``True`` or ``False`` and is set to ``True`` by default
-* ``default``
-* ``**kwargs`` a set of key value arguments 
+* ``default`` a default model instance, this is useful when defining relationships
+* ``**kwargs`` a set of key value arguments, each one of these must be an acceptable value for instance variables, all defined validation rules apply.
 
 
 Writing Models
 ==============
 
+.. code-block: python
 
-Relationships
--------------
 
-Arrays of Objects
------------------
+To One Relationship
+-------------------
+
+To Many Relationship (using Arrays)
+-----------------------------------
 
 Using Models to write Responses
 -------------------------------
