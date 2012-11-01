@@ -23,6 +23,8 @@ Basic Types
 
 Basic prestans types extend from ``prestans.types.DataType``, these are the building blocks of all data represented in systems, e.g Strings, Numbers, Booleans, Date and Times.
 
+Collections contain a series of attributes of both Basic and Collection types.
+
 String
 ------
 
@@ -131,3 +133,11 @@ Using Models to write Responses
 
 Using Data Adapters to build Responses
 ======================================
+
+Pairing REST models to Persistant models
+-----------------------------------------
+
+Adapting Models
+---------------
+
+

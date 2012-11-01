@@ -182,6 +182,7 @@ Once you've created a filter, all you have to do is tell prestans to use it whil
 Request Attribute Filter
 ------------------------
 
+
 .. code-block:: python
 
     my_attr_filter = prestans.parsers.AttributeFilter.from_model(MyModel(), default_value=True)
@@ -198,7 +199,7 @@ Request Attribute Filter
 
 
 Providing a Response Attribute Filter Template
------------------------------------------------
+----------------------------------------------
 
 prestans allows clients to make sensible requests to cut down latency. Consider two very different use cases for your API, a business to business client and your traditional Web or Mobile client. They both care for very different sorts of data, one willing to wait longer than the other, process more data than the later.
 
