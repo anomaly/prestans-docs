@@ -28,7 +28,7 @@ Collections contain a series of attributes of both Basic and Collection types.
 String
 ------
 
-.. note:: Extends ``prestans.types.DateType``
+.. note:: Extends ``prestans.types.DataType``
 
 Strings
 
@@ -43,7 +43,7 @@ Strings
 Integer
 -------
 
-.. note:: Extends ``prestans.types.DateType``
+.. note:: Extends ``prestans.types.DataType``
 
 * ``required`` flags if this is a mandatory field, accepts ``True`` or ``False`` and is set to ``True`` by default
 * ``default`` specifies the value to be assigned to the attribute if one isn't provided on instantiation, this must be a Integer.
@@ -54,7 +54,7 @@ Integer
 Float
 -----
 
-.. note:: Extends ``prestans.types.DateType``
+.. note:: Extends ``prestans.types.DataType``
 
 * ``required`` flags if this is a mandatory field, accepts ``True`` or ``False`` and is set to ``True`` by default
 * ``default`` specifies the value to be assigned to the attribute if one isn't provided on instantiation, this must be a Float.
@@ -66,7 +66,7 @@ Float
 Boolean
 -------
 
-.. note:: Extends ``prestans.types.DateType``
+.. note:: Extends ``prestans.types.DataType``
 
 * ``required`` flags if this is a mandatory field, accepts ``True`` or ``False`` and is set to ``True`` by default
 * ``default`` specifies the value to be assigned to the attribute if one isn't provided on instantiation, this must be a Boolean.
@@ -74,7 +74,7 @@ Boolean
 DataURLFile
 -----------
 
-.. note:: Extends ``prestans.types.DateType``
+.. note:: Extends ``prestans.types.DataType``
 
 * ``required`` flags if this is a mandatory field, accepts ``True`` or ``False`` and is set to ``True`` by default
 * ``allowed_mime_types``

@@ -182,6 +182,11 @@ Once you've created a filter, all you have to do is tell prestans to use it whil
 Request Attribute Filter
 ------------------------
 
+When sending the data back to the server there are often cases (e.g updating description of a Product using the PATCH HTTP method) where you only need to send part of the REST model to the server.
+
+prestans allows you to use REST models to validate incoming data, and validation is strict by default. Using filters, you can relax the validation rules when accepting requests.
+
+These rules can be defined per HTTP method using a ``RequestParser``.
 
 .. code-block:: python
 
