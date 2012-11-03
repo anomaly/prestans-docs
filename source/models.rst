@@ -12,14 +12,53 @@ prestans types are one of the following:
 
 Each type has configurable properties that prestans uses to validate data. It's important to design your models with the strictest case in mind. Use request and response filters to relax the rules for specific cases, refer to our chapter on :doc:`validation`.
 
-This chapter will introduce the various data types supported by prestans, and then demonstrate how you can write and use Models in your prestans application. It is possible to write custom ``DataType``.
+This chapter introduces you to writing Models and using it in various parts of your prestans application. It is possible to write custom ``DataType``.
 
-All prestas types are wrappers on Pythonic data types, expect that you get a chance to define strict rules for each attribute. These rules ensure that the data you exchange with a client is sane, ensures the integrity of your busines logic and minimizes issues when persisting data. All of this happens even before your handler is even called.
+All prestans types are wrappers on Pythonic data types, that you get a chance to define strict rules for each attribute. These rules ensure that the data you exchange with a client is sane, ensures the integrity of your business logic and minimizes issues when persisting data. All of this happens even before your handler is even called.
 
 *Most importantly* it cuts out the need for writing trivial boilerplate code to validate incoming and outgoing data. If your handler is called you can trust the data is sane and safe to use.
 
-Basic Types
-===========
+prestans types are divided into, *Basic Types*, and *Collections*, currently supported types are:
+
+* String, wraps a Python str
+* Integer, wraps a Python number
+* Float, wraps a Python number
+* Boolean, wraps a Python bool
+* DataURLFile, supports uploading files via HTML5 `FileReader <http://www.html5rocks.com/en/tutorials/file/dndfiles/>`_ API
+* DateTime, wraps Python ``datetime``
+* Array, wraps Python lists
+* Model, wraps Python dict
+
+The second half of this chapter has a detailed reference of configuration parameters for each prestans ``DataType``.
+
+Writing Models
+==============
+
+It's important to keep in mind that prestans or REST models are not persistent and are nearly never a direct translation of your persistent models. Clients require views of the data stored on the server.
+
+.. code-block: python
+
+
+To One Relationship
+-------------------
+
+To Many Relationship (using Arrays)
+-----------------------------------
+
+Using Models to write Responses
+-------------------------------
+
+Using Data Adapters to build Responses
+======================================
+
+Pairing REST models to persistent models
+----------------------------------------
+
+Adapting Models
+---------------
+
+Type Configuration Reference
+============================
 
 Basic prestans types extend from ``prestans.types.DataType``, these are the building blocks of all data represented in systems, e.g Strings, Numbers, Booleans, Date and Times.
 
@@ -28,9 +67,9 @@ Collections contain a series of attributes of both Basic and Collection types.
 String
 ------
 
-.. note:: Extends ``prestans.types.DataType``
+Strings are wrappers on Pythonic strings, the rules allow pattern matching and validation.
 
-Strings
+.. note:: Extends ``prestans.types.DataType``
 
 * ``required`` flags if this is a mandatory field, accepts ``True`` or ``False`` and is set to ``True`` by default
 * ``default`` specifies the value to be assigned to the attribute if one isn't provided on instantiation, this must be a String.
@@ -43,6 +82,8 @@ Strings
 Integer
 -------
 
+Integers are wrappers on Python numbers, limited to Integers. We distinguish between Integers and Floats because of formatting requirements.
+
 .. note:: Extends ``prestans.types.DataType``
 
 * ``required`` flags if this is a mandatory field, accepts ``True`` or ``False`` and is set to ``True`` by default
@@ -53,6 +94,8 @@ Integer
 
 Float
 -----
+
+Floats are wrappers on Python numbers, expanded to Floats.
 
 .. note:: Extends ``prestans.types.DataType``
 
@@ -66,6 +109,8 @@ Float
 Boolean
 -------
 
+Booleans are wrappers on Python ``bools``.
+
 .. note:: Extends ``prestans.types.DataType``
 
 * ``required`` flags if this is a mandatory field, accepts ``True`` or ``False`` and is set to ``True`` by default
@@ -74,6 +119,8 @@ Boolean
 DataURLFile
 -----------
 
+Supports uploading files using the HTML5 `FileReader <http://www.html5rocks.com/en/tutorials/file/dndfiles/>`_ API.
+
 .. note:: Extends ``prestans.types.DataType``
 
 * ``required`` flags if this is a mandatory field, accepts ``True`` or ``False`` and is set to ``True`` by default
@@ -81,6 +128,8 @@ DataURLFile
 
 DateTime
 --------
+
+Date Time is a complex structure that parses strings to Python ``datetime`` and vice versa. Default string format is ``%Y-%m-%d %H:%M:%S`` to assist with parsing on the client side using Google Closure Library provided `DateTime <http://closure-library.googlecode.com/svn/docs/class_goog_date_DateTime.html>`_.
 
 .. note:: Extends ``prestans.types.DataStructure``
 
@@ -91,7 +140,7 @@ DateTime
 Collections
 ===========
 
-Collections are formalised representations
+Collections are formalised representations to complex itterable data structures. prestans provides two Collections, Arrays and Models (dictionaries).
 
 Array
 -----
@@ -109,35 +158,10 @@ Arrays are collections of any prestans type. To ensure the integrity of RESTful 
 Model
 -----
 
+Models are wrapper on dictionaries, it provides a list of key, value pairs formalised as a Python ``class`` made up of any number of prestans ``DataType`` attributes. Models can have instances of other models or Arrays of Basic or Complex prestans types.
+
 .. note:: Extends ``prestans.types.DataCollection``
 
 * ``required`` flags if this is a mandatory field, accepts ``True`` or ``False`` and is set to ``True`` by default
 * ``default`` a default model instance, this is useful when defining relationships
 * ``**kwargs`` a set of key value arguments, each one of these must be an acceptable value for instance variables, all defined validation rules apply.
-
-
-Writing Models
-==============
-
-.. code-block: python
-
-
-To One Relationship
--------------------
-
-To Many Relationship (using Arrays)
------------------------------------
-
-Using Models to write Responses
--------------------------------
-
-Using Data Adapters to build Responses
-======================================
-
-Pairing REST models to Persistant models
------------------------------------------
-
-Adapting Models
----------------
-
-
