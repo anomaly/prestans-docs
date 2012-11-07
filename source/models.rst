@@ -34,16 +34,73 @@ The second half of this chapter has a detailed reference of configuration parame
 Writing Models
 ==============
 
-It's important to keep in mind that prestans or REST models are not persistent and are nearly never a direct translation of your persistent models. Clients require views of the data stored on the server.
+Writing ``Model``
 
-.. code-block: python
+.. note:: prestans or REST models are not persistent and are nearly never a direct translation of your persistent models. Clients require views of the data stored on the server.
 
+.. code-block:: python
+
+    class UserProfile(prestans.types.Model):
+
+        id = prestans.types.Integer(required=False)
+        email_address = prestans.types.String(required=True)
+
+        name = prestans.types.String(required=True)
+
+    class Track(prestans.types.Model):
+
+        id = prestans.types.Integer(required=False)
+        name = prestans.types.String(required=True, min_length=1)
+        duration = prestans.types.Float(required=True)
+
+        created_by = UserProfile()
+
+    class Album(prestans.types.Model):
+
+        id = prestans.types.Integer(required=False)
+        name = prestans.types.String(required=True, min_length=1, default=prestans.types.CONSTANT.DATETIME_NOW)
+        year = prestans.types.Integer(required=True)
+
+        tracks = prestans.types.Array(element_template=Track(), min_length=1)
+
+        created_by = UserProfile()
+
+    class Band(prestans.types.Model):
+
+        id = prestans.types.Integer(required=False)
+        name = prestans.types.String(required=True, min_length=1)
+
+        albums = prestans.types.Array(element_template=Album())
+
+        created_by = UserProfile()
 
 To One Relationship
 -------------------
 
+.. code-block:: python
+
+    class Band(prestans.types.Model):
+
+        ... other attributes ...
+
+        created_by = UserProfile()
+
+
 To Many Relationship (using Arrays)
 -----------------------------------
+
+prestans provides ``prestans.types.Array`` to provide lists of objects. Collections in REST responses or requests must have elements of the same type. 
+
+The ``element_template`` 
+
+.. code-block:: python
+
+    class Album(prestans.types.Model):
+
+        ... other attributes ...
+
+        tracks = prestans.types.Array(element_template=Track(), min_length=1)
+
 
 Using Models to write Responses
 -------------------------------
@@ -134,7 +191,7 @@ Date Time is a complex structure that parses strings to Python ``datetime`` and 
 .. note:: Extends ``prestans.types.DataStructure``
 
 * ``required`` flags if this is a mandatory field, accepts ``True`` or ``False`` and is set to ``True`` by default
-* ``default`` specifies the value to be assigned to the attribute if one isn't provided on instantiation, this must be a date.
+* ``default`` specifies the value to be assigned to the attribute if one isn't provided on instantiation, this must be a date. prestans provides a constans ``prestans.types.CONSTRANT.DATETIME_NOW`` if you want to use the date / time of execusion.
 * ``format`` default format  ``%Y-%m-%d %H:%M:%S``
 
 Collections
