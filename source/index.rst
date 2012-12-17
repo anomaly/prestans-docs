@@ -27,10 +27,10 @@ Software Requirements
 =====================
 
 * Python 2.6+
-* WSGI compliant server environment (Apache + mod_wsgi, Google AppEngine, etc).
+* WSGI compliant server environment (`Apache <http://httpd.apache.org>`_ + `mod_wsgi <http://modwsgi.googlecode.com>`_, `Google AppEngine <https://developers.google.com/appengine/>`_, etc).
 * Python Paste components
 
-Basic `Subversion <http://svn.tigris.org>`_ knowledge will come in handy, if you are going to follow our tutorial and code samples.
+We use `Subversion <http://svn.tigris.org>`_ to manage our source code.
 
 Getting Help
 ============

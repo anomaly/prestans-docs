@@ -38,8 +38,8 @@ Types API
 The Types API is a client side implementation of the types that are available in the server side API.
 
 
-Bound UI
-========
+Tools
+======
 
-The Bound UI is a system that allows you to bind your input forms to prestans models to have basic validation of data occur as the user is entering it.
-
+preplate
+--------

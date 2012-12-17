@@ -41,7 +41,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'prestans'
-copyright = u'2012, Devraj Mukherjee, Bradley Mclain'
+copyright = u'2013, Eternity Technologies'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -184,7 +184,7 @@ latex_elements = {
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
   ('index', 'prestans.tex', u'prestans Documentation',
-   u'Devraj Mukherjee, Bradley Mclain', 'manual'),
+   u'Eternity Technologies', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -214,7 +214,7 @@ latex_documents = [
 # (source start file, name, description, authors, manual section).
 man_pages = [
     ('index', 'prestans', u'prestans Documentation',
-     [u'Devraj Mukherjee, Bradley Mclain'], 1)
+     [u'Eternity Technologies'], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -228,7 +228,7 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
   ('index', 'prestans', u'prestans Documentation',
-   u'Devraj Mukherjee, Bradley Mclain', 'prestans', 'One line description of project.',
+   u'Eternity Technologies', 'prestans', 'One line description of project.',
    'Miscellaneous'),
 ]
 
@@ -246,9 +246,9 @@ texinfo_documents = [
 
 # Bibliographic Dublin Core info.
 epub_title = u'prestans'
-epub_author = u'Devraj Mukherjee, Bradley Mclain'
-epub_publisher = u'Devraj Mukherjee, Bradley Mclain'
-epub_copyright = u'2012, Devraj Mukherjee, Bradley Mclain'
+epub_author = u'Eternity Technologies'
+epub_publisher = u'Eternity Technologies'
+epub_copyright = u'2013, Eternity Technologies'
 
 # The language of the text. It defaults to the language option
 # or en if the language is not set.

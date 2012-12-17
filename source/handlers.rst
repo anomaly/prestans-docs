@@ -125,13 +125,13 @@ Under Apache with `mod_wsgi <http://modwsgi.googlecode.com>`_ it a .wsgi file wo
     ], application_name="prestans-demo", debug=False)
 
 
-
 Building and Writing Responses
-==============================
+------------------------------
+
+
 
 .. note:: Data Adapters help you quickly turn you persistent data to REST models instances.
 
 
 Defining rules for your incoming data
-=====================================
-
+-------------------------------------
