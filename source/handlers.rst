@@ -57,24 +57,24 @@ A Regex example of these URL patterns would look like:
 Defining your REST Application
 ------------------------------
 
-You must use a ``RESTApplication`` subclass (one that ships with prestans or a custom implementation) to create map URLs to REST Handlers. Each application requires the following parameters:
+You must use a ``RESTApplication`` subclass (one that's paired with a serializer) to create map URLs to REST Handlers. A REST application accepts the following optional parameters:
 
 * ``url_map`` a list of regex to REST handler maps
 * ``application_name`` optional name for your API, this will show up in the logs.
 * ``debug`` set to ``True`` by default, turn this off in production. This status is made available as ``self.request.debug`` 
 
-url_map requires pairs of URL patterns and REST Handler end points. This URL accepts two numeric IDs which are passed on to the handlers::
+url_map a non-optional parameter, requires pairs of URL patterns and REST Handler end points. The following example accepts two numeric IDs which are passed on to the handlers::
 
         (r'/api/band/([0-9]+)/album/([0-9]+)/track', pdemo.rest.handlers.track.Collection)
 
-Would map the ``Collection`` class defined in the package ``pdemo.rest.handlers.track``, if you were to define a GET method which returned all the tracks for a band's album, it would look like::
+prestans would map this URL to the ``Collection`` class defined in the package ``pdemo.rest.handlers.track``, if you were to define a GET method which returned all the tracks for a band's album, it would look like::
 
         class Collection(prestans.rest.RESTHandler):
 
             def get(self, band_id, album_id):
                 ... return all tracks for band_id and album_id
 
-If you don't wish to support an HTTP method for a URL, just ignore implementing the appropriate method and prestans does the rest.  An application API definition would be a collection of these URL to Handler pairs. The following is an extract from our demo application:
+If your handler does not support an particuar HTTP method for a URL, simply ignore implementing the appropriate method.  An application API definition would be a collection of these URL to Handler pairs. The following is an extract from our demo application:
 
 .. code-block:: python
 
@@ -92,22 +92,46 @@ If you don't wish to support an HTTP method for a URL, just ignore implementing 
         (r'/api/band/([0-9]+)/album/([0-9]+)/track', pdemo.rest.handlers.track.Collection)
     ], application_name="prestans-demo", debug=False)
 
+Configuring your WSGI environment
+=================================
 
-You now have to point your WSGI environment to the defiendThe corresponding Google AppEngine, app.yaml entry would look like::
+Your WSGI environment has to be made aware of your declared prestans application. A Google AppEngine, app.yaml entry would look like::
 
     - url: /api/.*
       script: entry.api
+      # Where the package entry contains an attribute called api
 
-If you were using prestans under Apache with mod_wsgi::
+a corresponding ``entry.py`` would look like::
 
+    #!/usr/bin/env/python
+
+    import prestans.rest
+    ... along with other imports
+
+    api = prestans.rest.JSONRESTApplication(url_handler_map=[
+        ... rules go here
+    ], application_name="prestans-demo", debug=False)
+
+
+Under Apache with `mod_wsgi <http://modwsgi.googlecode.com>`_ it a .wsgi file would look like (note that mod_wsgi requires the application attribute in the entry .wsgi script, best described in their `Quick Configuration Guide <http://code.google.com/p/modwsgi/wiki/QuickConfigurationGuide>`_)::
+
+    #!/usr/bin/env/python
+
+    import prestans.rest
+    ... along with other imports
+    
     application = prestans.rest.JSONRESTApplication(url_handler_map=[
         ... rules go here
     ], application_name="prestans-demo", debug=False)
 
 
 
-Building your Response
-======================
+Building and Writing Responses
+==============================
 
 .. note:: Data Adapters help you quickly turn you persistent data to REST models instances.
+
+
+Defining rules for your incoming data
+=====================================
 

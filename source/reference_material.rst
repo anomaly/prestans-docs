@@ -19,4 +19,4 @@ Advanced Python
 * `Python Decorators <http://www.python.org/dev/peps/pep-0318/>`_ various prestans utilities are provided as decorators
 * `Python Types and Objects <http://www.cafepy.com/article/python_types_and_objects/python_types_and_objects.html>`_ an excellent article by Shalabh Chaturvedi on how Python sees Objects and Types.
 * `Python Attributes and Methods <http://www.cafepy.com/article/python_attributes_and_methods/>`_ another excellent article by Shalabh Chaturvedi providing an indepth understanding of how attributes and methods work.
-
+* `Faux function type signatures in Python <http://www.regularexpressionless.com/?p=8>`_ using a Python decorator to ensure that your functions get values in the right type from WSGI calls. Originall posted as a `response <http://stackoverflow.com/questions/7019283/automatically-type-cast-parameters-in-python>`_ on Stackoverflow. 

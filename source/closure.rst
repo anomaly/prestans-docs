@@ -1,6 +1,6 @@
-==========================
-Closure Library Extensions
-==========================
+==============================================
+Google Closure Library Extensions (incomplete)
+==============================================
 
 `Google Closure <https://developers.google.com/closure/library/>`_ is a set of JavaScript tools, that Google uses to build many of their core products. It provides:
 

@@ -1,6 +1,6 @@
-======
-Models
-======
+===================
+Models (incomplete)
+===================
 
 Models allow you to define rules for your API's data. prestans uses these rules to ensure the integrity of the data exchanged between the client and the server. If you've' used the `Django <http://djangoproject.com>`_ or `Google AppEngine <https://developers.google.com/appengine/>`_ prestans models will look very familiar. prestans models are *not* persistent.
 
