@@ -128,7 +128,12 @@ Under Apache with `mod_wsgi <http://modwsgi.googlecode.com>`_ it a .wsgi file wo
 Building and Writing Responses
 ------------------------------
 
+Each handler method in your prestans REST application must return either a:
 
+* Python serializable type, these include basic types are iterables
+* Instances of ``prestans.types.DataType`` or subclasses
+
+Python types are passed directly to the serializer 
 
 .. note:: Data Adapters help you quickly turn you persistent data to REST models instances.
 

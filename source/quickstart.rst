@@ -121,8 +121,11 @@ Attributes can be of the following types, these are in accordance with popular s
 
 Each attribute provides a set rules configured by you, that prestans uses to validate incoming and outgoing data.
 
-Parsers
--------
+Request Parsers
+---------------
+
+Request Parsers allow you to define a set of rules that a request handler can use to validate incoming and outgoing data. Rulees are define per HTTP method that your handler corresponds to.
+
 
 Parameter Sets
 --------------
