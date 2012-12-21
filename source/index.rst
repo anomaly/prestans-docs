@@ -42,8 +42,8 @@ Getting Help
 
 We encourge the use of our mailing lists (run on Google Groups) as the primary method of getting help. You can also write the developers through contact information `our website <http://etk.com.au>`_.
 
-* `Discuss <http://groups.google.com/group/prestans-discuss>`_ general discussion, help, comments.
-* `Announcements <http://groups.google.com/group/prestans-announce>`_ security, release announcements.
+* `Discuss <http://groups.google.com/group/prestans-discuss>`_ general discussion, help, suggest a new feature.
+* `Announcements <http://groups.google.com/group/prestans-announce>`_ security / release announcements.
 
 Reporting Issues
 ^^^^^^^^^^^^^^^^

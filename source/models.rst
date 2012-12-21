@@ -34,9 +34,83 @@ The second half of this chapter has a detailed reference of configuration parame
 Writing Models
 ==============
 
-Writing ``Model``
+``Models`` are defined by extending ``prestans.types.Model``. Models contain attributes which either be a basic prestans type (a direct subclass of ``prestans.types.DataType``) or a reference to an instance of another Model, or an ``Array`` of objects.
 
-.. note:: prestans or REST models are not persistent and are nearly never a direct translation of your persistent models. Clients require views of the data stored on the server.
+The REST standard talks about URLs refering to entities, this is often interpreted literally as REST API URLs refer to persistent models. Your REST API is the *business logic* layer of your Web client / server application. Providing direct access to persistently stored data through your REST API is simply replicating XML-RPC and not only is it bad design in the RESTful world but also extremely insecure.
+
+RESTful APIs should serve back REST models. REST models are views of your data, that make sense as a response to the REST request. It's important to understand this so you can define your REST models to be as strict as possible. A RESTful API should never accept a request it can't comply with, this includes authority to perform the requested tasks on the data.
+
+Consider a scenario where we are trying to model discographies, where a ``Band`` has ``Albums``, has ``Tracks``.
+
+Depending on the implementation of this applicaiton it might be easier to send down ``Tracks`` when a client requests ``Albums``, but might only want to send down ``Albums`` (without ``Tracks``) when a list of ``Bands`` is requested.
+
+.. note:: Read our section of Design Notes, to learn more about designing better REST APIs.
+
+General convention for prestans apps is to keep all your REST models in a single package. To start creating models, simply define a class that extends from ``prestans.types.Model``
+
+.. code-block:: python
+
+    ... amogst other things
+    import prestans.types
+
+    class Track(prestans.types.Model):
+
+        ... next read about attributes here
+
+
+Defining Attributes
+-------------------
+
+All atributes of a ``Model`` must be an instance of a ``prestans.type``, Attributes can also be relationships to instances or collections of Models.
+
+Our :ref:`type-config-reference` guide documents in detail configuration validation options provided by each prestans ``DataType``.
+
+Attributes are defined at a class level, these are the rules used by prestans for each instance attributes of your ``Model``. By default prestans is absolutely unforgiving and will ensure that each attribute satifies all it's conditions. Failure results in aborting the creation of an instance.
+
+At the class level define attributes by instantiating prestans types with your rules, ensure they are as strict as possible, the more your define here the less you have to do in your handler. The objective is not to pass through data that your handler can't work with.
+
+.. code-block:: python
+
+    class Track(prestans.types.Model):
+
+        id = prestans.types.Integer(required=False)
+        name = prestans.types.String(required=True, min_length=1)
+        duration = prestans.types.Float(required=True)
+
+
+To One Relationship
+-------------------
+
+One to One relationships are supported 
+
+.. code-block:: python
+
+    class Band(prestans.types.Model):
+
+        ... other attributes ...
+
+        created_by = UserProfile()
+
+
+To Many Relationship (using Arrays)
+-----------------------------------
+
+prestans provides ``prestans.types.Array`` to provide lists of objects. Collections in REST responses or requests must have elements of the same type. 
+
+The ``element_template`` 
+
+.. code-block:: python
+
+    class Album(prestans.types.Model):
+
+        ... other attributes ...
+
+        tracks = prestans.types.Array(element_template=Track(), min_length=1)
+
+
+Self References
+---------------
+
 
 .. code-block:: python
 
@@ -74,38 +148,21 @@ Writing ``Model``
 
         created_by = UserProfile()
 
-To One Relationship
--------------------
 
-.. code-block:: python
+Special Types
+-------------
 
-    class Band(prestans.types.Model):
-
-        ... other attributes ...
-
-        created_by = UserProfile()
+Date Time
+=========
 
 
-To Many Relationship (using Arrays)
------------------------------------
-
-prestans provides ``prestans.types.Array`` to provide lists of objects. Collections in REST responses or requests must have elements of the same type. 
-
-The ``element_template`` 
-
-.. code-block:: python
-
-    class Album(prestans.types.Model):
-
-        ... other attributes ...
-
-        tracks = prestans.types.Array(element_template=Track(), min_length=1)
-
+DataURLFile
+===========
 
 Using Models to write Responses
 -------------------------------
 
-prestans
+
 
 Using Data Adapters to build Responses
 ======================================
@@ -115,6 +172,8 @@ Pairing REST models to persistent models
 
 Adapting Models
 ---------------
+
+.. _type-config-reference:
 
 Type Configuration Reference
 ============================
