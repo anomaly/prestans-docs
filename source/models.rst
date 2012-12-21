@@ -20,14 +20,14 @@ All prestans types are wrappers on Pythonic data types, that you get a chance to
 
 prestans types are divided into, *Basic Types*, and *Collections*, currently supported types are:
 
-* String, wraps a Python str
-* Integer, wraps a Python number
-* Float, wraps a Python number
-* Boolean, wraps a Python bool
-* DataURLFile, supports uploading files via HTML5 `FileReader <http://www.html5rocks.com/en/tutorials/file/dndfiles/>`_ API
-* DateTime, wraps Python ``datetime``
-* Array, wraps Python lists
-* Model, wraps Python dict
+* ``String``, wraps a Python ``str``
+* ``Integer``, wraps a Python number
+* ``Float``, wraps a Python number
+* ``Boolean``, wraps a Python ``bool``
+* ``DataURLFile``, supports uploading files via HTML5 `FileReader <http://www.html5rocks.com/en/tutorials/file/dndfiles/>`_ API
+* ``DateTime``, wraps Python ``datetime``
+* ``Array``, wraps Python lists
+* ``Model``, wraps Python dict
 
 The second half of this chapter has a detailed reference of configuration parameters for each prestans ``DataType``.
 

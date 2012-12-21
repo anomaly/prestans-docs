@@ -12,11 +12,11 @@ Google Closure Library Extensions (incomplete)
 
 Each one of these components is agnostic of the other. Closure is at the heart of building products with prestans.
 
-prestans provides a number of extensions to Closure Library, that ease and automate building rich JavaScript clients that consume your prestans API. It currently provides:
+prestans provides a number of extensions to Closure Library, that ease and automate building rich JavaScript clients that consume your prestans API. Our current line up includes:
 
-* REST Client
-* Types API
-* Bound UI
+* REST Client, provides a pattern to create Xhr requests, manages the lifecycle and parsers responses
+* Types API, a client side replica of the prestans server types package assisting with parsing responses
+* Code generation tools to quickly produce client side stubs from your REST application models
 
 REST Client
 ===========

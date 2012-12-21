@@ -30,24 +30,6 @@ Features
 
 We also maintain a set of tools that leverages prestans's ``Model`` definition schema to generate boiler plate client side parsing of REST resources.
 
-Sample App Scenario
-===================
-
-Due to our obsession with music, we thought it be fitting to build a music catalgoue as our demonstration application. The application models Artists, Bands, Albums and Tracks to demonstrate the features and techniques to make REST based Web applications.
-
-Sample data features legendary artists and bands like `Pink Floyd <http://en.wikipedia.org/wiki/Pink_Floyd>`_, `Eric Clapton <http://en.wikipedia.org/wiki/Eric_Clapton>`_ and `Metallica <http://en.wikipedia.org/wiki/Metallica>`_ purely due to the developers bias in music.
-
-It's complete with a Google Closure based user interface, which shows off the set of handy automation tools that prestans ships to speed up client side development.
-
-.. note:: Subversion path for our demo app, https://prestans-demo.googlecode.com/svn/trunk/
-
-The demo app ships with it's own copy of prestans, once you've obtained a copy of the demo app, and assuming you have Google's AppEngine Python SDK setup, just run the following command::
-
-    $ cd prestans-demo/app
-    $ dev_appsever.py .
-
-Navigate to http://localhost:8080/ and voilà we have an app!
-
 Installation
 ============
 
@@ -85,7 +67,7 @@ You should never have to serialize or unserialize data when writing prestans app
 REST Application
 ----------------
 
-REST Application is our router, it's an instance of REST Application that maps a URL to a handler. It's also responsible managing the API call lifecycle and humanising error messages for the client.
+REST Application is our router, an instance of REST Application is responsible for mapping URLs to handlers. It's also responsible managing the API call lifecycle and humanising error messages for the client.
 
 REST Application can not be used directly, you must use a sub class that's been paired with a Serializer. Out of the box prestans provides the following REST Application routers:
 
@@ -124,20 +106,21 @@ Each attribute provides a set rules configured by you, that prestans uses to val
 Request Parsers
 ---------------
 
-Request Parsers allow you to define a set of rules that a request handler can use to validate incoming and outgoing data. Rulees are define per HTTP method that your handler corresponds to.
+Request Parsers allow you to define a set of rules that a request handler can use to validate incoming and outgoing data. Rules are define per HTTP method each handler corresponds supports and allows you to:
 
+* validate sets of parmaeters in the URL
+* the body of the request (for POST, PUT, PATCH and DELETE methods) by defining :ref:`models`
+* a response attribute list template which allows clients to request partially formed responses, the template directly corresponds to the definition of the handler's response format
+* a definition of acceptable partially formed requests (based on models)
 
-Parameter Sets
---------------
-
-Are let you define rules for acceptable sets of parameters as part of the URL. These should be used to accept
+Complimentary to Request Parsers are ``ParameterSet`` which allow you defined patterns of acceptable groups of parameters in the URL and ``AttributeFilter`` which allow you to make exceptions to the rules defined by Models.
 
 Data Adapters
 -------------
 
-Data Adapters are a set of handy tools that allow you to quickly turn persistent data objects into instances of your REST models. prestans allows serialization of prestans managed Data Types, see :ref:`models`. This is a backend specific feature.
+Data Adapters are a set of extensions that allow you to quickly turn persistent data objects into instances of your REST models. prestans allows serialization of prestans managed Data Types, see :ref:`models`. Data Adapters are backend specific (we currently support SQLAlchemy, AppEngine NDB).
 
-You can map persistent models against prestans Models using a registry and ask prestans to perform the translation to construct your response.
+These Adapters function map persistent models against prestans Models using a registry, allowing prestans to perform the translation to construct your  REST handler's response.
 
 Providers
 ---------

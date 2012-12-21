@@ -20,27 +20,48 @@ prestans is a WSGI (PEP-333) complaint micro-framework that allows you to rapidl
    authentication
    design_notes
    closure
+   demo_app
    reference_material
 
 
 Software Requirements
 =====================
 
-* Python 2.6+
-* WSGI compliant server environment (`Apache <http://httpd.apache.org>`_ + `mod_wsgi <http://modwsgi.googlecode.com>`_, `Google AppEngine <https://developers.google.com/appengine/>`_, etc).
-* Python Paste components
+These are the requirements for running prestans on a server. Client side tools might have additional requirements, check relevant parts of our documentation for details.
 
-We use `Subversion <http://svn.tigris.org>`_ to manage our source code.
+.. note:: We use `Subversion <http://svn.tigris.org>`_ to manage our source code.
+
+* Python 2.6+, *2.7 recommended*
+* WSGI compliant server environment (`Apache <http://httpd.apache.org>`_ + `mod_wsgi <http://modwsgi.googlecode.com>`_, `Google AppEngine <https://developers.google.com/appengine/>`_, etc).
+* Python Paste components (e.g WebOb)
+
+We mostly test on latest releases of `Ubuntu Server <http://www.ubuntu.com/download/server>`_, and Google's `AppEngine <https://developers.google.com/appengine/>`_. 
 
 Getting Help
 ============
 
-We encourge the use of our mailing lists (run on Google Groups) as the primary method of getting help
+We encourge the use of our mailing lists (run on Google Groups) as the primary method of getting help. You can also write the developers through contact information `our website <http://etk.com.au>`_.
 
 * `Discuss <http://groups.google.com/group/prestans-discuss>`_ general discussion, help, comments.
 * `Announcements <http://groups.google.com/group/prestans-announce>`_ security, release announcements.
 
-We prefer the use of our `Issue Tracker <https://code.google.com/p/prestans/issues/list>`_ on Google Code, to triage feature requests, bug reports. Please check to ensure that you are lodging a duplicate request.
+Reporting Issues
+^^^^^^^^^^^^^^^^
+
+We prefer the use of our `Issue Tracker <https://code.google.com/p/prestans/issues/list>`_ on Google Code, to triage feature requests, bug reports. 
+
+Before you lodge a lodge a ticket:
+
+* Ensure that you ask a question on our list, there might already be answer out there or we might have already acknowledged the issue
+* Seek wisdom from our beautifully written documentation 
+* Google to see that it's not something to do with your server environment (versions of Web server, WSGI connectors, etc)
+* Check to ensure that you are *not* lodging a duplicate request.
+
+When reporting issues:
+
+* Include as much detail as you can about your environment (e.g Server OS, Web Server Version, WSGI connector)
+* Steps that we can use to replicate the bug
+* Share a bit of your application code with us, it goes a long way to replicate issues
 
 Commercial Support
 ------------------
