@@ -77,6 +77,8 @@ At the class level define attributes by instantiating prestans types with your r
 
 Our :ref:`type-config-reference` guide documents in detail configuration validation options provided by each prestans ``DataType``.
 
+.. note:: prestans Models do not provide back references when defining relationships between Models (like many ORM layers), defining cross references in Models can cause an infinite recursion. REST models are views on your persistent data, in most cases cross references might mean re-thinking your API design. You can also use DataAdapters to prevent an infinite recursion.
+
 To One Relationship
 -------------------
 
@@ -155,7 +157,7 @@ Apart the usual suspects (``String``, ``Integer``, ``Float``, ``Boolean``) prest
 DateTime
 --------
 
-Wraps around python ``datetime``, it provides a way 
+Serialization formats like JSON serialize dates as strings, there are various acceptable formats for serializing dates. DateTime wraps around python ``datetime``, and 
 
 .. code-block:: python
 
@@ -170,15 +172,30 @@ HTML5's `FileReader <http://www.html5rocks.com/en/tutorials/file/dndfiles/>`_ AP
 
 The FileReader API provides ``FileReader.readAsDataURL`` which reads the file using as `Data URL Scheme <http://en.wikipedia.org/wiki/Data_URI_scheme>`_, which essentially is a `Base64 <http://en.wikipedia.org/wiki/Base64>`_ encoded file with meta information.
 
+.. code-block:: html
+
+    <!-- Use of data URL to embed an image -->
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA
+    AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
+    9TXL0Y4OHwAAAABJRU5ErkJggg==" alt="Red dot"/>
+    <!-- Courtesy Wikipedia -->
+
 ``prestans.types.DataURLFile`` decodes the file Data URL Scheme encoded file and give access to the content and meta information. If you are using a traditional Web server like Apache, ``DataURLFile`` provides a ``save`` method to write the uploaded contents out, if you are on a Cloud infrastructure e.g Google AppEngine, you can use the ``file_contents`` property to get the decoded file.
 
 DataURLFile can restrict uploads based on mime types.
+
+.. code-block:: python
+
+    class Album(prestans.types.Model):
+        
+        ... other attributes
+        album_art =  prestans.types.DataURLFile(allowed_mime_types=['image/jpeg', 'image/png', 'image/gif'])
 
 
 Using Models to write Responses
 ===============================
 
-prestans ``DataTypes``
+Apart from validation, another handy use of prestans Models is to form
 
 
 .. _type-config-reference:

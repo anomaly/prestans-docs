@@ -4,17 +4,14 @@ Thoughts on API design
 
 prestans was a result of our careful study into the REST standards, frameworks and appraoches that were popular at the time. The following are a few useful lessons we've learnt along the way. Also refer to our extensive list of extremely useful :doc:`reference_material` we found on the Web.
 
-Infinite recursion in Models
-============================
-
 REST resources are *not* persistent models
 ==========================================
 
-Reading around the Web, it seems that traditional client/server programmers somehow concluded that REST is basically a HTTP replacement for XML-RPC, SOAP lovers might have had something to do with this as well. This school of thought essesntially thought of REST (like XML-RPC) as a gateway to each persistentant stored object on the server and making the client app responsible for delaing with data relationships, integrity etc. May frameworks took these ideas and implemented pass through REST gateways to RDBMS backends.
+Reading around the Web, it seems that traditional client/server programmers somehow concluded that REST is basically a HTTP replacement for XML-RPC, SOAP lovers might have had something to do with this as well. This school of thought lead developers to design of REST APIs (like XML-RPC) as a gateway to each persistent object on the server and making the client responsible for dealing with data relationships, integrity etc. Many frameworks took these ideas and implemented pass through REST gateways to RDBMS backends.
 
 This is completely incorrect.
 
-Data pressented to clients talking to REST services is very different to the way data is stored, this is particularly true when you are using NoSQL style databases. **So think of REST resources are views of the stored data**. The job of your server side code to do as much meaningful work as possible with the data and present it to the client in form that is immediately useful.
+Data presented to clients talking to REST services is very different to the way data is stored, this is particularly true when you are using NoSQL style databases. **Think of REST resources are views of the stored data**. The job of your server side code to do as much meaningful work as possible with the data and present it to the client in form that is immediately useful.
 
 Again, *REST resources are useful views of your persistent data*.
 
