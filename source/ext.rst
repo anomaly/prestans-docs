@@ -2,8 +2,8 @@
 Extensions
 ==========
 
-Using Data Adapters to build Responses
-======================================
+Data Adapters
+=============
 
 Pairing REST models to persistent models
 ----------------------------------------

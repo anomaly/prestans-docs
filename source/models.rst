@@ -1,6 +1,6 @@
-===================
-Models (incomplete)
-===================
+======
+Models
+======
 
 Models allow you to define rules for your API's data. prestans uses these rules to ensure the integrity of the data exchanged between the client and the server. If you've' used the `Django <http://djangoproject.com>`_ or `Google AppEngine <https://developers.google.com/appengine/>`_ prestans models will look very familiar. prestans models are *not* persistent.
 
@@ -122,6 +122,8 @@ Arrays of Models are validated using the rules defined by each attribute. If you
 Self References
 ---------------
 
+Self references in prestans Model definition are the same as self referencing Python objects. 
+
 .. code-block:: python
 
     ... amogst other things
@@ -139,20 +141,44 @@ Self References
     # Once defined above you can self refer 
     Genre.parent = Genre(required=False)
 
+Use arrays to make a list:
 
+.. code-block:: python
+
+    Genre.sub_genres = prestans.types.Array(element_template=Genre())
 
 Special Types
 =============
 
+Apart the usual suspects (``String``, ``Integer``, ``Float``, ``Boolean``) prestans also provides a few complex ``DataTypes``. These are wrappers on data types that have extensive libraries both on browsers and the Python runtime, but are serialized as strings or numbers.
+
 DateTime
 --------
+
+Wraps around python ``datetime``, it provides a way 
+
+.. code-block:: python
+
+    class Album(prestans.types.Model):
+        
+        last_updated =  prestans.types.DateTime(default=prestans.types.CONSTANT.DATETIME_NOW)
 
 DataURLFile
 -----------
 
+HTML5's `FileReader <http://www.html5rocks.com/en/tutorials/file/dndfiles/>`_ API is well supported by all modern browsers. Traditionally Web applications used multi part mime messages to upload files in a POST request. The ``FileReader`` API allows JavaScript to get access to local files and makes for a much nicer solution for file uploads via a REST API.
+
+The FileReader API provides ``FileReader.readAsDataURL`` which reads the file using as `Data URL Scheme <http://en.wikipedia.org/wiki/Data_URI_scheme>`_, which essentially is a `Base64 <http://en.wikipedia.org/wiki/Base64>`_ encoded file with meta information.
+
+``prestans.types.DataURLFile`` decodes the file Data URL Scheme encoded file and give access to the content and meta information. If you are using a traditional Web server like Apache, ``DataURLFile`` provides a ``save`` method to write the uploaded contents out, if you are on a Cloud infrastructure e.g Google AppEngine, you can use the ``file_contents`` property to get the decoded file.
+
+DataURLFile can restrict uploads based on mime types.
+
+
 Using Models to write Responses
 ===============================
 
+prestans ``DataTypes``
 
 
 .. _type-config-reference:
