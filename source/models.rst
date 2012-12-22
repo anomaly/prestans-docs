@@ -26,8 +26,8 @@ prestans types are divided into, *Basic Types*, and *Collections*, currently sup
 * ``Boolean``, wraps a Python ``bool``
 * ``DataURLFile``, supports uploading files via HTML5 `FileReader <http://www.html5rocks.com/en/tutorials/file/dndfiles/>`_ API
 * ``DateTime``, wraps Python ``datetime``
-* ``Array``, wraps Python lists
-* ``Model``, wraps Python dict
+* ``Array``, wraps Python ``lists``
+* ``Model``, wraps Python ``dict``
 
 The second half of this chapter has a detailed reference of configuration parameters for each prestans ``DataType``.
 
@@ -38,7 +38,7 @@ Writing Models
 
 The REST standard talks about URLs refering to entities, this is often interpreted literally as REST API URLs refer to persistent models. Your REST API is the *business logic* layer of your Web client / server application. Providing direct access to persistently stored data through your REST API is simply replicating XML-RPC and not only is it bad design in the RESTful world but also extremely insecure.
 
-RESTful APIs should serve back REST models. REST models are views of your data, that make sense as a response to the REST request. It's important to understand this so you can define your REST models to be as strict as possible. A RESTful API should never accept a request it can't comply with, this includes authority to perform the requested tasks on the data.
+RESTful APIs should serve back REST models. REST models are views of your data, that make sense as a response to the REST request. It's important to understand this so you can define your REST models to be as strict as possible. Like all good business logic layers, a RESTful API should never accept a request it can't comply with, this includes authority to perform the requested tasks on the data.
 
 Consider a scenario where we are trying to model discographies, where a ``Band`` has ``Albums``, has ``Tracks``.
 
@@ -63,8 +63,6 @@ Defining Attributes
 
 All atributes of a ``Model`` must be an instance of a ``prestans.type``, Attributes can also be relationships to instances or collections of Models.
 
-Our :ref:`type-config-reference` guide documents in detail configuration validation options provided by each prestans ``DataType``.
-
 Attributes are defined at a class level, these are the rules used by prestans for each instance attributes of your ``Model``. By default prestans is absolutely unforgiving and will ensure that each attribute satifies all it's conditions. Failure results in aborting the creation of an instance.
 
 At the class level define attributes by instantiating prestans types with your rules, ensure they are as strict as possible, the more your define here the less you have to do in your handler. The objective is not to pass through data that your handler can't work with.
@@ -77,11 +75,14 @@ At the class level define attributes by instantiating prestans types with your r
         name = prestans.types.String(required=True, min_length=1)
         duration = prestans.types.Float(required=True)
 
+Our :ref:`type-config-reference` guide documents in detail configuration validation options provided by each prestans ``DataType``.
 
 To One Relationship
 -------------------
 
-One to One relationships are supported 
+One to One relationships are defined assigning an instance of an existing ``Model`` to an attribute of another.
+
+Validation rules accepted as instantiation values are for the attribute of the container ``Model``, they are evaluated the same way as basic prestans ``DataTypes``.
 
 .. code-block:: python
 
@@ -89,15 +90,16 @@ One to One relationships are supported
 
         ... other attributes ...
 
-        created_by = UserProfile()
+        created_by = UserProfile(required=True)
 
+On success the attribute will refer to an instance of the child ``Model``. Failure to validate attributes of the children result in the failure of the parent  ``Model``.
 
 To Many Relationship (using Arrays)
 -----------------------------------
 
-prestans provides ``prestans.types.Array`` to provide lists of objects. Collections in REST responses or requests must have elements of the same type. 
+prestans provides ``prestans.types.Array`` to provide lists of objects. Because REST end points refer to Entities, Collections in REST responses or requests must have elements of the same data type.
 
-The ``element_template`` 
+You must provide an instance prestans DataType (e.g Array of Strings for tagging) or defined Model as the ``element_template`` property of an ``Array``. Each instance in the ``Array`` must comply with the rules defined by the template. Failure to validate any instance in the ``Array``, results as a failure to validate the entire ``Array``.
 
 .. code-block:: python
 
@@ -107,71 +109,51 @@ The ``element_template``
 
         tracks = prestans.types.Array(element_template=Track(), min_length=1)
 
+Arrays of Models are validated using the rules defined by each attribute. If you are creating an Array of a basic prestans type, the validation rules are defined in the instance provided as the ``element_template``:
+
+.. code-block:: python
+
+    class Album(prestans.types.Model):
+
+        ... other attributes ...
+
+        tags = prestans.types.Array(element_template=prestans.types.String(min_length=1, max_length=20))
 
 Self References
 ---------------
 
-
 .. code-block:: python
 
-    class UserProfile(prestans.types.Model):
+    ... amogst other things
+    import prestans.types
 
-        id = prestans.types.Integer(required=False)
-        email_address = prestans.types.String(required=True)
-
-        name = prestans.types.String(required=True)
-
-    class Track(prestans.types.Model):
+    # Define the Model first
+    class Genre(prestans.types.Model):
 
         id = prestans.types.Integer(required=False)
         name = prestans.types.String(required=True, min_length=1)
-        duration = prestans.types.Float(required=True)
+        year_started = prestans.types.Float(required=True)
 
-        created_by = UserProfile()
+        ... and other attributes
 
-    class Album(prestans.types.Model):
+    # Once defined above you can self refer 
+    Genre.parent = Genre(required=False)
 
-        id = prestans.types.Integer(required=False)
-        name = prestans.types.String(required=True, min_length=1, default=prestans.types.CONSTANT.DATETIME_NOW)
-        year = prestans.types.Integer(required=True)
-
-        tracks = prestans.types.Array(element_template=Track(), min_length=1)
-
-        created_by = UserProfile()
-
-    class Band(prestans.types.Model):
-
-        id = prestans.types.Integer(required=False)
-        name = prestans.types.String(required=True, min_length=1)
-
-        albums = prestans.types.Array(element_template=Album())
-
-        created_by = UserProfile()
 
 
 Special Types
--------------
+=============
 
-Date Time
-=========
-
+DateTime
+--------
 
 DataURLFile
-===========
+-----------
 
 Using Models to write Responses
--------------------------------
+===============================
 
 
-
-Using Data Adapters to build Responses
-======================================
-
-Pairing REST models to persistent models
-----------------------------------------
-
-Adapting Models
----------------
 
 .. _type-config-reference:
 
@@ -282,4 +264,7 @@ Models are wrapper on dictionaries, it provides a list of key, value pairs forma
 
 * ``required`` flags if this is a mandatory field, accepts ``True`` or ``False`` and is set to ``True`` by default
 * ``default`` a default model instance, this is useful when defining relationships
+
+The following is a parallel argument:
+
 * ``**kwargs`` a set of key value arguments, each one of these must be an acceptable value for instance variables, all defined validation rules apply.
