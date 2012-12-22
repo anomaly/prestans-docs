@@ -195,8 +195,27 @@ DataURLFile can restrict uploads based on mime types.
 Using Models to write Responses
 ===============================
 
-Apart from validation, another handy use of prestans Models is to form
+REST APIs should validate any data being sent back down to clients. Your application's persistent layer can't always guarantee that stored data meets your business logic rules.
 
+Models are a great way of constructing sound responses. They are also serializable by prestans. Your handlers can simply pass a collection (using Arrays) or instance of a Model and prestans will serialize the results.
+
+.. code-block:: python
+
+    class AlbumEntityHandler(prestans.rest.RESTHandler):
+
+        def get(self, band_id, album_id):
+
+            ... environment specific code to get an Album for the Band
+
+            album = pdemo.rest.models.Album()
+            album.name = persistent_album_object.name
+
+            ... and so on until you copy all the values across
+
+            self.response.http_status = prestans.rest.STATUS.OK
+            self.response.body = album
+
+From the above example it's clear that code to convert persistent objects into REST models becomes repetitive, and as a result error prone. prestans provides ``DataAdapters``, that automate the conversion of persistent models to REST models. Read about it in the :doc:`ext` chapter.
 
 .. _type-config-reference:
 
