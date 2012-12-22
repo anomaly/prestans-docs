@@ -157,13 +157,17 @@ Apart the usual suspects (``String``, ``Integer``, ``Float``, ``Boolean``) prest
 DateTime
 --------
 
-Serialization formats like JSON serialize dates as strings, there are various acceptable formats for serializing dates. DateTime wraps around python ``datetime``, and 
+DateTime wraps around python ``datetime``, serialization formats like JSON serialize dates as strings, there are various standard formats for serializing dates as Strings, by default prestans ``DateTime`` uses `RFC822 <http://www.w3.org/Protocols/rfc822/>`_ expressed as ``%Y-%m-%d %H:%M:%S`` format string in Python. This is because Google Closure's `Date API <http://closure-library.googlecode.com/svn/docs/class_goog_date_DateTime.html>`_ conveniently provides ``goog.date.fromIsoString`` to parse these Strings.
+
+To use another format string, override the ``format`` parameter when defining ``DateTime`` attributes.
 
 .. code-block:: python
 
     class Album(prestans.types.Model):
         
         last_updated =  prestans.types.DateTime(default=prestans.types.CONSTANT.DATETIME_NOW)
+
+Assigning python ``datetime`` instances as the default value for prestans ``DateTime`` attributes works on the server, our problem lies in auto-generating client side stub code.  The use of the constant ``prestans.types.CONSTANT.DATETIME_NOW`` instruct prestans to handle this properly.
 
 DataURLFile
 -----------
@@ -216,6 +220,8 @@ Models are a great way of constructing sound responses. They are also serializab
             self.response.body = album
 
 From the above example it's clear that code to convert persistent objects into REST models becomes repetitive, and as a result error prone. prestans provides ``DataAdapters``, that automate the conversion of persistent models to REST models. Read about it in the :doc:`ext` chapter.
+
+If you use Google's Closure Library for client side development, we provide a complete client side implementation of our types library to create and parse, requests and responses. Details available in the :doc:`closure` section.
 
 .. _type-config-reference:
 
