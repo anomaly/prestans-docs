@@ -125,8 +125,8 @@ Under Apache with `mod_wsgi <http://modwsgi.googlecode.com>`_ it a .wsgi file wo
     ], application_name="prestans-demo", debug=False)
 
 
-Building and Writing Responses
-------------------------------
+Writing Responses
+-----------------
 
 Each handler method in your prestans REST application must return either a:
 
@@ -138,13 +138,25 @@ To write a response you must:
 * Set a proper HTTP response code, by setting ``self.response.status_code`` to a constant in ``prestans.rest.STATUS``
 * Populating the body of the response
 
-By default the response is set to a dictionary. Remember that at the end of the REST request lifecycle the response data is sent to the serializer. If your handler is sending arbitary data back to the client, we suggest you use a key / value scheme to form your response.
+By default the response is set to a dictionary. Remember that at the end of the REST request lifecycle the response data is sent to the serializer. If your handler is sending arbitary data back to the client, it's suggested you use a key / value scheme to form your response.
 
 ``prestans.rest.Response`` provides the ``set_body_attribute`` method, which takes a string key and seriliable value:
 
 .. code-block:: python
 
-    class AlbumEntityHandler(self, band_id, album_id):
+    class AlbumEntityHandler(prestans.rest.RESTHandler):
+
+        def get(self, band_id, album_id):
+
+            # Set the handler status code to 200
+            self.response.http_status = prestans.rest.STATUS.OK 
+
+            # Add new attribute
+            self.response.body.set_body_attribute("name", "Dark side of the moon")
+
+prestans provides a well defined API to defined models for your REST API layer. These models are views on your persistent data and perform strong validation relfecting your business logic.
+
+It's highly recommended to use :doc:`models` to form strongly validated responses. In addition prestans provides a set of :doc:`ext` that ease translation of persistent models to prestans REST models.
 
 Defining rules for your incoming data
 -------------------------------------
