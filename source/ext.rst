@@ -20,6 +20,8 @@ DataAdapters fills that gap in prestans, it automates the process of converting 
 
 For our sample code assume that rest models live in the ``pdemo.rest.models`` and the persistent models live in ``pdemo.models``, and is written for AppEngine.
 
+prestans supports ``SQLAlchemy`` and AppEngine's ``ndb`` and ``datastore``. You can write your DataAdapter to support custom backends.
+
 Pairing REST models to persistent models
 ----------------------------------------
 
@@ -77,10 +79,15 @@ And then in your persistent model package, use ``prestans.ext.data.adapters.regi
         )
     )
 
-This
-
 Adapting Models
 ---------------
+
+Once your models have been declared in the adapter registry, your REST handler:
+
+* Query the data that your handler is expected to return
+* Set the HTTP status code
+* Use the appropriate QueryResultIterator to construct your REST adapted models
+* Assign the returned collection to ``self.response.body``
 
 .. code-block:: python
 
@@ -109,9 +116,28 @@ Adapting Models
 
             bands = pdemo.models.Band().query()
         
-            response = pdemo.rest.models.Response()
-            response.count = bands.count()
-            response.results = prestans.ext.data.adapters.ndb.QueryResultIterator(bands, pdemo.rest.models.Band)
-
             self.response.http_status = prestans.rest.STATUS.OK
-            self.response.body = prestans.ext.data.adapters.ndb.QueryResultIterator(bands, pdemo.rest.models.Band)
+            self.response.body = prestans.ext.data.adapters.ndb.QueryResultIterator(
+                collection=bands, 
+                target_rest_instance=pdemo.rest.models.Band
+            )
+
+If you are using AttributeFilters (read our chapter on :doc:`validation` to learn how you can make exceptions to Model validation rules) you can pass them onto the QueryResultsIterator which results in the QueryResultsIterator skipping accessing that property all together significantly reducing the load on the Data Layer:
+
+.. code-block:: python
+
+    class BandCollection(pdemo.rest.handlers.Base):
+
+        request_parser = CollectionRequestParser()
+
+        def get(self):
+
+            bands = pdemo.models.Band().query()
+        
+            self.response.http_status = prestans.rest.STATUS.OK
+            self.response.body = prestans.ext.data.adapters.ndb.QueryResultIterator(
+                collection=bands, 
+                target_rest_instance=pdemo.rest.models.Band,
+                attribute_filter = self.response.attribute_filter
+            )
+
