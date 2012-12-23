@@ -133,10 +133,18 @@ Each handler method in your prestans REST application must return either a:
 * Python serializable type, these include basic types are iterables
 * Instances of ``prestans.types.DataType`` or subclasses
 
-Python types are passed directly to the serializer 
+To write a response you must:
 
-.. note:: Data Adapters help you quickly turn you persistent data to REST models instances.
+* Set a proper HTTP response code, by setting ``self.response.status_code`` to a constant in ``prestans.rest.STATUS``
+* Populating the body of the response
 
+By default the response is set to a dictionary. Remember that at the end of the REST request lifecycle the response data is sent to the serializer. If your handler is sending arbitary data back to the client, we suggest you use a key / value scheme to form your response.
+
+``prestans.rest.Response`` provides the ``set_body_attribute`` method, which takes a string key and seriliable value:
+
+.. code-block:: python
+
+    class AlbumEntityHandler(self, band_id, album_id):
 
 Defining rules for your incoming data
 -------------------------------------

@@ -6,7 +6,9 @@
 prestans, a Python REST micro-framework
 =======================================
 
-prestans is a WSGI (PEP-333) complaint micro-framework that allows you to rapidly build quality REST services by introducing a pattern of models, parsers and handlers and in turn taking care of boilerplate code. prestans is currently hosted on `Google Code <http://prestans.googlecode.com>`_ and distributed under the terms defined by the `New BSD license <http://opensource.org/licenses/bsd-license.php>`_.
+prestans is a WSGI (PEP-333) complaint micro-framework that allows you to rapidly build quality REST services by introducing a pattern of models, parsers and handlers and in turn taking care of boilerplate code. prestans is aimed towards turly Ajax applications where the client side is completely written in JavaScript using toolkits like `Google Closure <https://developers.google.com/closure/>`_.
+
+prestans is currently hosted on `Google Code <http://prestans.googlecode.com>`_ and distributed under the terms defined by the `New BSD license <http://opensource.org/licenses/bsd-license.php>`_. A list of current downloads is `available here <https://code.google.com/p/prestans/downloads/list>`_.
 
 .. toctree::
    :numbered:
