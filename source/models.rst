@@ -157,7 +157,7 @@ Apart the usual suspects (``String``, ``Integer``, ``Float``, ``Boolean``) prest
 DateTime
 --------
 
-DateTime wraps around python ``datetime``, serialization formats like JSON serialize dates as strings, there are various standard formats for serializing dates as Strings, by default prestans ``DateTime`` uses `RFC822 <http://www.w3.org/Protocols/rfc822/>`_ expressed as ``%Y-%m-%d %H:%M:%S`` format string in Python. This is because Google Closure's `Date API <http://closure-library.googlecode.com/svn/docs/class_goog_date_DateTime.html>`_ conveniently provides ``goog.date.fromIsoString`` to parse these Strings.
+DateTime wraps around python ``datetime``, serialization formats like JSON serialize dates as strings, there are various standard formats for serializing dates as Strings, by default prestans ``DateTime`` uses :rfc:`822` expressed as ``%Y-%m-%d %H:%M:%S`` format string in Python. This is because Google Closure's `Date API <http://closure-library.googlecode.com/svn/docs/class_goog_date_DateTime.html>`_ conveniently provides ``goog.date.fromIsoString`` to parse these Strings.
 
 To use another format string, override the ``format`` parameter when defining ``DateTime`` attributes.
 

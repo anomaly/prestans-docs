@@ -125,6 +125,23 @@ Under Apache with `mod_wsgi <http://modwsgi.googlecode.com>`_ it a .wsgi file wo
     ], application_name="prestans-demo", debug=False)
 
 
+Accessing incoming parameters
+-----------------------------
+
+Handlers can accept input as parts of the URL, or the query string, or in the acceptable serialized format in the body of the request (not available for GET requests):
+
+* Patterns matched using Regular Expression are passed via as part of the function call. They are positionally passed. Default behaviour passes all parameters as strings.
+* Query parameters are available as key / value pairs, accessiable in a handler as ``self.request.get('param_name')``
+* Serializers attempt to parse the request body and make the end results available at ``self.request.pased_body``
+
+prestans defines a rich API to parse Query Strings, parts of the URL and the raw serialized body:
+
+* Router that calls each handler passing parts of the URL extracted using ``regex`` to the appropriate handler method. 
+* Use of Parameter Sets to parse set of acceptable queries, so your handlder doesn't have to worry about if the parameters in the query string are acceptable.
+* Use of :doc:`models` and defined types to parse the body of requests, once again releaving you of checking the validity of the body.
+
+This is a signature feature of our framework, and we have dedicated an entire chapter to discuss :doc:`validation`.
+
 Writing Responses
 -----------------
 
@@ -144,6 +161,8 @@ By default the response is set to a dictionary. Remember that at the end of the 
 
 .. code-block:: python
 
+    import prestans.rest
+
     class AlbumEntityHandler(prestans.rest.RESTHandler):
 
         def get(self, band_id, album_id):
@@ -157,6 +176,3 @@ By default the response is set to a dictionary. Remember that at the end of the 
 prestans provides a well defined API to defined models for your REST API layer. These models are views on your persistent data and perform strong validation relfecting your business logic.
 
 It's highly recommended to use :doc:`models` to form strongly validated responses. In addition prestans provides a set of :doc:`ext` that ease translation of persistent models to prestans REST models.
-
-Defining rules for your incoming data
--------------------------------------
