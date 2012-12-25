@@ -28,7 +28,7 @@ prestans is currently hosted on `Google Code <http://prestans.googlecode.com>`_ 
 
 
 Software Requirements
-=====================
+---------------------
 
 These are the requirements for running prestans on a server. Client side tools might have additional requirements, check relevant parts of our documentation for details.
 
@@ -41,7 +41,7 @@ These are the requirements for running prestans on a server. Client side tools m
 We mostly test on latest releases of `Ubuntu Server <http://www.ubuntu.com/download/server>`_, and Google's `AppEngine <https://developers.google.com/appengine/>`_. 
 
 Getting Help
-============
+------------
 
 We encourge the use of our mailing lists (run on Google Groups) as the primary method of getting help. You can also write the developers through contact information `our website <http://etk.com.au>`_.
 
@@ -67,7 +67,7 @@ When reporting issues:
 * Share a bit of your application code with us, it goes a long way to replicate issues
 
 Commercial Support
-------------------
+^^^^^^^^^^^^^^^^^^
 
 All commercial endeavors around prestans are managed by Eternity Technologies.
 

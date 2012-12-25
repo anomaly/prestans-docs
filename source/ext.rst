@@ -104,9 +104,9 @@ Once your models have been declared in the adapter registry, your REST handler:
 
     class CollectionRequestParser(prestans.parsers.RequestParser):
 
-    GET = prestans.parsers.ParserRuleSet(        
-        response_attribute_filter_template=prestans.parsers.AttributeFilter.from_model(pdemo.rest.models.Band())
-    )
+        GET = prestans.parsers.ParserRuleSet(        
+            response_attribute_filter_template=prestans.parsers.AttributeFilter.from_model(pdemo.rest.models.Band())
+        )
 
     class BandCollection(pdemo.rest.handlers.Base):
 
@@ -140,4 +140,5 @@ If you are using AttributeFilters (read our chapter on :doc:`validation` to lear
                 target_rest_instance=pdemo.rest.models.Band,
                 attribute_filter = self.response.attribute_filter
             )
+
 
