@@ -14,7 +14,7 @@ Each ``RESTApplication`` sub class paired with a serialzier is used to route URL
 .. note:: Do not attempt to use an instance of ``prestans.rest.RESTApplication`` directly.
 
 API Request Lifecycle
----------------------
+=====================
 
 From the outset prestans will handle all trivial cases of validation, non matching URLs, authentication and convey an appropriate error message to the client. It's important that you understand the life cycle of a prestans API request, you can use predefined Exceptions to automatically convey appropriate status codes to the client:
 
@@ -29,7 +29,7 @@ From the outset prestans will handle all trivial cases of validation, non matchi
 * Serializes your output
 
 Regex & URL design primer
--------------------------
+=========================
 
 URL patterns are described using Regular expression, this section provides a quick reference to handy regex patterns for writing REST services. If you are fulent Regex speaker, feel free to skip this chapter.
 
@@ -55,7 +55,7 @@ A Regex example of these URL patterns would look like:
 * ``/api/album/([0-9]+)/track/([0-9]+)``
 
 Defining your REST Application
-------------------------------
+==============================
 
 You must use a ``RESTApplication`` subclass (one that's paired with a serializer) to create map URLs to REST Handlers. A REST application accepts the following optional parameters:
 
@@ -93,7 +93,7 @@ If your handler does not support an particuar HTTP method for a URL, simply igno
     ], application_name="prestans-demo", debug=False)
 
 Configuring your WSGI environment
-=================================
+---------------------------------
 
 Your WSGI environment has to be made aware of your declared prestans application. A Google AppEngine, app.yaml entry would look like::
 
@@ -126,7 +126,7 @@ Under Apache with `mod_wsgi <http://modwsgi.googlecode.com>`_ it a .wsgi file wo
 
 
 Accessing incoming parameters
------------------------------
+=============================
 
 Handlers can accept input as parts of the URL, or the query string, or in the acceptable serialized format in the body of the request (not available for GET requests):
 
@@ -143,7 +143,7 @@ prestans defines a rich API to parse Query Strings, parts of the URL and the raw
 This is a signature feature of our framework, and we have dedicated an entire chapter to discuss :doc:`validation`.
 
 Writing Responses
------------------
+=================
 
 Each handler method in your prestans REST application must return either a:
 
@@ -176,3 +176,54 @@ By default the response is set to a dictionary. Remember that at the end of the 
 prestans provides a well defined API to defined models for your REST API layer. These models are views on your persistent data and perform strong validation relfecting your business logic.
 
 It's highly recommended to use :doc:`models` to form strongly validated responses. In addition prestans provides a set of :doc:`ext` that ease translation of persistent models to prestans REST models.
+
+Using pre-defined exceptions
+----------------------------
+
+REST applications should use the breath of HTTP status codes to add meaning to the responses. prestans defines and handles a set of common expcetions that can be used by your application to send our standardised error responses. These ``Exception`` classes are paired with a status code and accept a string message as part of the constructor.
+
+The string message is meant to make the error message more meaningful to the consumer of the API. Imagine the client wants to fetch an album for a band, it calls the album service with a ``band_id`` and an ``album_id``, if the album is not found or does not belong to the band, the service should throw return the status code of ``404`` Not Found with enough information that the client can act upon it.
+
+It's not important to echo back values they sent as part of the request, as they should already have access to the original request.
+
+A snippet that outlines this example would look as follows:
+
+.. code-block:: python
+
+    import prestans.rest
+
+    class AlbumEntityHandler(prestans.rest.RESTHandler):
+
+        def get(self, band_id, album_id):
+
+            ... fetch the album that matches band_id and album_id
+
+            # Raise an exception if the album was not found or didn't belong to the band
+            if fetched_album is None or not fetched_album.band_id == int(band_id):
+                raise prestans.rest.NotFoundException("Album")
+
+            # Set the handler status code to 200
+            self.response.http_status = prestans.rest.STATUS.OK 
+
+            ... and return the album serialized in the appropriate format
+
+
+The following are a list of exceptions provided by prestans along with their paired status code and suggestions for use cases:
+
++-------------------------------------------+---------------------------+------------------------------------------------------------------+
+| Class                                     | HTTP status code          | Use cases                                                        |
++===========================================+===========================+==================================================================+
+| prestans.rest.ServiceUnavailableException | 503 (Service Unavailable) | The REST service or a related backend service is unavailable     |
++-------------------------------------------+---------------------------+------------------------------------------------------------------+
+| prestans.rest.BadRequestException         | 400 (Bad Request)         | Parameters sent as part of the request are not acceptable        |
++-------------------------------------------+---------------------------+------------------------------------------------------------------+
+| prestans.rest.ConflictException           | 409 (Conflict)            |                                                                  |
++-------------------------------------------+---------------------------+------------------------------------------------------------------+
+| prestans.rest.NotFoundException           | 404 (Not Found)           | The requested entity does not exists                             |
++-------------------------------------------+---------------------------+------------------------------------------------------------------+
+| prestans.rest.UnauthorizedException       | 401 (Unauthorised)        | The request entity can not be accessed by the current client     |
++-------------------------------------------+---------------------------+------------------------------------------------------------------+
+| prestans.rest.ForbiddenException          | 403 (Forbidden)           |                                                                  |
++-------------------------------------------+---------------------------+------------------------------------------------------------------+
+
+It it obviously possible to use the other error codes by manually setting the handler's resposne code and body message.
