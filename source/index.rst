@@ -12,7 +12,7 @@ prestans is currently hosted on `Google Code <http://prestans.googlecode.com>`_ 
 
 .. toctree::
    :numbered:
-   :maxdepth: 2
+   :maxdepth: 3
 
    quickstart
    handlers
