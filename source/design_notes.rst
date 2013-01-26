@@ -20,8 +20,8 @@ Collections & Entities
 
 URLs should refer to resource or a kind of data that your client can work with. Resources are *not* persistent entities rather a view of them. There generally are two patterns for each resource that you need to address. Consider the following URL patterns
 
-* /api/product
-* /api/product/{id} 
+* ``/api/product``
+* ``/api/product/{id}``
 
 Both deal with a resource called product. The first URL deals with collections, so get all products (GET), or create a new product (POST) are the requests it should respond to. 
 
