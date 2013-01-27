@@ -71,8 +71,8 @@ REST Application is our router, an instance of REST Application is responsible f
 
 REST Application can not be used directly, you must use a sub class that's been paired with a Serializer. Out of the box prestans provides the following REST Application routers:
 
-* JSONRESTApplication
-* YAMLRESTApplication
+* ``prestans.rest.JSONRESTApplication``
+* ``prestans.rest.YAMLRESTApplication``
 
 It's possible to write your serializer and REST Application, you should only have to do this if you want to use a format not supported by prestans.
 

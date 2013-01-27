@@ -21,6 +21,7 @@ prestans is currently hosted on `Google Code <http://prestans.googlecode.com>`_ 
    models
    authentication
    ext
+   utils
    design_notes
    closure
    demo_app

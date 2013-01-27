@@ -37,6 +37,7 @@ The Types API is a client side implementation of the prestans types API found on
 Array
 -----
 
+``prestans.types.Array`` is iterable, it extends ``goog.iter.Iterator``. 
 
 REST Client
 ===========
@@ -83,7 +84,7 @@ Requests ``prestans.rest.Request``
 * ``urlFormat`` sprintf like string used internally with `goog.string.format <http://closure-library.googlecode.com/svn/docs/namespace_goog_string.html>`_
 * ``urlArgs`` a JavaScript array of parameters used with ``urlFormat``
 
-prestans.net.HttpMethod encapsulate HTTP verbs as constants, currently supported verbs are:
+``prestans.net.HttpMethod`` encapsulate HTTP verbs as constants, currently supported verbs are:
 
 * ``prestans.net.HttpMethod.GET``
 * ``prestans.net.HttpMethod.PUT``
@@ -101,6 +102,8 @@ Response
 * ``responseModelElementTemplates``
 * ``responseBody`` JSON Object (Optional)
 
+Closure Unit Tests
+==================
 
 Tools
 ======
