@@ -21,16 +21,37 @@ We decided to take this approach to auto casting because it's a per handler and 
 API Blueprint
 =============
 
-prestans ships with a built-in handler that can produce a blueprint for your prestans API. Documentation is a developer's nightmare, mostly because it's difficult to think back and encapsulate all parts of your design (not to mention that it's not the most exciting part of the job). However it's one of the most important ingredients of success. Consumers are most interested in endpoints provided by your API and what each endpoint expects, e.g. data payloads, URL parameters, etc. 
+prestans ships with a special built-in handler base that can produce a blueprint for your prestans API. Documentation is a developer's nightmare, mostly because it's difficult to think back and encapsulate all parts of your design (not to mention that it's not the most exciting part of the job). However it's one of the most important ingredients for success. Consumers are most interested in endpoints provided by your API and what each endpoint expects, e.g. data payloads, URL parameters, etc. 
 
-prestans ships with an inbuilt handler that inspects all handlers, models, parameter sets, attribute filters and makes available a description in your chosen serialization format.
+prestans ships with an inbuilt handler that inspects all of your application's registered handlers, models, parameter sets, attribute filters and makes available a description in your chosen serialization format.
+
+Presumeably you might to expose the blueprint to the public, and so you can leverage from all the other features of prestans (e.g authentication, throttling, caching) prestans requires you to implement a simple handler that: 
+
+* extends from ``prestans.handlers.BlueprintHandler``
+* implements the method to respond to an ``GET`` request (all other requests to blueprint handlers are supressed)
+* calls the ``create_blueprint`` method which returns a serializable dictionary
+* add the returned dictionary to the response
+
+A sample implementation would look something like this:
+
+.. code-block:: python
+
+    import prestans.handlers
+
+    class APIBlueprintHandler(prestans.handlers.BlueprintHandler):
+
+        def get(self):
+
+            blueprint = self.create_blueprint()
+
+            self.response.status_code = prestans.rest.STATUS.OK
+            self.response.set_body_attribute("api", blueprint)
+
+then map it as you would any other handler to a URL that you see fit, remember that this handler will be ignored from the API blueprint:
 
 .. code-block:: python
 
     import prestans.rest
-
-    # Provides BlueprintHandler
-    import prestans.handlers
 
     import pdemo.handlers
     import pdemo.rest.handlers.album
@@ -40,7 +61,7 @@ prestans ships with an inbuilt handler that inspects all handlers, models, param
     api = prestans.rest.JSONRESTApplication(url_handler_map=[
 
         # Add the blueprint handler to /api/blueprint
-        (r'/api/blueprint', prestans.handlers.BlueprintHandler),
+        (r'/api/blueprint', pdemo.rest.handlers.APIBlueprintHandler),
 
         # Application handlers
         (r'/api/band', pdemo.rest.handlers.band.Collection),
@@ -53,3 +74,8 @@ prestans ships with an inbuilt handler that inspects all handlers, models, param
 
 .. note:: If you are planning to make blueprints available on your live service, we seriously recommend using a caching mechanism. Blueprints introspect every handler, parameter set, model to produce it's output and could prove to be computationally expensive.
 
+Each auto generated blueprint:
+
+* Is grouped by Python package that contains your handlers, each module is the key in a dictionary.
+* Uses Python docstrings (`PEP 257 <http://www.python.org/dev/peps/pep-0257/>`_) to fetch descriptions on each handler class and method.
+* Includes information on supported handler methods, Parameter Sets, Models, Attribute Filters, constraints of each attribute.
