@@ -4,18 +4,20 @@ Utilities
 
 This section covers a set of utilities shipped with prestans. These features are complimentary to API design but are not required for your application to function.
 
-prestans.util.autocaste
+prestans.util.signature
 =======================
 
-``@prestans.util.autocaste`` is a decorator that automatically castes each incoming parameter per handler to their right type. ``prestans.util.autocaste`` takes positional arguments of Python types that must match your handler signature.
+``@prestans.util.signature`` is a decorator that automatically castes each incoming parameter per handler to their right type. ``prestans.util.signature`` takes positional arguments of Python types that must match your handler signature.
 
 .. code-block:: python
 
-    @prestans.util.autocaste(int, int)
+    @prestans.util.signature(self, int, int)
     def get(self, band_id, album_id):
         ... do what you need here
 
-We decided to take this approach to auto casting because it's a per handler and environment specific decision. Our solution is designed to assist not assert.
+We decided to take this approach to variable casting because it's a per handler and environment specific decision. Our solution is designed to assist not assert.
+
+.. note:: This function is based upon `Andrew Lee <http://stackoverflow.com/users/586660/andrew-lee>`_'s blog post `Faux function type signatures in Python <http://www.regularexpressionless.com/?p=8>`_
 
 
 API Blueprint
