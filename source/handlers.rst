@@ -11,7 +11,7 @@ We plan to support other formats as we need them. You can also write your own fo
 
 Each ``RESTApplication`` sub class paired with a serialzier is used to route URLs to handlers.
 
-.. note:: Do not attempt to use an instance of ``prestans.rest.RESTApplication`` directly.
+.. warning:: Do not attempt to use an instance of ``prestans.rest.RESTApplication`` directly.
 
 API Request Lifecycle
 =====================

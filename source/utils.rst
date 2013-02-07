@@ -74,7 +74,7 @@ then map it as you would any other handler to a URL that you see fit, remember t
     ], application_name="prestans-demo", debug=False)
 
 
-.. note:: If you are planning to make blueprints available on your live service, we seriously recommend using a caching mechanism. Blueprints introspect every handler, parameter set, model to produce it's output and could prove to be computationally expensive.
+.. warning:: If you are planning to make blueprints available on your live service, we seriously recommend using a caching mechanism. Blueprints introspect every handler, parameter set, model to produce it's output and could prove to be computationally expensive.
 
 Each auto generated blueprint:
 
