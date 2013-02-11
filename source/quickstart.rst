@@ -33,19 +33,17 @@ We also maintain a set of tools that leverages prestans's ``Model`` definition s
 Installation
 ============
 
-There are two ways you can install prestans, one using Python's distutils and the other is by simple including it with your project's source. This is pariticularly handy if you are using environments like Google's AppEngine.
+We recommend installing prestans via `PyPI <http://pypi.python.org/pypi>`_::
 
-Making prestans available system wide, download a copy of the latest release, unpack the tarball and run setup.py::
+    $ pip install prestans
 
-    $ cd prestans-1.0
-    $ python setup.py install
+this will build and install prestans for your default Python interpreter.
 
-Ensure that the version of Python you are installing prestans for is the version used by your Web server.
+Environments like Google's AppEngine require you to include custom packages as part of your source. Things to consider when distributing prestans with your application:
 
-Things to consider when distributing prestans with your application:
-
-* Make sure download target a particular release of prestans, it is not recommended to use the bleeding edge.
+* Make sure you target a particular release of prestans, distributing our development branch is not recommended. 
 * If you prefer reference prestans as a Subversion external, ensure you use reference one of the ``tags``, it is not recommended to reference ``trunk``
+* If your server environment has hard limits on number of files, consider using `zipimport <http://docs.python.org/2/library/zipimport.html>`_.
 
 Concepts
 ========
