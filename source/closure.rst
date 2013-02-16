@@ -14,11 +14,13 @@ Each one of these components is agnostic of the other. Closure is at the heart o
 
 prestans provides a number of extensions to Closure Library, that ease and automate building rich JavaScript clients that consume your prestans API. Our current line up includes:
 
-* REST Client, provides a pattern to create Xhr requests, manages the lifecycle and parsers responses
-* Types API, a client side replica of the prestans server types package assisting with parsing responses
-* Code generation tools to quickly produce client side stubs from your REST application models
+* REST Client, provides a pattern to create Xhr requests, manages the life cycle and parsers responses, also supports Attribute Fitlers.
+* Types API, a client side replica of the prestans server types package assisting with parsing responses.
+* Code generation tools to quickly produce client side stubs from your REST application models.
 
 It's expected that you will use the Google Closure `dependency manager <https://developers.google.com/closure/library/docs/introduction>`_ to load the prestans namespaces.
+
+.. note:: It's assumed that you are familiar with developing applications with Google Closure tools.
 
 Types API
 =========
@@ -54,39 +56,68 @@ The general idea is:
 
 * To maintain a globally accessible Request Manager 
 * Formally define each Xhr operation as a Request object 
-* The Request Manager handles the lifecycle of a Xhr call and call an endpoint in your application on success or failure
+* The Request Manager handles the life cycle of a Xhr call and call an endpoint in your application on success or failure
 * Both these callbacks are provided an instance of ``Response`` containing the appropriate available information
 
-Client
-------
+Request Manager
+---------------
 
-``prestans.rest.json.Client`` 
+First step is to create a request manager by instantiating ``prestans.rest.json.Client``, it takes the following parameters:
 
-* ``baseUrl``
-* ``opt_numRetries`` set to 0 by default, causing requests never to be retired
+* ``baseUrl``, to be consistent with the single point of origin constraint, we assume that all your API calls are prefixed with something like ``/api``. If you provide a base URL all your requests should provide URLs relative to the base. This also makes for eased maintenance in case you rearrange your application URLs.
+* ``opt_numRetries`` set to 0 by default, causing requests never to be retried. Xhr implementations are capable of retrying to reach the server in case of failure.
+
+There's a fair chance that your application might launch simultaneous Xhr requests, it's also likely that you would want to cancel some requests on events e.g as the user clicks around names of artists to get a list of their albums, you want to cancel any previously unfinished calls if the user has clicked on another artist name.
+
+Our request manager can work this, this is done by using a shared instance of the request manager across your application. The following code sample demonstrates how you might maintain a global Request Manager instance:
 
 .. code-block:: javascript
 
     goog.provide('pdemo');
     goog.require('prestans.rest.json.Client');
 
-
     pdemo.GLOBALS = {
-
         API_CLIENT: new prestans.rest.json.Client("/api", 0)
-
     };
 
-Instance methods:
+Then use the ``makeRequest`` method on the Request Manager instance to dispatch API calls, it requires the following parameters:
 
-* ``abortAllPendingRequests``
-* ``makeRequest`` request, callbackSuccessMethod, callbackFailureMethod, opt_abortPreviousRequests
+* ``request`` is a ``prestans.rest.json.Request`` object.
+* ``callbackSuccessMethod`` which is a reference to a function the Request Manager calls if the API call succeeds, the method will be passed a response object. Ensure you use ``goog.bind`` to bind your function to your namespace.   
+* ``callbackFailureMethod`` optional reference to a function the Request Manager calls if the API call fails, this method will be passed a response object with failure information. 
+* ``opt_abortPreviousRequests``, asks the Request Manager to cancel all pending requests.
+
+.. code-block:: javascript
+
+    # Assume you have a request object
+    pdemo.GLOBALS.API_CLIENT.makeRequest(
+        request,
+        goog.bind(this.successCallback_, this),
+        goog.bind(this.failureCallback_, this),
+        false
+    );
+
+.. note:: Request objects tell the manager if they are willing to be aborted, this is configurable per request lodged with the manager.
+
+The second method the Request Manager provides is ``abortAllPendingRequests``, this accepts no parameters and is responsible for aborting any currently queued connections. The failure callback is not fired when requests are aborted.
 
 Events
 ^^^^^^
 
-* ``prestans.rest.json.Client.EventType.RESPONSE``
-* ``prestans.rest.json.Client.EventType.FAILURE``
+The Request Manager raises the following events. These come in handy if your application requires global UI interactions e.g a Modal popup if network communication fails, or notification messages on success.
+
+* ``prestans.rest.json.Client.EventType.RESPONSE``, raised when a round trip succeeds, this would be raised even if your API raised an error code, e.g Bad Request or Service Unavailable.
+* ``prestans.rest.json.Client.EventType.FAILURE`` raised if a round trip fails.
+
+Example of using Closure's EventHandler to listen to these events:
+
+.. code-block:: javascript
+
+    goog.require('goog.events.EventHandler');
+
+    # and somewhere in one of your functions
+    this.eventHandler = new goog.events.EventHandler(this);
+    this.eventHandler_.listen(pdemo.GLOBALS.API_CLIENT, prestans.rest.json.Client.EventType.FAILURE, this.handleFailure_);
 
 Request
 -------
