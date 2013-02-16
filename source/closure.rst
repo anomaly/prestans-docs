@@ -54,7 +54,7 @@ Extending JavaScript namespaces
 
 Auto generated code is accompanied with the curse of loosing local modifications (e.g adding a helper method or computed property) when you next run the auto generate process. 
 
-Consider the following scenario, prestans auto generates a Model class called ``User``, this uses the JavaScript namespace ``pdemo.data.model.User``, you now wish to write a function to say concatenate a user's first and last name. The obvious approach is to use ``goog.inherits``to create a subclass of ``pdemo.data.model.User``. However for dynamic operations like parsing server responses maintaining the namespace is crucial.
+Consider the following scenario, prestans auto generates a Model class called ``User``, this uses the JavaScript namespace ``pdemo.data.model.User``, you now wish to write a function to say concatenate a user's first and last name. The obvious approach is to use ``goog.inherits`` to create a subclass of ``pdemo.data.model.User``. However for dynamic operations like parsing server responses maintaining the namespace is crucial.
 
 Thanks to JavaScript's dynamic nature and Closure's excellent dependency management it's quite easy to implement a pattern that closely resembles `Objective-C Categories <http://developer.apple.com/library/ios/#documentation/cocoa/conceptual/ProgrammingWithObjectiveC/CustomizingExistingClasses/CustomizingExistingClasses.html>`_. The idea is to be able to maintain the custom code in a separate file and be able to dynamically merge it with the auto generated code during runtime.
 
