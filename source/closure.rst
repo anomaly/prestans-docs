@@ -20,7 +20,18 @@ prestans provides a number of extensions to Closure Library, that ease and autom
 
 It's expected that you will use the Google Closure `dependency manager <https://developers.google.com/closure/library/docs/introduction>`_ to load the prestans namespaces.
 
+Google Closure is unlike other JavaScript frameworks (e.g jQuery). An extremely central part of Closure tools is it's `compiler <https://developers.google.com/closure/compiler/>`_ (which is not just a minifier), the Closure development philosophy is to use the abstractions and components made available by Closure library and allow the compiler to optimise it for production.
+
 .. note:: It's assumed that you are familiar with developing applications with Google Closure tools.
+
+Installation
+============
+
+Our client library follows the same development philosophy as Google Closure library, although we make available downloadable versions of the client library it's highly recommended that you reference our repository as an external source.
+
+This allows you to keep up to date with our code base and benefit from the latest patches when you next compile.
+
+Closure library does the same, and we ensure that we are leveraging off their latest developments.
 
 Types API
 =========
@@ -39,7 +50,7 @@ The Types API is a client side implementation of the prestans types API found on
 Array
 -----
 
-``prestans.types.Array`` is iterable, it extends ``goog.iter.Iterator``. 
+``prestans.types.Array`` extends ``goog.iter.Iterator``, allowing you to use ``goog.iter.forEach`` to iterate.
 
 REST Client
 ===========
@@ -48,8 +59,8 @@ prestans contains a ready made REST Client to allow you to easily make requests 
 
 The client has three important parts:
 
-* Request Manager provided by ``prestans.rest.json.Client``, this queues, manages, cancels requests and is resposible for firing callbacks on success and failure. Your application lodges all API call requests with an instance of ``prestans.rest.json.Client``. It's designed to be shared by your entire application.
-* Request provided by ``prestans.rest.json.Request`` is a formalised request that can be passed to a Request Manager. The Request constructor accepts a JSON payload with configuration information, this includs partial URL schemes, parameters, optionaly a body and a format for the response. The Request Manager uses the responses format to parse the server response.
+* Request Manager provided by ``prestans.rest.json.Client``, this queues, manages, cancels requests and is responsible for firing callbacks on success and failure. Your application lodges all API call requests with an instance of ``prestans.rest.json.Client``. It's designed to be shared by your entire application.
+* Request provided by ``prestans.rest.json.Request`` is a formalised request that can be passed to a Request Manager. The Request constructor accepts a JSON payload with configuration information, this includs partial URL schemes, parameters, optional body and a format for the response. The Request Manager uses the responses format to parse the server response.
 * Response provided by ``prestans.rest.json.Response`` encapsulates a server response. It also contains a parsed copy of the server response expressed using prestans types.
 
 The general idea is:
@@ -101,15 +112,15 @@ Then use the ``makeRequest`` method on the Request Manager instance to dispatch 
 
 The second method the Request Manager provides is ``abortAllPendingRequests``, this accepts no parameters and is responsible for aborting any currently queued connections. The failure callback is not fired when requests are aborted.
 
-Events
-^^^^^^
+Xhr Communication Events
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 The Request Manager raises the following events. These come in handy if your application requires global UI interactions e.g a Modal popup if network communication fails, or notification messages on success.
 
 * ``prestans.rest.json.Client.EventType.RESPONSE``, raised when a round trip succeeds, this would be raised even if your API raised an error code, e.g Bad Request or Service Unavailable.
 * ``prestans.rest.json.Client.EventType.FAILURE`` raised if a round trip fails.
 
-Example of using Closure's EventHandler to listen to these events:
+Example of using ``goog.events.EventHandler`` to listen to the Failure event:
 
 .. code-block:: javascript
 
@@ -118,6 +129,8 @@ Example of using Closure's EventHandler to listen to these events:
     # and somewhere in one of your functions
     this.eventHandler = new goog.events.EventHandler(this);
     this.eventHandler_.listen(pdemo.GLOBALS.API_CLIENT, prestans.rest.json.Client.EventType.FAILURE, this.handleFailure_);
+
+The ``event`` object passed to the end points is of type ``prestans.rest.json.Client.Event`` a subclass of ``goog.events.Event``. Call ``getResponse`` method on the event to get the ``Response`` object, this will give you access all the information about the request and it's outcome.
 
 Request
 -------
@@ -159,6 +172,16 @@ Response
 
 Closure Unit Tests
 ==================
+
+.. code-block:: javascript
+
+    /path/to/depswriter.py --root_with_prefix=". ../prestans" > deps.js
+
+To run these unit tests you will need to start Google Chrome with ``--allow-file-access-from-files`` parameter. Example on Mac OS X:
+
+.. code-block:: bash
+    
+    spock:docs devraj$ /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --allow-file-access-from-files
 
 Tools
 ======
