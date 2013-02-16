@@ -44,14 +44,38 @@ REST Client
 
 prestans contains a ready made REST Client to allow you to easily make requests and unpack responses from a prestans enabled server API. Our client implementation is specific to be used with Google Closure and only speaks `JSON`.
 
+The client has three important parts:
+
+* Request Manager provided by ``prestans.rest.json.Client``, this queues, manages, cancels requests and is resposible for firing callbacks on success and failure. Your application lodges all API call requests with an instance of ``prestans.rest.json.Client``. It's designed to be shared by your entire application.
+* Request provided by ``prestans.rest.json.Request`` is a formalised request that can be passed to a Request Manager. The Request constructor accepts a JSON payload with configuration information, this includs partial URL schemes, parameters, optionaly a body and a format for the response. The Request Manager uses the responses format to parse the server response.
+* Response provided by ``prestans.rest.json.Response`` encapsulates a server response. It also contains a parsed copy of the server response expressed using prestans types.
+
+The general idea is:
+
+* To maintain a globally accessible Request Manager 
+* Formally define each Xhr operation as a Request object 
+* The Request Manager handles the lifecycle of a Xhr call and call an endpoint in your application on success or failure
+* Both these callbacks are provided an instance of ``Response`` containing the appropriate available information
+
 Client
 ------
 
-``prestans.rest.Client``
+``prestans.rest.json.Client`` 
 
 * ``baseUrl``
 * ``opt_numRetries`` set to 0 by default, causing requests never to be retired
 
+.. code-block:: javascript
+
+    goog.provide('pdemo');
+    goog.require('prestans.rest.json.Client');
+
+
+    pdemo.GLOBALS = {
+
+        API_CLIENT: new prestans.rest.json.Client("/api", 0)
+
+    };
 
 Instance methods:
 
