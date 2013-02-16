@@ -60,7 +60,7 @@ Thanks to JavaScript's dynamic nature and Closure's excellent dependency managem
 
 To achieve this for our hypothetical User class, create a file called ``UserExtensions.js``, this will provide the namespace ``pdemo.data.model.UserExtension`` and depend on ``pdemo.data.model.User``. 
 
-.. code:: javascript
+.. code-block:: javascript
 
     goog.provide('pdemo.data.model.UserExtension');
     goog.require('pdemo.data.model.User');
@@ -74,7 +74,7 @@ To achieve this for our hypothetical User class, create a file called ``UserExte
 
 Now where you want to create an instance of ``pdemo.data.model.User``, use the extension as the dependency ``pdemo.data.model.UserExtension``. This ensures that both the auto generated namespace and your extensions are available.
 
-.. code:: javascript
+.. code-block:: javascript
 
     goog.provide('pdemo.ui.web.Renderer');
 
