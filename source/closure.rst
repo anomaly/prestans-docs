@@ -12,6 +12,10 @@ Google Closure Library Extensions (incomplete)
 
 Each one of these components is agnostic of the other. Closure is at the heart of building products with prestans.
 
+Google Closure is unlike other JavaScript frameworks (e.g jQuery). An extremely central part of Closure tools is it's `compiler <https://developers.google.com/closure/compiler/>`_ (which is not just a minifier), the Closure development philosophy is to use the abstractions and components made available by Closure library and allow the compiler to optimise it for production.
+
+.. note:: It's assumed that you are familiar with developing applications with Google Closure tools.
+
 prestans provides a number of extensions to Closure Library, that ease and automate building rich JavaScript clients that consume your prestans API. Our current line up includes:
 
 * REST Client, provides a pattern to create Xhr requests, manages the life cycle and parsers responses, also supports Attribute Fitlers.
@@ -20,9 +24,6 @@ prestans provides a number of extensions to Closure Library, that ease and autom
 
 It's expected that you will use the Google Closure `dependency manager <https://developers.google.com/closure/library/docs/introduction>`_ to load the prestans namespaces.
 
-Google Closure is unlike other JavaScript frameworks (e.g jQuery). An extremely central part of Closure tools is it's `compiler <https://developers.google.com/closure/compiler/>`_ (which is not just a minifier), the Closure development philosophy is to use the abstractions and components made available by Closure library and allow the compiler to optimise it for production.
-
-.. note:: It's assumed that you are familiar with developing applications with Google Closure tools.
 
 Installation
 ============
@@ -32,6 +33,54 @@ Our client library follows the same development philosophy as Google Closure lib
 This allows you to keep up to date with our code base and benefit from the latest patches when you next compile.
 
 Closure library does the same, and we ensure that we are leveraging off their latest developments.
+
+Unit testing
+------------
+
+.. code-block:: javascript
+
+    /path/to/depswriter.py --root_with_prefix=". ../prestans" > deps.js
+
+To run these unit tests you will need to start Google Chrome with ``--allow-file-access-from-files`` parameter. Example on Mac OS X:
+
+.. code-block:: bash
+    
+    spock:docs devraj$ /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --allow-file-access-from-files
+
+Extending JavaScript namespaces
+===============================
+
+:doc:`models` ensure the validity of data sent to and from the server. The application client should be as responsible validate data on the client side, ensuring that you never send an invalid request or you never accept an invalid response. Discussed later in this chapter are tools provided by prestans that auto generate Closure library compatible versions of your server side Models and Attribute Filters, needless to say our JSON client works seamlessly with these auto generated Models and Filters.
+
+Auto generated code is accompanied with the curse of loosing local modifications (e.g adding a helper method or computed property) when you next run the auto generate process. 
+
+Consider the following scenario, prestans auto generates a Model class called ``User``, this uses the JavaScript namespace ``pdemo.data.model.User``, you now wish to write a function to say concatenate a user's first and last name. The obvious approach is to use ``goog.inherits``to create a subclass of ``pdemo.data.model.User``. However for dynamic operations like parsing server responses maintaining the namespace is crucial.
+
+Thanks to JavaScript's dynamic nature and Closure's excellent dependency management it's quite easy to implement a pattern that closely resembles `Objective-C Categories <http://developer.apple.com/library/ios/#documentation/cocoa/conceptual/ProgrammingWithObjectiveC/CustomizingExistingClasses/CustomizingExistingClasses.html>`_. The idea is to be able to maintain the custom code in a separate file and be able to dynamically merge it with the auto generated code during runtime.
+
+To achieve this for our hypothetical User class, create a file called ``UserExtensions.js``, this will provide the namespace ``pdemo.data.model.UserExtension`` and depend on ``pdemo.data.model.User``. 
+
+.. code:: javascript
+
+    goog.provide('pdemo.data.model.UserExtension');
+    goog.require('pdemo.data.model.User');
+
+    # Closure will ensure that the namespace pdemo.data.model.UserExtension
+    # is available here, feel free to extend it
+
+    pdemo.data.model.User.prototype.getFullName = function() { 
+        return this.getFirstName() + " " +  this.getLastName();
+    };
+
+Now where you want to create an instance of ``pdemo.data.model.User``, use the extension as the dependency ``pdemo.data.model.UserExtension``. This ensures that both the auto generated namespace and your extensions are available.
+
+.. code:: javascript
+
+    goog.provide('pdemo.ui.web.Renderer');
+
+    # This will make available the pdemo.data.model.User namespace with your extensions
+    goog.require('pdemo.data.model.UserExtension');
+
 
 Types API
 =========
@@ -51,6 +100,25 @@ Array
 -----
 
 ``prestans.types.Array`` extends ``goog.iter.Iterator``, allowing you to use ``goog.iter.forEach`` to iterate.
+
+* ``isEmpty``
+* ``isValid``
+* ``append``
+* ``insertAt``
+* ``insertAfter``
+* ``length``
+* ``asArray``
+* ``clone``
+
+Wrappers
+
+* ``removeIf``
+* ``remove``
+* ``sort``
+* ``clear``
+* ``containsIf``
+* ``contains``
+* ``objectAtIndex``
 
 REST Client
 ===========
@@ -170,21 +238,6 @@ Response
 * ``responseModelElementTemplates``
 * ``responseBody`` JSON Object (Optional)
 
-Closure Unit Tests
-==================
 
-.. code-block:: javascript
-
-    /path/to/depswriter.py --root_with_prefix=". ../prestans" > deps.js
-
-To run these unit tests you will need to start Google Chrome with ``--allow-file-access-from-files`` parameter. Example on Mac OS X:
-
-.. code-block:: bash
-    
-    spock:docs devraj$ /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --allow-file-access-from-files
-
-Tools
-======
-
-preplate
---------
+Code Generation 
+===============
