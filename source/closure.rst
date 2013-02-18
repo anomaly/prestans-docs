@@ -85,7 +85,7 @@ Now where you want to create an instance of ``pdemo.data.model.User``, use the e
 Types API
 =========
 
-The Types API is a client side implementation of the prestans types API found on the server side. It assists in directly translating validation rules for Web based clients consuming REST services defined using prestans. Later in this chapter we discuss a set of tools that cut out the laborious job of creating client side stubs of your prestans models.
+The Types API is a client side implementation of the prestans types API found on the server side. It assists in directly translating validation rules for Web based clients consuming REST services defined using prestans. Later in this chapter we demonstrate a set of tools that cut out the laborious job of creating client side stubs of your prestans models.
 
 * ``String``, wraps a string
 * ``Integer``, wraps a number
@@ -110,7 +110,7 @@ Array
 * ``asArray``
 * ``clone``
 
-Wrappers
+Google Closur provides a number of useful methods
 
 * ``removeIf``
 * ``remove``
@@ -200,8 +200,8 @@ Example of using ``goog.events.EventHandler`` to listen to the Failure event:
 
 The ``event`` object passed to the end points is of type ``prestans.rest.json.Client.Event`` a subclass of ``goog.events.Event``. Call ``getResponse`` method on the event to get the ``Response`` object, this will give you access all the information about the request and it's outcome.
 
-Request
--------
+Composing a Request
+-------------------
 
 Requests ``prestans.rest.Request``
 
@@ -228,8 +228,8 @@ Requests ``prestans.rest.Request``
 * ``prestans.net.HttpMethod.DELETE``
 * ``prestans.net.HttpMethod.PATCH``
 
-Response
---------
+Reading a Response
+------------------
 
 * ``requestIdentifier`` The string identifier for the request type,
 * ``statusCode`` HTTP status code,

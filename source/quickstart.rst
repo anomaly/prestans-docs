@@ -21,12 +21,13 @@ prestans is distributed under the terms and conditions of the New BSD license an
 Features
 ========
 
-* Validation or incoming and outgoing using strongly defined Models
+* Validation or incoming and outgoing using strongly defined :doc:`models`
 * Pluggable architecture allowing prestans to plug into any authentication, caching and serialization requirements.
 * A custom URL dispatcher that allows you to re-use handlers for multiple output formats.
 * Data Adapters, that allows you to translate persistent objects into REST resources, with a single line of code.
 * Validation of URL parameters using strong defined Parameter Sets.
-* Dynamically filtering response fields when writing responses.
+* Dynamically filtering response fields when writing responses to reduce payload sizes.
+* Auto generate API documentation using Blueprint (:doc:`utilities`)
 
 We also maintain a set of tools that leverages prestans's ``Model`` definition schema to generate boiler plate client side parsing of REST resources.
 
