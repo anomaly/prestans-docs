@@ -2,7 +2,7 @@
 Getting Started
 ===============
 
-prestans is a WSGI compliant REST server framework, best suited for use with applications that nearly their entire interface using JavaScript (using frameworks like `Google Closure <https://developers.google.com/closure/>`_) or a bespoke Mobile client. Although prestans is a standalone framework, it provides hooks (called Providers) to integrate with your application's authentication, caching and other such core services.
+prestans is a WSGI compliant REST server framework, best suited for use with applications where the entire interface is written using JavaScript (using frameworks like `Google Closure <https://developers.google.com/closure/>`_) or a bespoke Mobile client. Although prestans is a standalone framework, it provides hooks (called Providers) to integrate with your application's authentication, caching and other such core services.
 
 We have battle tested prestans under Apache (using mod_wsgi) and Google's AppEngine platform.
 
@@ -10,13 +10,11 @@ Code samples used throughout our documentation is available as a `Google AppEngi
 
 .. note:: You will require a copy of `Google's AppEngine Python SDK <https://developers.google.com/appengine/downloads>`_ (v1.7.0+) to run the sample project.
 
-A downloadable release is available for prestans demo, but we are consistentantly working on it, so you might want to check out the Subversion repository.
-
 Our philosophy is **"take as much or as little of the project as you like"**, prestans was designed ground up to sit nicely along side other Python frameworks. Needless to say that a dynamic language such as Python lends itself extremely well to writing frameworks such as prestans, and highly scaleable Web applications.
 
 And incase you are still wondering prestans is a latin word meaning *"excellent, distinguished, imminent".*
 
-prestans is distributed under the terms and conditions of the New BSD license and is hosted on Google Code.
+prestans is distributed under the terms and conditions of the `New BSD <http://en.wikipedia.org/wiki/BSD_licenses#3-clause_license_.28.22Revised_BSD_License.22.2C_.22New_BSD_License.22.2C_or_.22Modified_BSD_License.22.29>`_ license and is hosted on `Github <http://github.com/prestans>`_.
 
 Features
 ========
@@ -27,7 +25,7 @@ Features
 * Data Adapters, that allows you to translate persistent objects into REST resources, with a single line of code.
 * Validation of URL parameters using strong defined Parameter Sets.
 * Dynamically filtering response fields when writing responses to reduce payload sizes.
-* Auto generate API documentation using Blueprint (:doc:`utilities`)
+* Auto generate API documentation using Blueprint (:doc:`utils`)
 
 We also maintain a set of tools that leverages prestans's ``Model`` definition schema to generate boiler plate client side parsing of REST resources.
 
@@ -45,6 +43,20 @@ Environments like Google's AppEngine require you to include custom packages as p
 * Make sure you target a particular release of prestans, distributing our development branch is not recommended. 
 * If you prefer reference prestans as a Subversion external, ensure you use reference one of the ``tags``, it is not recommended to reference ``trunk``
 * If your server environment has hard limits on number of files, consider using `zipimport <http://docs.python.org/2/library/zipimport.html>`_.
+
+Software Requirements
+---------------------
+
+The server side requires a WSGI compliant environment:
+
+* Python 2.6+, *2.7 recommended*
+* WSGI compliant server environment (`Apache <http://httpd.apache.org>`_ + `mod_wsgi <http://modwsgi.googlecode.com>`_, or `Google AppEngine <https://developers.google.com/appengine/>`_, etc).
+* Python Paste components (e.g WebOb)
+
+Client side code is written for Google Closure.
+
+We mostly test on latest releases of `Ubuntu Server <http://www.ubuntu.com/download/server>`_, and Google's `AppEngine <https://developers.google.com/appengine/>`_. 
+
 
 Concepts
 ========
@@ -108,7 +120,7 @@ Request Parsers
 Request Parsers allow you to define a set of rules that a request handler can use to validate incoming and outgoing data. Rules are define per HTTP method each handler corresponds supports and allows you to:
 
 * validate sets of parmaeters in the URL
-* the body of the request (for POST, PUT, PATCH and DELETE methods) by defining :ref:`models`
+* the body of the request (for ``POST``, ``PUT``, ``PATCH`` and ``DELETE`` methods) by defining :ref:`models`
 * a response attribute list template which allows clients to request partially formed responses, the template directly corresponds to the definition of the handler's response format
 * a definition of acceptable partially formed requests (based on models)
 
@@ -134,4 +146,5 @@ These services include:
 
 * Authentication
 * Caching
+* Throttling
 

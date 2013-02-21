@@ -13,21 +13,6 @@ Each ``RESTApplication`` sub class paired with a serialzier is used to route URL
 
 .. warning:: Do not attempt to use an instance of ``prestans.rest.RESTApplication`` directly.
 
-API Request Lifecycle
-=====================
-
-From the outset prestans will handle all trivial cases of validation, non matching URLs, authentication and convey an appropriate error message to the client. It's important that you understand the life cycle of a prestans API request, you can use predefined Exceptions to automatically convey appropriate status codes to the client:
-
-* URL Routers checks for a handler mapping
-* Router checks to see if the handler implements the requested method (GET, PUT, POST, PATCH, DELETE)
-* If required checks to see if the user is allowed to access
-* Unserializes input from the client
-* Runs validation on URL parameters, body models and makes them available via the request object
-* Runs pre-hook methods for handlers (use this for establishing DB connections, environment setup)
-* **Runs your handler implementation, where you place your API logic**
-* Runs post-hook methods for handlers (use this to perform your tear down)
-* Serializes your output
-
 Regex & URL design primer
 =========================
 
@@ -124,6 +109,43 @@ Under Apache with `mod_wsgi <http://modwsgi.googlecode.com>`_ it a .wsgi file wo
         ... rules go here
     ], application_name="prestans-demo", debug=False)
 
+
+API Request Lifecycle
+=====================
+
+From the outset prestans will handle all trivial cases of validation, non matching URLs, authentication and convey an appropriate error message to the client. It's important that you understand the life cycle of a prestans API request, you can use predefined Exceptions to automatically convey appropriate status codes to the client:
+
+* URL Routers checks for a handler mapping
+* Router checks to see if the handler implements the requested method (``GET``, ``PUT``, ``POST``, ``PATCH``, ``DELETE``)
+* If required checks to see if the user is allowed to access
+* Unserializes input from the client
+* Runs validation on URL parameters, body models and makes them available via the request object
+* Runs pre-hook methods for handlers (use this for establishing DB connections, environment setup)
+* **Runs your handler implementation, where you place your API logic**
+* Runs post-hook methods for handlers (use this to perform your tear down)
+* Serializes your output
+
+To put it in perspective of your handler code, prestans will execute the following:
+
+* prestans runs checks through constraints defined by Parameters Sets and Models
+* If your handler overrides the pre run hook, prestans runs ``handler_will_run`` 
+* prestans calls the method (i.e ``get``, ``post``, ``put``, ``patch``, ``delete``), that corresponds to the requested HTTP verb.
+* If your handler overrides the pre run hook, prestans runs ``handler_did_run`` 
+
+.. code-block:: python
+
+        class Collection(prestans.rest.RESTHandler):
+
+            def handler_will_run(self):
+                ... do your setup stuff here
+
+            def get(self, band_id, album_id):
+                ... return all tracks for band_id and album_id
+
+            def handler_did_run(self):
+                ... do your tear down stuff here
+
+.. note:: Consider defining a Base handler class in your application to perform common operations like establishing database connections in the pre and post hook methods.
 
 Accessing incoming parameters
 =============================

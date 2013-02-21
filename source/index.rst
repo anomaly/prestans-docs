@@ -27,20 +27,6 @@ prestans is currently hosted on `Google Code <http://prestans.googlecode.com>`_ 
    demo_app
    reference_material
 
-
-Software Requirements
----------------------
-
-These are the requirements for running prestans on a server. Client side tools might have additional requirements, check relevant parts of our documentation for details.
-
-.. note:: We use `Subversion <http://svn.tigris.org>`_ to manage our source code.
-
-* Python 2.6+, *2.7 recommended*
-* WSGI compliant server environment (`Apache <http://httpd.apache.org>`_ + `mod_wsgi <http://modwsgi.googlecode.com>`_, `Google AppEngine <https://developers.google.com/appengine/>`_, etc).
-* Python Paste components (e.g WebOb)
-
-We mostly test on latest releases of `Ubuntu Server <http://www.ubuntu.com/download/server>`_, and Google's `AppEngine <https://developers.google.com/appengine/>`_. 
-
 Getting Help
 ------------
 
