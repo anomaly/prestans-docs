@@ -38,6 +38,12 @@ We recommend installing prestans via `PyPI <http://pypi.python.org/pypi>`_::
 
 this will build and install prestans for your default Python interpreter.
 
+Alternatively you can download and build prestans using distutils::
+
+    $ tar -zxvf prestans-1.1.tgz
+    $ cd prestans-1.1
+    $ python setup.py install
+
 Environments like Google's AppEngine require you to include custom packages as part of your source. Things to consider when distributing prestans with your application:
 
 * Make sure you target a particular release of prestans, distributing our development branch is not recommended. 
@@ -56,7 +62,6 @@ The server side requires a WSGI compliant environment:
 Client side code is written for Google Closure.
 
 We mostly test on latest releases of `Ubuntu Server <http://www.ubuntu.com/download/server>`_, and Google's `AppEngine <https://developers.google.com/appengine/>`_. 
-
 
 Concepts
 ========
@@ -110,6 +115,8 @@ Attributes can be of the following types, these are in accordance with popular s
 * Float
 * Boolean
 * Date Time
+* Date
+* Time
 * Arrays
 
 Each attribute provides a set rules configured by you, that prestans uses to validate incoming and outgoing data.
@@ -129,7 +136,7 @@ Complimentary to Request Parsers are ``ParameterSet`` which allow you defined pa
 Data Adapters
 -------------
 
-Data Adapters are a set of extensions that allow you to quickly turn persistent data objects into instances of your REST models. prestans allows serialization of prestans managed Data Types, see :ref:`models`. Data Adapters are backend specific (we currently support SQLAlchemy, AppEngine NDB).
+Data Adapters are a set of extensions that allow you to quickly turn persistent data objects into instances of your REST models. prestans allows serialization of prestans managed Data Types, see :ref:`models`. Data Adapters are backend specific (we currently support `SQLAlchemy <http://www.sqlalchemy.org>_`, AppEngine `NDB <https://developers.google.com/appengine/docs/python/ndb>_`).
 
 These Adapters function map persistent models against prestans Models using a registry, allowing prestans to perform the translation to construct your  REST handler's response.
 

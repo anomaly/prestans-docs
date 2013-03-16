@@ -154,7 +154,7 @@ Handlers can accept input as parts of the URL, or the query string, or in the ac
 
 * Patterns matched using Regular Expression are passed via as part of the function call. They are positionally passed. Default behaviour passes all parameters as strings.
 * Query parameters are available as key / value pairs, accessiable in a handler as ``self.request.get('param_name')``
-* Serializers attempt to parse the request body and make the end results available at ``self.request.pased_body``
+* Serializers attempt to parse the request body and make the end results available at ``self.request.parsed_body_model``
 
 prestans defines a rich API to parse Query Strings, parts of the URL and the raw serialized body:
 
@@ -199,8 +199,8 @@ prestans provides a well defined API to defined models for your REST API layer. 
 
 It's highly recommended to use :doc:`models` to form strongly validated responses. In addition prestans provides a set of :doc:`ext` that ease translation of persistent models to prestans REST models.
 
-Using pre-defined exceptions
-----------------------------
+Pre-defined exceptions
+----------------------
 
 REST applications should use the breath of HTTP status codes to add meaning to the responses. prestans defines and handles a set of common expcetions that can be used by your application to send our standardised error responses. These ``Exception`` classes are paired with a status code and accept a string message as part of the constructor.
 
@@ -232,20 +232,20 @@ A snippet that outlines this example would look as follows:
 
 The following are a list of exceptions provided by prestans along with their paired status code and suggestions for use cases:
 
-+-------------------------------------------+---------------------------+------------------------------------------------------------------+
-| Class                                     | HTTP status code          | Use cases                                                        |
-+===========================================+===========================+==================================================================+
-| prestans.rest.ServiceUnavailableException | 503 (Service Unavailable) | The REST service or a related backend service is unavailable     |
-+-------------------------------------------+---------------------------+------------------------------------------------------------------+
-| prestans.rest.BadRequestException         | 400 (Bad Request)         | Parameters sent as part of the request are not acceptable        |
-+-------------------------------------------+---------------------------+------------------------------------------------------------------+
-| prestans.rest.ConflictException           | 409 (Conflict)            |                                                                  |
-+-------------------------------------------+---------------------------+------------------------------------------------------------------+
-| prestans.rest.NotFoundException           | 404 (Not Found)           | The requested entity does not exists                             |
-+-------------------------------------------+---------------------------+------------------------------------------------------------------+
-| prestans.rest.UnauthorizedException       | 401 (Unauthorised)        | The request entity can not be accessed by the current client     |
-+-------------------------------------------+---------------------------+------------------------------------------------------------------+
-| prestans.rest.ForbiddenException          | 403 (Forbidden)           |                                                                  |
-+-------------------------------------------+---------------------------+------------------------------------------------------------------+
++-------------------------------------------+---------------------------+--------------------------------------------------------------------+
+| Class                                     | HTTP status code          | Use cases                                                          |
++===========================================+===========================+====================================================================+
+| prestans.rest.ServiceUnavailableException | 503 (Service Unavailable) | The REST service or a related backend service is unavailable       |
++-------------------------------------------+---------------------------+--------------------------------------------------------------------+
+| prestans.rest.BadRequestException         | 400 (Bad Request)         | Parameters sent as part of the request are not acceptable          |
++-------------------------------------------+---------------------------+--------------------------------------------------------------------+
+| prestans.rest.ConflictException           | 409 (Conflict)            | The request conflicts the rules of the system, e.g duplicate users |
++-------------------------------------------+---------------------------+--------------------------------------------------------------------+
+| prestans.rest.NotFoundException           | 404 (Not Found)           | The requested entity does not exists                               |
++-------------------------------------------+---------------------------+--------------------------------------------------------------------+
+| prestans.rest.UnauthorizedException       | 401 (Unauthorised)        | The request entity can not be accessed by the current client       |
++-------------------------------------------+---------------------------+--------------------------------------------------------------------+
+| prestans.rest.ForbiddenException          | 403 (Forbidden)           | The user is not allowed to access the particular resource          |
++-------------------------------------------+---------------------------+--------------------------------------------------------------------+
 
 It it obviously possible to use the other error codes by manually setting the handler's resposne code and body message.
