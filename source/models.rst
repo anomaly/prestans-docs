@@ -205,7 +205,7 @@ Models are a great way of constructing sound responses. They are also serializab
 
 .. code-block:: python
 
-    class AlbumEntityHandler(prestans.rest.RESTRequestHandler):
+    class AlbumEntityHandler(prestans.handlers.RESTRequestHandler):
 
         def get(self, band_id, album_id):
 
