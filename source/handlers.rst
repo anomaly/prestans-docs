@@ -54,7 +54,7 @@ url_map a non-optional parameter, requires pairs of URL patterns and REST Handle
 
 prestans would map this URL to the ``Collection`` class defined in the package ``pdemo.rest.handlers.track``, if you were to define a GET method which returned all the tracks for a band's album, it would look like::
 
-        class Collection(prestans.rest.RESTHandler):
+        class Collection(prestans.rest.RESTRequestHandler):
 
             def get(self, band_id, album_id):
                 ... return all tracks for band_id and album_id
@@ -134,7 +134,7 @@ To put it in perspective of your handler code, prestans will execute the followi
 
 .. code-block:: python
 
-        class Collection(prestans.rest.RESTHandler):
+        class Collection(prestans.rest.RESTRequestHandler):
 
             def handler_will_run(self):
                 ... do your setup stuff here
@@ -185,7 +185,7 @@ By default the response is set to a dictionary. Remember that at the end of the 
 
     import prestans.rest
 
-    class AlbumEntityHandler(prestans.rest.RESTHandler):
+    class AlbumEntityHandler(prestans.rest.RESTRequestHandler):
 
         def get(self, band_id, album_id):
 
@@ -214,7 +214,7 @@ A snippet that outlines this example would look as follows:
 
     import prestans.rest
 
-    class AlbumEntityHandler(prestans.rest.RESTHandler):
+    class AlbumEntityHandler(prestans.rest.RESTRequestHandler):
 
         def get(self, band_id, album_id):
 
