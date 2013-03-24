@@ -46,7 +46,7 @@ A sample implementation would look something like this:
 
             blueprint = self.create_blueprint()
 
-            self.response.status_code = prestans.rest.STATUS.OK
+            self.response.http_status = prestans.rest.STATUS.OK
             self.response.set_body_attribute("api", blueprint)
 
 then map it as you would any other handler to a URL that you see fit, remember that this handler will be ignored from the API blueprint:

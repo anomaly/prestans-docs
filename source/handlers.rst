@@ -16,7 +16,7 @@ Each ``RESTApplication`` sub class paired with a serialzier is used to route URL
 Regex & URL design primer
 =========================
 
-URL patterns are described using Regular expression, this section provides a quick reference to handy regex patterns for writing REST services. If you are fulent Regex speaker, feel free to skip this chapter.
+URL patterns are described using Regular expression, this section provides a quick reference to handy regex patterns for writing REST services. If you are fluent Regex speaker, feel free to skip this chapter.
 
 Most URL patters either refer to collections or entities, consider the following URL scheme requirements:
 
@@ -153,7 +153,7 @@ Accessing incoming parameters
 Handlers can accept input as parts of the URL, or the query string, or in the acceptable serialized format in the body of the request (not available for GET requests):
 
 * Patterns matched using Regular Expression are passed via as part of the function call. They are positionally passed. Default behaviour passes all parameters as strings.
-* Query parameters are available as key / value pairs, accessiable in a handler as ``self.request.get('param_name')``
+* Query parameters are available as key / value pairs, accessible in a handler as ``self.request.get('param_name')``
 * Serializers attempt to parse the request body and make the end results available at ``self.request.parsed_body_model``
 
 prestans defines a rich API to parse Query Strings, parts of the URL and the raw serialized body:
