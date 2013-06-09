@@ -232,8 +232,8 @@ Your REST handler must provide a template prestans can match this input, if the 
         GET = prestans.parsers.ParserRuleSet(
             parameter_sets = [
                 KeywordSearchParameterSet(),
-                response_attribute_filter_template=prestans.parsers.AttributeFilter.from_model(MyModel())
-            ]
+            ],
+            response_attribute_filter_template=prestans.parsers.AttributeFilter.from_model(MyModel())
         )
 
 Your handler end point can get access to this ``AttributeFilter`` at ``self.response.attribute_filter``. Responses are filtered while prestans is serializing output. Keys of the object being serialized must match the attribute filter's list. If you are serializing :doc:`models` it's recommended you create your attribute filter using the model.
