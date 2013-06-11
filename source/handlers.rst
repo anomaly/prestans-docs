@@ -193,7 +193,7 @@ By default the response is set to a dictionary. Remember that at the end of the 
             self.response.http_status = prestans.rest.STATUS.OK 
 
             # Add new attribute
-            self.response.body.set_body_attribute("name", "Dark side of the moon")
+            self.response.set_body_attribute("name", "Dark side of the moon")
 
 prestans provides a well defined API to defined models for your REST API layer. These models are views on your persistent data and perform strong validation relfecting your business logic.
 
