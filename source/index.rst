@@ -14,17 +14,7 @@ prestans is currently hosted on `Github <http://github.com/prestans>`_ and distr
    :numbered:
    :maxdepth: 3
 
-   quickstart
-   handlers
-   serializers
-   validation
-   models
-   authentication
-   ext
-   utils
    design_notes
-   closure
-   demo_app
    reference_material
 
 Getting Help
