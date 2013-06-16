@@ -6,6 +6,8 @@
 prestans, a Python REST micro-framework
 =======================================
 
+.. warning: This branch of the documentation is under agressive development along with the framework.
+
 prestans is a WSGI (`PEP-333 <http://www.python.org/dev/peps/pep-0333/>`_) complaint micro-framework that allows you to rapidly build quality REST services by introducing a pattern of models, parsers and handlers and in turn taking care of boilerplate code. prestans is aimed towards turly Ajax applications where the client side is completely written in JavaScript using toolkits like `Google Closure <https://developers.google.com/closure/>`_.
 
 prestans is currently hosted on `Github <http://github.com/prestans>`_ and distributed under the terms defined by the `New BSD license <http://opensource.org/licenses/bsd-license.php>`_. A list of current downloads is `available here <https://github.com/prestans/prestans/tags>`_.  We highly recommend using `PyPI <http://pypi.python.org>`_ to install prestans.

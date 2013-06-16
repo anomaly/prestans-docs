@@ -10,8 +10,8 @@ this will build and install prestans for your default Python interpreter.
 
 Alternatively you can download and build prestans using distutils::
 
-    $ tar -zxvf prestans-1.1.tgz
-    $ cd prestans-1.1
+    $ tar -zxvf prestans-2.0.tgz
+    $ cd prestans-2.0
     $ python setup.py install
 
 Environments like Google's AppEngine require you to include custom packages as part of your source. Things to consider when distributing prestans with your application:
