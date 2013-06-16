@@ -14,6 +14,7 @@ prestans is currently hosted on `Github <http://github.com/prestans>`_ and distr
    :numbered:
    :maxdepth: 3
 
+   install
    design_notes
    reference_material
 
@@ -39,18 +40,6 @@ Before you lodge a lodge a ticket:
 
 When reporting issues:
 
-* Include as much detail as you can about your environment (e.g Server OS, Web Server Version, WSGI connector)
+* Include as much detail as you can about your environment (e.g Server OS, Web Server and it's Version, WSGI connector)
 * Steps that we can use to replicate the bug
 * Share a bit of your application code with us, it goes a long way to replicate issues
-
-Commercial Support
-^^^^^^^^^^^^^^^^^^
-
-All commercial endeavors around prestans are managed by Eternity Technologies.
-
-* Help with designing high performance REST apps using prestans
-* Extending prestans support for backends, serializers, etc.
-* Developer training in Python, prestans, Google Closure.
-
-We also offer custom development services for writing high end Ajax and mobile apps, check out `our website <http://etk.com.au>`_ to see if we can help you create your next Web / Mobile project.
-
