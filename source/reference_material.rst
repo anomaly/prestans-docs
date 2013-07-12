@@ -22,8 +22,8 @@ Advanced Python
 * `Faux function type signatures in Python <http://www.regularexpressionless.com/?p=8>`_ using a Python decorator to ensure that your functions get values in the right type from WSGI calls. Originall posted as a `response <http://stackoverflow.com/questions/7019283/automatically-type-cast-parameters-in-python>`_ on Stackoverflow. 
 * `Inspecting live objects in Python <http://www.doughellmann.com/PyMOTW/inspect/>`_ the inspect module provides functions for introspecting on live objects and their source code. This article by Doug Hellmann shows off many really nice features like discovering method signatures, extracting docstrings, etc.
 
-Software
-========
+Server Software
+===============
 
 * `Google App Engine <https://developers.google.com/appengine/>`_ an extemely easy to work with Cloud platform run by Google.
 * `mod_wsgi <http://code.google.com/p/modwsgi/>`_, a connector module allowing your to run WSGI apps with Apache Web server.

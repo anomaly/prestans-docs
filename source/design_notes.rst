@@ -2,18 +2,18 @@
 Thoughts on API design
 ======================
 
-prestans was a result of our careful study into the REST standards, frameworks and appraoches that were popular at the time. The following are a few useful lessons we've learnt along the way. Also refer to our extensive list of extremely useful :doc:`reference_material` we found on the Web.
+prestans was a result of our careful study into the REST standards, popular frameworks and appraoches. Following are useful lessons we've learnt along the way. We've also compiled an extensive list of extremely useful :doc:`reference_material` we found during our research.
 
 REST resources are *not* persistent models
 ==========================================
 
-Reading around the Web, it seems that traditional client/server programmers somehow concluded that REST is basically a HTTP replacement for XML-RPC, SOAP lovers might have had something to do with this as well. This school of thought lead developers to design of REST APIs (like XML-RPC) as a gateway to each persistent object on the server and making the client responsible for dealing with data relationships, integrity etc. Many frameworks took these ideas and implemented pass through REST gateways to RDBMS backends.
+The word entity traditionally referred to persistent objects. That concept applied on the Web results in a HTTP implementation of approaches like XML-RPC. Many frameworks implement REST as a gateway to directly access persistent object on the server.
 
-This is completely incorrect.
+Entity in the REST world refers to entities returned by REST service; not what's stored in the persistence layer. In most instances it refers to an application specific view of the persistent data; that the requesting client will find most useful.
 
-Data presented to clients talking to REST services is very different to the way data is stored, this is particularly true when you are using NoSQL style databases. **Think of REST resources are views of the stored data**. The job of your server side code to do as much meaningful work as possible with the data and present it to the client in form that is immediately useful.
+REST endpoints form the business logic layer of your Ajax/Mobile application. REST services should do the heavy lifting and return the most useful view of the data for the use-case; this may include related data i.e Order may include Order line.
 
-Again, *REST resources are useful views of your persistent data*.
+Server round trips (or latency) is one of biggest performance overheads for REST services.
 
 Collections & Entities
 ======================
@@ -27,15 +27,13 @@ Both deal with a resource called product. The first URL deals with collections, 
 
 The second would deal with a specific entity of that kind of resource. So get a product (GET), Update a product (PUT, PATCH), or delete a product (DELETE) are the requests it should respond to.
 
-As a design principle we recommend you handle collections and entities in two seaprate handlers.
+As a design principle we recommend you handle collections and entities in separate handlers.
 
-Response Size does matter
-=========================
+Response Size
+=============
 
-Database, Web Servers, prestans your handlers, servers are generally pretty quick (if you have written most things well). Network latency is still a killer for REST applications. 
+Running local development HTTP servers is common practice. Due to negligible latency; local server are notorious for masking server round trip issues, specially ones related to response size. Only when you've deployed your application to a remote server can you judge how long noticing how long round trips take.
 
-A general view is that latency is generally caused by services on the server side running slow, althought can be the case, one thing that slips out of the radar is the size of the response that you send down to the client.
+Database, Web Servers, prestans your handlers, servers are generally pretty quick (if you have written most things well). Network latency caused by the sheer size of the response can make your REST services appear to be slow. 
 
-One of our latest applications was sending down large amounts of textual data, was never a problem when were building the application but as it was put to the production the size of stored text went out of hand, pushing the size of a 100 record response to 2.5 Megabytes. It wasn't MySQL, wasn't our code, prestans, Apache, or the server it was purely the size of response.
-
-So when writing REST services, **Size really does matter!**
+It's important not to loose sight of the response size written out by your REST services.
