@@ -13,6 +13,13 @@ WSGI
 * `ReUsable Web Components with Python and Future Python Web <http://www.youtube.com/watch?v=Ui-mSFuUZmQ>`_ presented by Ben Bangert (YouTube).
 * `Hosting Python Web Applications <http://www.youtube.com/watch?v=PWIvm-uloMg>`_ presented by Graham P Dumpleton, author of `mod_wsgi <http://modwsgi.googlecode.com>`_ (YouTube).
 
+HTTP
+====
+
+* `Unacceptable Browser HTTP Accept Headers <http://www.gethifi.com/blog/browser-rest-http-accept-headers>`_ `Kris Jordan <http://www.gethifi.com/authors/kris-jordan>`_'s excellent article on how different browser interpret the Accept header.
+* `The Accept Header <http://shiflett.org/blog/2011/may/the-accept-header>`_ `Chris Shifflett <http://shiflett.org/about>`_ describes the Accept Header.
+* `A Beginner's Guide to HTTP Cache Headers <http://www.mobify.com/blog/beginners-guide-to-http-cache-headers/>`_ Kyle Young's excellent description of HTTP cache headers.
+
 Advanced Python
 ===============
 
