@@ -17,6 +17,8 @@ prestans is currently hosted on `Github <http://github.com/prestans>`_ and distr
    :maxdepth: 3
 
    install
+   concepts
+   handlers
    exceptions
    design_notes
    reference_material

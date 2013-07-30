@@ -31,4 +31,8 @@ The server side requires a WSGI compliant environment:
 
 Client side code is written for Google Closure.
 
-We mostly test on latest releases of `Ubuntu Server <http://www.ubuntu.com/download/server>`_, and Google's `AppEngine <https://developers.google.com/appengine/>`_. 
+We mostly test on latest releases of `Ubuntu Server <http://www.ubuntu.com/download/server>`_, and Google's `AppEngine <https://developers.google.com/appengine/>`_.
+
+Starting your project
+=====================
+
