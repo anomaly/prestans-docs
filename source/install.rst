@@ -21,7 +21,7 @@ Environments like Google's AppEngine require you to include custom packages as p
 * If your server environment has hard limits on number of files, consider using `zipimport <http://docs.python.org/2/library/zipimport.html>`_.
 
 Software Requirements
----------------------
+=====================
 
 The server side requires a WSGI compliant environment:
 
@@ -35,4 +35,14 @@ We mostly test on latest releases of `Ubuntu Server <http://www.ubuntu.com/downl
 
 Starting your project
 =====================
+
+For deployment under Apache
+---------------------------
+
+For deployment under AppEngine
+------------------------------
+
+
+Development Server
+==================
 

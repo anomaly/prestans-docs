@@ -19,6 +19,8 @@ prestans is currently hosted on `Github <http://github.com/prestans>`_ and distr
    install
    concepts
    handlers
+   validation
+   models
    exceptions
    design_notes
    reference_material
