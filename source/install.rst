@@ -4,20 +4,22 @@ Installation
 
 We recommend installing prestans via `PyPI <http://pypi.python.org/pypi>`_::
 
-    $ pip install prestans
+    $ sudo pip install prestans
 
-this will build and install prestans for your default Python interpreter.
+this will build and install prestans for your default Python interpreter. To keep up-to-date; use the ``---upgrade`` opion::
+
+	$ sudo pip install prestans --upgrade
 
 Alternatively you can download and build prestans using distutils::
 
     $ tar -zxvf prestans-2.0.tgz
     $ cd prestans-2.0
-    $ python setup.py install
+    $ sudo python setup.py install
 
 Environments like Google's AppEngine require you to include custom packages as part of your source. Things to consider when distributing prestans with your application:
 
-* Make sure you target a particular release of prestans, distributing our development branch is not recommended. 
-* If you prefer reference prestans as a Subversion external, ensure you use reference one of the ``tags``, it is not recommended to reference ``trunk``
+* Make sure you target a particular release of prestans, distributing our development branch is not recommended (unless of course you require a bleeding edge feature). 
+* If you prefer reference prestans as a Subversion external, ensure you use reference one of the ``tags``.
 * If your server environment has hard limits on number of files, consider using `zipimport <http://docs.python.org/2/library/zipimport.html>`_.
 
 Software Requirements
@@ -25,9 +27,10 @@ Software Requirements
 
 The server side requires a WSGI compliant environment:
 
-* Python 2.6+, *2.7 recommended*
+* Python 2.7; should work under *2.6* also
 * WSGI compliant server environment (`Apache <http://httpd.apache.org>`_ + `mod_wsgi <http://modwsgi.googlecode.com>`_, or `Google AppEngine <https://developers.google.com/appengine/>`_, etc).
-* Python Paste components (e.g WebOb)
+* Python Paste components
+* WebOb 1.2.3 (should be installed as a dependency, AppEngine already provided WebOb)
 
 Client side code is written for Google Closure.
 
@@ -46,3 +49,6 @@ For deployment under AppEngine
 Development Server
 ==================
 
+
+Apache Configuration tips
+=========================
