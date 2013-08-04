@@ -221,7 +221,7 @@ Models are a great way of constructing sound responses. They are also serializab
 
 From the above example it's clear that code to convert persistent objects into REST models becomes repetitive, and as a result error prone. prestans provides ``DataAdapters``, that automate the conversion of persistent models to REST models. Read about it in the :doc:`ext` chapter.
 
-If you use Google's Closure Library for client side development, we provide a complete client side implementation of our types library to create and parse, requests and responses. Details available in the :doc:`closure` section.
+If you use Google's Closure Library for client side development, we provide a complete client side implementation of our types library to create and parse, requests and responses. Details available in the :doc:`client` section.
 
 .. _type-config-reference:
 

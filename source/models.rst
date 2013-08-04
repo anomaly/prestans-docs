@@ -5,6 +5,8 @@ Types & Models
 
 Models allow you to define rules for your API's data. prestans uses these rules to ensure the integrity of the data exchanged between the client and the server. If you've' used the `Django <http://djangoproject.com>`_ or `Google AppEngine <https://developers.google.com/appengine/>`_ prestans models will look very familiar. prestans models are *not* persistent.
 
+.. image:: prestans_datatypes.png
+
 prestans types are one of the following:
 
 * ``prestans.types.DataType`` all prestans types are a subclass of ``DataType``, this is the most basic DataType in the prestans world.
@@ -26,6 +28,8 @@ prestans types are divided into, *Basic Types*, and *Collections*, currently sup
 * ``Float``, wraps a Python number
 * ``Boolean``, wraps a Python ``bool``
 * ``DataURLFile``, supports uploading files via HTML5 `FileReader <http://www.html5rocks.com/en/tutorials/file/dndfiles/>`_ API
+* ``Date``, wraps Python ``date``
+* ``Time``, wraps Python ``time``
 * ``DateTime``, wraps Python ``datetime``
 * ``Array``, wraps Python ``lists``
 * ``Model``, wraps Python ``dict``
@@ -222,7 +226,7 @@ Models are a great way of constructing sound responses. They are also serializab
 
 From the above example it's clear that code to convert persistent objects into REST models becomes repetitive, and as a result error prone. prestans provides ``DataAdapters``, that automate the conversion of persistent models to REST models. Read about it in the :doc:`ext` chapter.
 
-If you use Google's Closure Library for client side development, we provide a complete client side implementation of our types library to create and parse, requests and responses. Details available in the :doc:`closure` section.
+If you use Google's Closure Library for client side development, we provide a complete client side implementation of our types library to create and parse, requests and responses. Details available in the :doc:`client` section.
 
 .. _type-config-reference:
 
