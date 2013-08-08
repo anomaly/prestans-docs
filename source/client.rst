@@ -34,6 +34,8 @@ This allows you to keep up to date with our code base and benefit from the lates
 
 Closure library does the same, and we ensure that we are leveraging off their latest developments.
 
+.. note:: Code referenced in this section is available on `Github <http://github.com/prestans/prestans-client/>`_.
+
 Unit testing
 ------------
 

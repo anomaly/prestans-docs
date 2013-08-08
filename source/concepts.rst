@@ -14,8 +14,8 @@ Headers
 =======
 
 * Prestans-Version
-* Prestans-Response-Attribute-Filter
-* Prestans-Response-Attribute-Filter-StartKey
+* Prestans-Response-Attribute-List
+* Prestans-Response-Attribute-List-StartKey
 * Prestans-Rewrite-Map
 
 Request lifecycle

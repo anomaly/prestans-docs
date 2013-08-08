@@ -299,6 +299,28 @@ Supports uploading files using the HTML5 `FileReader <http://www.html5rocks.com/
 * ``required`` flags if this is a mandatory field, accepts ``True`` or ``False`` and is set to ``True`` by default
 * ``allowed_mime_types``
 
+Date
+----
+
+Date Time is a complex structure that parses strings to Python ``datetime`` and vice versa. Default string format is ``%Y-%m-%d`` to assist with parsing on the client side using Google Closure Library provided `DateTime <http://closure-library.googlecode.com/svn/docs/class_goog_date_DateTime.html>`_.
+
+.. note:: Extends ``prestans.types.DataStructure``
+
+* ``required`` flags if this is a mandatory field, accepts ``True`` or ``False`` and is set to ``True`` by default
+* ``default`` specifies the value to be assigned to the attribute if one isn't provided on instantiation, this must be a date. prestans provides a constans ``prestans.types.Date.CONSTANT.TODAY`` if you want to use the date / time of execusion.
+* ``format`` default format  ``%Y-%m-%d``
+
+Time
+----
+
+Date Time is a complex structure that parses strings to Python ``datetime`` and vice versa. Default string format is ``%H:%M:%S`` to assist with parsing on the client side using Google Closure Library provided `DateTime <http://closure-library.googlecode.com/svn/docs/class_goog_date_DateTime.html>`_.
+
+.. note:: Extends ``prestans.types.DataStructure``
+
+* ``required`` flags if this is a mandatory field, accepts ``True`` or ``False`` and is set to ``True`` by default
+* ``default`` specifies the value to be assigned to the attribute if one isn't provided on instantiation, this must be a date. prestans provides a constans ``prestans.types.Time.CONSTANT.NOW`` if you want to use the date / time of execusion.
+* ``format`` default format  ``%H:%M:%S``
+
 DateTime
 --------
 
@@ -307,7 +329,7 @@ Date Time is a complex structure that parses strings to Python ``datetime`` and 
 .. note:: Extends ``prestans.types.DataStructure``
 
 * ``required`` flags if this is a mandatory field, accepts ``True`` or ``False`` and is set to ``True`` by default
-* ``default`` specifies the value to be assigned to the attribute if one isn't provided on instantiation, this must be a date. prestans provides a constans ``prestans.types.CONSTRANT.DATETIME_NOW`` if you want to use the date / time of execusion.
+* ``default`` specifies the value to be assigned to the attribute if one isn't provided on instantiation, this must be a date. prestans provides a constans ``prestans.types.DateTime.CONSTANT.NOW`` if you want to use the date / time of execusion.
 * ``format`` default format  ``%Y-%m-%d %H:%M:%S``
 
 Collections

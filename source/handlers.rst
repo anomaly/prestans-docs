@@ -21,3 +21,8 @@ Handler
 =======
 
 * Lifecycle of the handler
+
+Registering additional serializers and deserializers
+
+Logger
+======
