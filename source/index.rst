@@ -14,10 +14,10 @@ prestans is currently hosted on `Github <http://github.com/prestans>`_ and distr
 
 .. toctree::
    :numbered:
-   :maxdepth: 2
+   :maxdepth: 3
 
-   install
    concepts
+   install
    serializers_deserializers
    handlers
    validation

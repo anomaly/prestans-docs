@@ -2,6 +2,8 @@
 Understanding prestans
 ======================
 
+This is 
+
 * Serializers
 * Router
 * Handler
@@ -20,21 +22,25 @@ Serializers
 prestans HTTP Headers
 =====================
 
-Accept
-Content-Type
+prestans uses several HTTP headers to evaluate requests. This section outline the rules in the prestans lifecycle.
 
-For GET requests there are no Content-Type
+Each request must send an ``Accept`` header for prestans to decide the resposne format. If the registered handler cannot respond in the requeted format prestans raises an ``UnsupportedVocabularyError`` exception inturn producing a ``501 Not Implemented`` response. All prestans APIs have a set of default formats all handlers accept, each end-point might accept additional formats.
 
-Sent by the client:
+If a request has send a body (e.g ``PUT``, ``POST``) you must send a ``Content-Type`` header to declare the format in use. If you do not send a ``Content-Type`` header prestans will attempt to use the default deserializer to deserialize the body. If the ``Content-Type`` is not supported by the API an ``UnsupportedContentTypeError``` exception is raised inturn producing a ``501 Not Implemented`` response.
 
-* Prestans-Version
-* Prestans-Response-Attribute-List
-* Prestans-Response-Minification
+Inbound headers
+---------------
+
+A client may send the following 
+
+* ``Prestans-Version``
+* ``Prestans-Response-Attribute-List``
+* ``Prestans-Response-Minification``
 
 Sent by the server:
 
-* Prestans-Version
-* Prestans-Rewrite-Map
+* ``Prestans-Version``
+* ``Prestans-Rewrite-Map``
 
 Request lifecycle
 ==================

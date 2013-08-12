@@ -22,8 +22,11 @@ Environments like Google's AppEngine require you to include custom packages as p
 * If you prefer to include prestans as a Git submodule, ensure you use reference one of the ``tags``.
 * If your server environment has hard limits on number of files, consider using `zipimport <http://docs.python.org/2/library/zipimport.html>`_.
 
-Git submodule
--------------
+As a `Git submodule <http://git-scm.com/book/en/Git-Tools-Submodules>`_::
+
+	$ git submodule add git://github.com/prestans/prestans.git prestans
+
+Make sure you read on about configuring your Web server environment.
 
 Software Requirements
 =====================
@@ -44,6 +47,13 @@ Starting your project
 
 For deployment under Apache
 ---------------------------
+
+Directory stucture::
+
+	+-- app
+	+-- static
+	+-- ext
+	    +-- prestans
 
 For deployment under AppEngine
 ------------------------------
