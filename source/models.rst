@@ -170,7 +170,7 @@ To use another format string, override the ``format`` parameter when defining ``
 
     class Album(prestans.types.Model):
         
-        last_updated =  prestans.types.DateTime(default=prestans.types.CONSTANT.DATETIME_NOW)
+        last_updated =  prestans.types.DateTime(default=prestans.types.DATETIME.CONSTANT.NOW)
 
 Assigning python ``datetime`` instances as the default value for prestans ``DateTime`` attributes works on the server, our problem lies in auto-generating client side stub code.  The use of the constant ``prestans.types.CONSTANT.DATETIME_NOW`` instruct prestans to handle this properly.
 

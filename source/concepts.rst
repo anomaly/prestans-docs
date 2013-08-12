@@ -10,12 +10,30 @@ Understanding prestans
 * Data Adapters
 * Providers
 
-Headers
-=======
+
+Serializers
+===========
+
+* Textual
+* Binary
+
+prestans HTTP Headers
+=====================
+
+Accept
+Content-Type
+
+For GET requests there are no Content-Type
+
+Sent by the client:
 
 * Prestans-Version
 * Prestans-Response-Attribute-List
-* Prestans-Response-Attribute-List-StartKey
+* Prestans-Response-Minification
+
+Sent by the server:
+
+* Prestans-Version
 * Prestans-Rewrite-Map
 
 Request lifecycle
