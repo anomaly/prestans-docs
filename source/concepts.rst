@@ -2,7 +2,7 @@
 Understanding prestans
 ======================
 
-This is 
+This section aims to introduce you to the design concepets that make up the prestans framework. 
 
 * Serializers
 * Router
@@ -13,38 +13,31 @@ This is
 * Providers
 
 
-Serializers
-===========
+Vocabularies
+============
 
-* Textual
-* Binary
+Serializers and DeSerializers are pluggable prestans constructs that assist the framework in packing or unpacking data. Serialzier or deserializer handle content of a particular mime type and are generally wrappers to vocabularies already available in Python (although it possible to write a custom serializer entirely in Python). There are two types of serializers and deserializers:
 
-prestans HTTP Headers
-=====================
+* ``Textual`` - serialization formats that are text based (e.g JSON, XML, CSV) and are the ones that applications common use to communicate
+* ``Binary`` - serialization formats that are binary (e.g PDF) and are mostly used as an output format.
 
-prestans uses several HTTP headers to evaluate requests. This section outline the rules in the prestans lifecycle.
+prestans application may speak as many vocabularies as they wish; vocabularies can also be local to handlers (as opposed to applicaiton wide). You must also define a default format.
 
-Each request must send an ``Accept`` header for prestans to decide the resposne format. If the registered handler cannot respond in the requeted format prestans raises an ``UnsupportedVocabularyError`` exception inturn producing a ``501 Not Implemented`` response. All prestans APIs have a set of default formats all handlers accept, each end-point might accept additional formats.
+Each request must send an ``Accept`` header for prestans to decide the response format. If the registered handler cannot respond in the requeted format prestans raises an ``UnsupportedVocabularyError`` exception inturn producing a ``501 Not Implemented`` response. All prestans APIs have a set of default formats all handlers accept, each end-point might accept additional formats.
 
 If a request has send a body (e.g ``PUT``, ``POST``) you must send a ``Content-Type`` header to declare the format in use. If you do not send a ``Content-Type`` header prestans will attempt to use the default deserializer to deserialize the body. If the ``Content-Type`` is not supported by the API an ``UnsupportedContentTypeError``` exception is raised inturn producing a ``501 Not Implemented`` response.
 
-Inbound headers
----------------
 
-A client may send the following 
+HTTP Headers
+============
+
+Inbound headers:
 
 * ``Prestans-Version``
 * ``Prestans-Response-Attribute-List``
-* ``Prestans-Response-Minification``
+* ``Prestans-Minify-Response``
 
-Sent by the server:
+Outbound headers:
 
 * ``Prestans-Version``
 * ``Prestans-Rewrite-Map``
-
-Request lifecycle
-==================
-
-* Is the verb supported
-* Is the requested mime type supported
-* 

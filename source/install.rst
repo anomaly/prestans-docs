@@ -24,7 +24,7 @@ Environments like Google's AppEngine require you to include custom packages as p
 
 As a `Git submodule <http://git-scm.com/book/en/Git-Tools-Submodules>`_::
 
-	$ git submodule add git://github.com/prestans/prestans.git prestans
+	$ git submodule add https://github.com/prestans/prestans.git prestans
 
 Make sure you read on about configuring your Web server environment.
 
@@ -33,12 +33,12 @@ Software Requirements
 
 The server side requires a WSGI compliant environment:
 
-* Python 2.7; should work under *2.6* also
+* Python 2.7
 * WSGI compliant server environment (`Apache <http://httpd.apache.org>`_ + `mod_wsgi <http://modwsgi.googlecode.com>`_, or `Google AppEngine <https://developers.google.com/appengine/>`_, etc).
 * WebOb 1.2.3 (should be installed as a dependency, AppEngine already provided WebOb)
 * You may optionally need SQLAlchemy or AppEngine.
 
-Client side code is written for Google Closure.
+Client side code is dependant on the Google Closure tools.
 
 We mostly test on latest releases of `Ubuntu Server <http://www.ubuntu.com/download/server>`_, and Google's `AppEngine <https://developers.google.com/appengine/>`_.
 
@@ -51,9 +51,12 @@ For deployment under Apache
 Directory stucture::
 
 	+-- app
+	+-- conf
 	+-- static
 	+-- ext
 	    +-- prestans
+	+-- client
+	+-- conf
 
 For deployment under AppEngine
 ------------------------------
@@ -64,6 +67,8 @@ Development Server
 
 prestans ships with a development server built on top of Pooco's `werkzeug <http://werkzeug.pocoo.org/>`_. 
 
+* `blessings <https://pypi.python.org/pypi/blessings/>`_ - A thin, practical wrapper around terminal coloring, styling, and positioning
+* `voluptuous <https://github.com/alecthomas/voluptuous>`_ - Voluptuous, despite the name, is a Python data validation library. It is primarily intended for validating data coming into Python as JSON, YAML, etc.
 
 Apache Configuration tips
 =========================

@@ -23,6 +23,7 @@ HTTP
 Advanced Python
 ===============
 
+* `Python WSGI reference implementation <http://docs.python.org/2/library/wsgiref.html>`_ - available in Python 2.5
 * `Effbot <http://effbot.org/pyfaq/>`_ - (A Semi-Official) Python FAQ Zone
 * `Python Decorators <http://www.python.org/dev/peps/pep-0318/>`_ - various prestans utilities are provided as decorators
 * `Python Types and Objects <http://www.cafepy.com/article/python_types_and_objects/python_types_and_objects.html>`_ - an excellent article by Shalabh Chaturvedi on how Python sees Objects and Types.
@@ -30,8 +31,7 @@ Advanced Python
 * `Python Regular Expressions <https://developers.google.com/edu/python/regular-expressions>`_ - Google Developer article on regular expressions.
 * `Regular Expressions by Example <http://flockhart.virtualave.net/RBIF0100/regexp.html>`_ - specific regular expression examples. 
 * `Inspecting live objects in Python <http://www.doughellmann.com/PyMOTW/inspect/>`_ - the inspect module provides functions for introspecting on live objects and their source code. This article by Doug Hellmann shows off many really nice features like discovering method signatures, extracting docstrings, etc.
-* `YAML ain't a markup language <http://jessenoller.com/blog/2009/04/13/yaml-aint-markup-language-completely-different>`_ - `Jess Noller <https://twitter.com/jessenoller>`_ talks about YAML.
-* `An Intro to logging <http://www.blog.pythonlibrary.org/2012/08/02/python-101-an-intro-to-logging/>`_
+* `An Intro to logging <http://www.blog.pythonlibrary.org/2012/08/02/python-101-an-intro-to-logging/>`_ - learn about how to use and extend the Python logging feature.
 * `Python Style Guide <http://www.python.org/dev/peps/pep-0008/#package-and-module-names>`_ - PEP 0008 standards on naming stuff in Python
 
 Implementation specific posts:
@@ -42,6 +42,10 @@ Frameworks:
 
 * `Another Do-It-Yourself Framework <http://docs.webob.org/en/latest/do-it-yourself.html>`_
 
+Serialization format
+====================
+
+* `YAML ain't a markup language <http://jessenoller.com/blog/2009/04/13/yaml-aint-markup-language-completely-different>`_ - `Jess Noller <https://twitter.com/jessenoller>`_ talks about YAML.
 
 Server Software
 ===============
