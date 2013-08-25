@@ -13,3 +13,10 @@ Each request must send an ``Accept`` header for prestans to decide the response 
 
 If a request has send a body (e.g ``PUT``, ``POST``) you must send a ``Content-Type`` header to declare the format in use. If you do not send a ``Content-Type`` header prestans will attempt to use the default deserializer to deserialize the body. If the ``Content-Type`` is not supported by the API an ``UnsupportedContentTypeError``` exception is raised inturn producing a ``501 Not Implemented`` response.
 
+Serializers
+===========
+
+
+DeSerializers
+=============
+

@@ -58,6 +58,8 @@ Directory stucture::
 	+-- client
 	+-- conf
 
+`mod_wsgi <http://code.google.com/p/modwsgi/wiki/ConfigurationDirectives#WSGIPythonPath>`_
+
 For deployment under AppEngine
 ------------------------------
 
@@ -65,10 +67,8 @@ For deployment under AppEngine
 Development Server
 ==================
 
-prestans ships with a development server built on top of Pooco's `werkzeug <http://werkzeug.pocoo.org/>`_. 
 
-* `blessings <https://pypi.python.org/pypi/blessings/>`_ - A thin, practical wrapper around terminal coloring, styling, and positioning
+* `werkzeug <http://werkzeug.pocoo.org/>`_ - built on top of Pocoo's web server.
+* `blessings <https://pypi.python.org/pypi/blessings/>`_ - A thin, practical wrapper around terminal coloring, styling, and positioning.
 * `voluptuous <https://github.com/alecthomas/voluptuous>`_ - Voluptuous, despite the name, is a Python data validation library. It is primarily intended for validating data coming into Python as JSON, YAML, etc.
 
-Apache Configuration tips
-=========================
