@@ -3,6 +3,19 @@ Routing & Handling Requests
 ===========================
 
 
+HTTP Headers
+============
+
+Inbound headers:
+
+* ``Prestans-Version``
+* ``Prestans-Response-Attribute-List``
+* ``Prestans-Minification``
+
+Outbound headers:
+
+* ``Prestans-Version``
+
 
 Routing Requests
 ================

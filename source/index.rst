@@ -16,9 +16,8 @@ prestans is currently hosted on `Github <http://github.com/prestans>`_ and distr
    :numbered:
    :maxdepth: 3
 
-   concepts
    install
-   serializers_deserializers
+   serializer_deserializer
    handlers
    validation
    models
