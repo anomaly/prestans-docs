@@ -3,7 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-prestans, a Python REST micro-framework
+prestans, a Python WSGI REST micro-framework
 =======================================
 
 .. warning:: This branch of the documentation is under agressive development along with the framework.
@@ -17,11 +17,10 @@ prestans is currently hosted on `Github <http://github.com/prestans>`_ and distr
    :maxdepth: 3
 
    install
-   serializer_deserializer
    handlers
    validation
    models
-   exceptions
+   ext
    client
    design_notes
    reference_material
