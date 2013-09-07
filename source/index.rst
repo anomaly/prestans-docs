@@ -20,6 +20,7 @@ prestans is currently hosted on `Github <http://github.com/prestans>`_ and distr
    handlers
    validation
    models
+   providers
    ext
    client
    design_notes
@@ -36,7 +37,7 @@ We encourge the use of our mailing lists (run on Google Groups) as the primary m
 Reporting Issues
 ^^^^^^^^^^^^^^^^
 
-We prefer the use of our `Issue Tracker <https://code.google.com/p/prestans/issues/list>`_ on Google Code, to triage feature requests, bug reports. 
+We prefer the use of our `Issue Tracker <https://github.com/prestans/prestans/issues>`_ on Github, to triage feature requests, bug reports. Code patches are very welcome.
 
 Before you lodge a lodge a ticket:
 

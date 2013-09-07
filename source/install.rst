@@ -63,6 +63,22 @@ Directory stucture::
 For deployment under AppEngine
 ------------------------------
 
+Python projects under AppEngine use a YAML configuration file called `app.yaml <https://developers.google.com/appengine/docs/python/config/appconfig>`_ to specify versions of Python libraries you project requires. Ensure that you have one of the following included in your `app.yaml <https://developers.google.com/appengine/docs/python/config/appconfig#Python_app_yaml_Configuring_libraries>`_ file.
+
+During development::
+
+    libraries:
+    - name: webob
+      version: latest
+
+During deployment::
+
+    libraries:
+    - name: webob
+      version: "1.2.3"
+
+
+Leaving this directive out loads version 1.1 of WebOb; prestans 2.0 onwards specifically uses WebOb 1.2.3+.
 
 Development Server
 ==================
