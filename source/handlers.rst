@@ -2,6 +2,11 @@
 Routing & Handling Requests
 ===========================
 
+Web Server Gateway Interface or WSGI (`PEP-333 <http://www.python.org/dev/peps/pep-0333/>`_) is the glue between a Web Server and your Python Web application. The responding application simply has to be a Python `callable <http://docs.python.org/2/library/functions.html#callable>`_ (a python function or a class that implements the ``__call__`` method). Each *callable* is passed the Web server environment (much like CGI applications) and a ``start_resposne``. 
+
+If you are not familiar with WSGI we recommend reading `Armin Ronarcher <http://lucumr.pocoo.org/>`_'s `introduction to WSGI <http://lucumr.pocoo.org/2007/5/21/getting-started-with-wsgi/>`_. We also have a great collection of :doc:`reference_material` on Python Web development.
+
+Most Python
 
 HTTP Headers
 ============
@@ -19,6 +24,7 @@ Outbound headers:
 Content Negotiation
 ===================
 
+
 Serializers & DeSerializers
 ---------------------------
 
@@ -33,8 +39,38 @@ Each request must send an ``Accept`` header for prestans to decide the response 
 
 If a request has send a body (e.g ``PUT``, ``POST``) you must send a ``Content-Type`` header to declare the format in use. If you do not send a ``Content-Type`` header prestans will attempt to use the default deserializer to deserialize the body. If the ``Content-Type`` is not supported by the API an ``UnsupportedContentTypeError``` exception is raised inturn producing a ``501 Not Implemented`` response.
 
+
 Routing Requests
 ================
+
+Regex & URL design primer
+-------------------------
+
+URL patterns are described using Regular expression, this section provides a quick reference to handy regex patterns for writing REST services. If you are fluent Regex speaker, feel free to skip this chapter.
+
+Most URL patters either refer to collections or entities, consider the following URL scheme requirements:
+
+* ``/api/album/`` - refers to a collection of type album
+* ``/api/album/{id}`` - refers to a specific album entity
+
+Notice no trailing slashes at the end of the entity URL. Collection URLs may or may not have a URL slash. The above patterns can would be represented in like Regex as: 
+
+* ``/api/album/*`` - For collection of albums
+* ``/api/album/([0-9]+)`` - For a specific album
+
+If you have entities that exclusively belong to a parent object, e.g. Albums have Tracks, we suggest prefixing their URLs with a parent entity id. This will ensure your handler has access to the {id} of the parent object, easing operations like:
+
+* Does referenced parent object exists?
+* When creating a new child object, which parent object would you like to add it to? 
+* Does the child belong to the intended parent (Works particularly well with ORM layers like SQLAlchemy)
+
+A Regex example of these URL patterns would look like:
+
+* ``/api/album/([0-9]+)/track/*``
+* ``/api/album/([0-9]+)/track/([0-9]+)``
+
+Using Request Router
+--------------------
 
 .. code-block:: python
 

@@ -33,6 +33,7 @@ Advanced Python
 * `Inspecting live objects in Python <http://www.doughellmann.com/PyMOTW/inspect/>`_ - the inspect module provides functions for introspecting on live objects and their source code. This article by Doug Hellmann shows off many really nice features like discovering method signatures, extracting docstrings, etc.
 * `An Intro to logging <http://www.blog.pythonlibrary.org/2012/08/02/python-101-an-intro-to-logging/>`_ - learn about how to use and extend the Python logging feature.
 * `Python Style Guide <http://www.python.org/dev/peps/pep-0008/#package-and-module-names>`_ - PEP 0008 standards on naming stuff in Python
+* `Getting Stated with WSGI <http://lucumr.pocoo.org/2007/5/21/getting-started-with-wsgi/>`_ - Armin Ronarcher's introduction to WSGI.
 
 Implementation specific posts:
 

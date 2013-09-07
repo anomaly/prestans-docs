@@ -38,7 +38,7 @@ The server side requires a WSGI compliant environment:
 * WebOb 1.2.3 (should be installed as a dependency, AppEngine already provided WebOb)
 * You may optionally need SQLAlchemy or AppEngine.
 
-Client side code is dependant on the Google Closure tools.
+We provide client side integration tools; all Javascript code is dependant on the Google Closure tools.
 
 We mostly test on latest releases of `Ubuntu Server <http://www.ubuntu.com/download/server>`_, and Google's `AppEngine <https://developers.google.com/appengine/>`_.
 

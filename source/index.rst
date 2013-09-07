@@ -19,7 +19,7 @@ prestans is currently hosted on `Github <http://github.com/prestans>`_ and distr
    install
    handlers
    validation
-   models
+   types
    providers
    ext
    client
