@@ -2,28 +2,34 @@
 Routing & Handling Requests
 ===========================
 
-Web Server Gateway Interface or WSGI (`PEP-333 <http://www.python.org/dev/peps/pep-0333/>`_) is the glue between a Web Server and your Python Web application. The responding application simply has to be a Python `callable <http://docs.python.org/2/library/functions.html#callable>`_ (a python function or a class that implements the ``__call__`` method). Each *callable* is passed the Web server environment (much like CGI applications) and a ``start_resposne``. 
+Web Server Gateway Interface or WSGI (`PEP-333 <http://www.python.org/dev/peps/pep-0333/>`_) is the glue between a Web Server and your Python Web application. The responding application simply has to be a Python `callable <http://docs.python.org/2/library/functions.html#callable>`_ (a python function or a class that implements the ``__call__`` method). Each *callable* is passed the Web server environment (much like CGI applications) and a ``start_response``. 
 
 If you are not familiar with WSGI we recommend reading `Armin Ronarcher <http://lucumr.pocoo.org/>`_'s `introduction to WSGI <http://lucumr.pocoo.org/2007/5/21/getting-started-with-wsgi/>`_. We also have a great collection of :doc:`reference_material` on Python Web development.
 
-Most Python
+WSGI interfaces will generally handover requests that match a URL pattern to the mapped WSGI callable. From the callable is responsible for dispatching the request to the appropriate handler based on part of the URL, HTTP verb, headers or any other property of an HTTP request or a combination properties. This middle ware code is refered to as a request router and prestans provides one of it's own.
+
+prestans makes use of standard HTTP headers for content negotiation. In addition it uses a handful of custom headers that the client can use to control the prestans based API's behavior (features include Content Minification and Attribute Subsets for requests and responses). We'll first introduce you to the relevant HTTP and how it effects your API requests followed by how you can handle API requests in prestans.
 
 HTTP Headers
 ============
 
-Inbound headers:
+HTTP headers are components of the message header for both HTTP requests and responses. They define the rules (e.g preferred content, cookies, software version) for each HTTP requests. These assist the server to best respond to the request and ensures that the client is able to consume it properly.
 
-* ``Prestans-Version``
-* ``Prestans-Response-Attribute-List``
-* ``Prestans-Minification``
+Headers can be specific to an HTTP Verb.
 
-Outbound headers:
-
-* ``Prestans-Version``
+prestans provides a `client side <https://github.com/prestans/prestans-client/>`_ add-ons for `Google Closure <https://developers.google.com/closure/library/>`_ which supports the use of our HTTP rules.
 
 Content Negotiation
 ===================
 
+Each API requests needs to 
+
+* ``Accept`` - header tells the server
+* ``Content-Type``	
+
+.. note:: If you are new to REST, we highly recommend watching `Michael Mahemoff <http://mahemoff.com>`_'s `Web Directions Code 2013 <http://code13.webdirections.org>`_ presentation on REST, `What every developer should know about REST <https://www.youtube.com/watch?v=2yAQ-yLq5eI>`_.
+
+The handler section in this chapter discusses how you pair up serializers and deserializers to handle each Accept and Contet-Type header.
 
 Serializers & DeSerializers
 ---------------------------
@@ -38,6 +44,20 @@ prestans application may speak as many vocabularies as they wish; vocabularies c
 Each request must send an ``Accept`` header for prestans to decide the response format. If the registered handler cannot respond in the requeted format prestans raises an ``UnsupportedVocabularyError`` exception inturn producing a ``501 Not Implemented`` response. All prestans APIs have a set of default formats all handlers accept, each end-point might accept additional formats.
 
 If a request has send a body (e.g ``PUT``, ``POST``) you must send a ``Content-Type`` header to declare the format in use. If you do not send a ``Content-Type`` header prestans will attempt to use the default deserializer to deserialize the body. If the ``Content-Type`` is not supported by the API an ``UnsupportedContentTypeError``` exception is raised inturn producing a ``501 Not Implemented`` response.
+
+Custom Headers
+--------------
+
+Inbound headers:
+
+* ``Prestans-Version``
+* ``Prestans-Response-Attribute-List``
+* ``Prestans-Minification``
+
+Outbound headers:
+
+* ``Prestans-Version``
+
 
 
 Routing Requests

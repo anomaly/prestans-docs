@@ -6,12 +6,13 @@ We found the following references useful while writing prestans, they cover a va
 
 It's important that you understand the basic concepts of Python Web Programming. All our documentation and support is based around the assumption that you are familiar with Python Web development using WSGI and are writing Ajax Web apps.
 
-WSGI
-====
+WSGI & REST
+===========
 
 * `WSGI <http://www.wsgi.org/en/latest/index.html>`_ - the way Web servers talk to Python apps.
 * `ReUsable Web Components with Python and Future Python Web <http://www.youtube.com/watch?v=Ui-mSFuUZmQ>`_ - presented by Ben Bangert (YouTube).
-* `Hosting Python Web Applications <http://www.youtube.com/watch?v=PWIvm-uloMg>`_ - presented by Graham P Dumpleton, author of `mod_wsgi <http://modwsgi.googlecode.com>`_ (YouTube).
+* `Hosting Python Web Applications <http://www.youtube.com/watch?v=PWIvm-uloMg>`_ - presented by Graham P Dumpleton (YouTube).
+* `What every developer should know about REST <https://www.youtube.com/watch?v=2yAQ-yLq5eI>`_ - `Michael Mahemoff <http://mahemoff.com/>`_'s `Web Directions Code 2013 <http://code13.webdirections.org/>`_ presentation on REST (YouTube).
 
 HTTP
 ====
@@ -19,6 +20,7 @@ HTTP
 * `Unacceptable Browser HTTP Accept Headers <http://www.gethifi.com/blog/browser-rest-http-accept-headers>`_ - `Kris Jordan <http://www.gethifi.com/authors/kris-jordan>`_'s comprehensive article on how different browser interpret the Accept header.
 * `The Accept Header <http://shiflett.org/blog/2011/may/the-accept-header>`_ - `Chris Shifflett <http://shiflett.org/about>`_ describes the Accept Header.
 * `A Beginner's Guide to HTTP Cache Headers <http://www.mobify.com/blog/beginners-guide-to-http-cache-headers/>`_ - Kyle Young's excellent description of HTTP cache headers.
+* `Know your HTTP headers well <https://github.com/andreineculau/know-your-http-well/blob/master/headers.md>`_ - `Andrei Neculau <http://andreineculau.com>`_'s guide to the HTTP protocol
 
 Advanced Python
 ===============
