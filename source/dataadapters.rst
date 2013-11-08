@@ -1,9 +1,3 @@
-======
-Extras
-======
-
-prestans extensions are purpose built extensions that act as bridges between prestans elements and for argument sake persistent backends. Etensions build on the core prestans framework and are heavily dependent on environment specific packages.
-
 Data Adapters
 =============
 

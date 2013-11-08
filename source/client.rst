@@ -243,3 +243,16 @@ Reading a Response
 
 Code Generation 
 ===============
+
+
+
+Wisdom
+======
+
+Extensions
+----------
+
+
+Event Handling in Components
+----------------------------
+

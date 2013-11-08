@@ -10,29 +10,8 @@ WSGI interfaces will generally handover requests that match a URL pattern to the
 
 prestans makes use of standard HTTP headers for content negotiation. In addition it uses a handful of custom headers that the client can use to control the prestans based API's behavior (features include Content Minification and Attribute Subsets for requests and responses). We'll first introduce you to the relevant HTTP and how it effects your API requests followed by how you can handle API requests in prestans.
 
-HTTP Headers
-============
-
-HTTP headers are components of the message header for both HTTP requests and responses. They define the rules (e.g preferred content, cookies, software version) for each HTTP requests. These assist the server to best respond to the request and ensures that the client is able to consume it properly.
-
-Headers can be specific to an HTTP Verb.
-
-prestans provides a `client side <https://github.com/prestans/prestans-client/>`_ add-ons for `Google Closure <https://developers.google.com/closure/library/>`_ which supports the use of our HTTP rules.
-
-Content Negotiation
-===================
-
-Each API requests needs to 
-
-* ``Accept`` - header tells the server
-* ``Content-Type``	
-
-.. note:: If you are new to REST, we highly recommend watching `Michael Mahemoff <http://mahemoff.com>`_'s `Web Directions Code 2013 <http://code13.webdirections.org>`_ presentation on REST, `What every developer should know about REST <https://www.youtube.com/watch?v=2yAQ-yLq5eI>`_.
-
-The handler section in this chapter discusses how you pair up serializers and deserializers to handle each Accept and Contet-Type header.
-
 Serializers & DeSerializers
----------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Serializers and DeSerializers are pluggable prestans constructs that assist the framework in packing or unpacking data. Serialzier or deserializer handle content of a particular mime type and are generally wrappers to vocabularies already available in Python (although it possible to write a custom serializer entirely in Python). There are two types of serializers and deserializers:
 
@@ -44,20 +23,6 @@ prestans application may speak as many vocabularies as they wish; vocabularies c
 Each request must send an ``Accept`` header for prestans to decide the response format. If the registered handler cannot respond in the requeted format prestans raises an ``UnsupportedVocabularyError`` exception inturn producing a ``501 Not Implemented`` response. All prestans APIs have a set of default formats all handlers accept, each end-point might accept additional formats.
 
 If a request has send a body (e.g ``PUT``, ``POST``) you must send a ``Content-Type`` header to declare the format in use. If you do not send a ``Content-Type`` header prestans will attempt to use the default deserializer to deserialize the body. If the ``Content-Type`` is not supported by the API an ``UnsupportedContentTypeError``` exception is raised inturn producing a ``501 Not Implemented`` response.
-
-Custom Headers
---------------
-
-Inbound headers:
-
-* ``Prestans-Version``
-* ``Prestans-Response-Attribute-List``
-* ``Prestans-Minification``
-
-Outbound headers:
-
-* ``Prestans-Version``
-
 
 
 Routing Requests
@@ -109,14 +74,16 @@ Using Request Router
 	    debug=True)
 
 * ``routes``
-* ``serializers`` takes a list of serializer instances, if you ommit this paramter presntas will assign JSON as serializer to the API.
-* ``default_serializer`` takes a serializer instance which it as use
-* ``deserializers`` ``None``
-* ``default_deserializer`` ``None``
+* ``serializers`` takes a list of serializer instances, if you omit this parameter prestans will assign JSON as serializer to the API.
+* ``default_serializer`` takes a serializer instance which it as used if 
+* ``deserializers`` ``None`` fill this out a little
+* ``default_deserializer`` fill this out a little ``None``s 
 * ``charset`` ``utf-8``
 * ``application_name`` ``prestans``
 * ``logger`` ``None``
 * ``debug`` ``False``
+
+Write about these things:
 
 * Configuring the router
 * Debug mode
@@ -128,8 +95,8 @@ Using Request Router
 Describe the responsibilities of a request router
 
 
-Handler 
-=======
+Handling Requests
+=================
 
 * Lifecycle of the handler
 
@@ -137,11 +104,17 @@ Registering additional serializers and deserializers
 
 
 Logger
-======
+------
 
+Minifying Content
+-----------------
+
+
+Constructing Response
+=====================
 
 Raising Exceptions
-==================
+------------------
 
 
 `PEP 008 <http://www.python.org/dev/peps/pep-0008/#exception-names>`_ says Exceptions that are errors should end with the Error suffix.

@@ -17,11 +17,12 @@ prestans is currently hosted on `Github <http://github.com/prestans>`_ and distr
    :maxdepth: 3
 
    install
+   headers
    handlers
    validation
    types
    providers
-   ext
+   dataadapters
    client
    design_notes
    reference_material
