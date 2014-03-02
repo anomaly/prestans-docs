@@ -46,14 +46,15 @@ The server side requires a WSGI compliant environment:
 
 We mostly test on latest releases of `Ubuntu Server <http://www.ubuntu.com/download/server>`_, and Google's `AppEngine <https://developers.google.com/appengine/>`_.
 
-Starting your project
-=====================
+Deployment tips
+===============
 
+This section contains a few things we have learnt about various platforms that we've deployed WSGI projects on.
 
-For deployment under Apache
----------------------------
+Apache + mod_wsgi
+-----------------
 
-Directory stucture::
+Consider the following directory stucture, you might wish to checkout a bleeding edge prestans into a source controlled directory (in this instance Git)::
 
 	+-- app
 	+-- conf
@@ -63,10 +64,10 @@ Directory stucture::
 	+-- client
 	+-- conf
 
-`mod_wsgi <http://code.google.com/p/modwsgi/wiki/ConfigurationDirectives#WSGIPythonPath>`_
+`mod_wsgi <http://code.google.com/p/modwsgi/wiki/ConfigurationDirectives#WSGIPythonPath>`_ allows you to use path files 
 
-For deployment under AppEngine
-------------------------------
+AppEngine
+---------
 
 Python projects under AppEngine use a YAML configuration file called `app.yaml <https://developers.google.com/appengine/docs/python/config/appconfig>`_ to specify versions of Python libraries you project requires. Ensure that you have one of the following included in your `app.yaml <https://developers.google.com/appengine/docs/python/config/appconfig#Python_app_yaml_Configuring_libraries>`_ file.
 
@@ -84,10 +85,3 @@ During deployment::
 
 
 Leaving this directive out loads version 1.1 of WebOb; prestans 2.0 onwards specifically uses WebOb 1.2.3+.
-
-Development Server
-==================
-
-* `werkzeug <http://werkzeug.pocoo.org/>`_ - built on top of Pocoo's web server.
-* `voluptuous <https://github.com/alecthomas/voluptuous>`_ - Voluptuous, despite the name, is a Python data validation library. It is primarily intended for validating data coming into Python as JSON, YAML, etc.
-

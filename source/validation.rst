@@ -2,5 +2,19 @@
 Validating Requests & Responses
 ===============================
 
+Setting up validation rules
+---------------------------
 
-Include attribute filter here
+Parameters
+^^^^^^^^^^
+
+Body
+^^^^
+
+
+
+
+Attribute Filters
+-----------------
+
+

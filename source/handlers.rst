@@ -11,7 +11,7 @@ WSGI interfaces will generally handover requests that match a URL pattern to the
 prestans makes use of standard HTTP headers for content negotiation. In addition it uses a handful of custom headers that the client can use to control the prestans based API's behavior (features include Content Minification and Attribute Subsets for requests and responses). We'll first introduce you to the relevant HTTP and how it effects your API requests followed by how you can handle API requests in prestans.
 
 Serializers & DeSerializers
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+===========================
 
 Serializers and DeSerializers are pluggable prestans constructs that assist the framework in packing or unpacking data. Serialzier or deserializer handle content of a particular mime type and are generally wrappers to vocabularies already available in Python (although it possible to write a custom serializer entirely in Python). There are two types of serializers and deserializers:
 
@@ -22,7 +22,7 @@ prestans application may speak as many vocabularies as they wish; vocabularies c
 
 Each request must send an ``Accept`` header for prestans to decide the response format. If the registered handler cannot respond in the requeted format prestans raises an ``UnsupportedVocabularyError`` exception inturn producing a ``501 Not Implemented`` response. All prestans APIs have a set of default formats all handlers accept, each end-point might accept additional formats.
 
-If a request has send a body (e.g ``PUT``, ``POST``) you must send a ``Content-Type`` header to declare the format in use. If you do not send a ``Content-Type`` header prestans will attempt to use the default deserializer to deserialize the body. If the ``Content-Type`` is not supported by the API an ``UnsupportedContentTypeError``` exception is raised inturn producing a ``501 Not Implemented`` response.
+If a request has send a body (e.g ``PUT``, ``POST``) you must send a ``Content-Type`` header to declare the format in use. If you do not send a ``Content-Type`` header prestans will attempt to use the default deserializer to deserialize the body. If the ``Content-Type`` is not supported by the API an ``UnsupportedContentTypeError`` exception is raised inturn producing a ``501 Not Implemented`` response.
 
 
 Routing Requests
@@ -73,13 +73,13 @@ Using Request Router
 	    logger=None,
 	    debug=True)
 
-* ``routes``
+* ``routes`` a list of tuples that maps a URL with 
 * ``serializers`` takes a list of serializer instances, if you omit this parameter prestans will assign JSON as serializer to the API.
 * ``default_serializer`` takes a serializer instance which it as used if 
 * ``deserializers`` ``None`` fill this out a little
-* ``default_deserializer`` fill this out a little ``None``s 
+* ``default_deserializer`` fill this out a little ``None`` 
 * ``charset`` ``utf-8``
-* ``application_name`` ``prestans``
+* ``application_name`` the name of your API, ``prestans``
 * ``logger`` ``None``
 * ``debug`` ``False``
 
@@ -106,15 +106,16 @@ Registering additional serializers and deserializers
 Logger
 ------
 
-Minifying Content
------------------
-
 
 Constructing Response
 =====================
 
+Minifying Content
+-----------------
+
+
 Raising Exceptions
-------------------
+==================
 
 
 `PEP 008 <http://www.python.org/dev/peps/pep-0008/#exception-names>`_ says Exceptions that are errors should end with the Error suffix.
@@ -137,5 +138,3 @@ Parser Exceptions
 Handler Exceptions
 ------------------
 
-Not listed here
----------------

@@ -13,6 +13,7 @@ WSGI & REST
 * `ReUsable Web Components with Python and Future Python Web <http://www.youtube.com/watch?v=Ui-mSFuUZmQ>`_ - presented by Ben Bangert (YouTube).
 * `Hosting Python Web Applications <http://www.youtube.com/watch?v=PWIvm-uloMg>`_ - presented by Graham P Dumpleton (YouTube).
 * `What every developer should know about REST <https://www.youtube.com/watch?v=2yAQ-yLq5eI>`_ - `Michael Mahemoff <http://mahemoff.com/>`_'s `Web Directions Code 2013 <http://code13.webdirections.org/>`_ presentation on REST (YouTube).
+* `Thoughts on RESTfulAPI Design <https://restful-api-design.readthedocs.org/en/latest/>` - by Geert Jansen
 
 HTTP
 ====
