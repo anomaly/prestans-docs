@@ -1,3 +1,24 @@
+================
+Framework Design
+================
+
+prestans is a developer-to-developer product. Before we start talking about how you can start harnessing it's features, we thought it might be a good idea to introduce you to some of the design decisions and patterns. This chapter highlights some of under the hood design decisions, it's written so you can gain an understanding of why prestans behaves the way it does.
+
+It covers the use of HTTP headers to control features of prestans, and when prestans will decide to bail out processing a request and when it will choose to fail gracefully (still responding back to the requesting client).
+
+If you trust that we have made all the right decisions and you'd rather start working on your prestans powered API, then head straight to :doc:`handlers`
+
+Exceptions
+==========
+
+prestans raises two kinds of exceptions. It handles both of them in very different ways:
+
+* The first are inbuilt Python exceptions e.g ``TypeError``, ``AssertionError``, prestans does not handle these exceptions, causing your API to fail process that particular request. This is because these are only raised if you have incorrectly configured your prestans handler, or more importantly your handler is not respecting it's own rules e.g objects returned by an end point don't match your parser configuration.
+
+* The second are prestans defined exceptions. These are handled by prestans and the router will return a proper error response to the requesting client. These are raised if the client placed an incorrect request e.g An attribute wasn't the right length or type. These excpetions are defined in ``prestans.exceptions``, along with a guide for it's suggested use.
+
+prestans defined exceptions can also be used by your handler to notify the client of trivial REST usecases e.g requested entity does not exists. We talk about these in :doc:`handlers`.
+
 HTTP Header Reference
 =====================
 
