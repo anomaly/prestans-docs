@@ -41,7 +41,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'prestans'
-copyright = u'2013, Eternity Technologies'
+copyright = u'2014, Eternity Technologies'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -248,7 +248,7 @@ texinfo_documents = [
 epub_title = u'prestans'
 epub_author = u'Eternity Technologies'
 epub_publisher = u'Eternity Technologies'
-epub_copyright = u'2013, Eternity Technologies'
+epub_copyright = u'2014, Eternity Technologies'
 
 # The language of the text. It defaults to the language option
 # or en if the language is not set.

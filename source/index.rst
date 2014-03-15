@@ -56,6 +56,6 @@ When reporting issues:
 License
 -------
 
-prestans's documentation is distributed under terms of `Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License <http://creativecommons.org/licenses/by-nc-sa/3.0/deed.en_US>`_. Source avialable on `GitHub <https://github.com/prestans/prestans-docs/>`_.
+prestans's documentation is distributed under terms outlined by `Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License <http://creativecommons.org/licenses/by-nc-sa/3.0/deed.en_US>`_. Source avialable on `GitHub <https://github.com/prestans/prestans-docs/>`_.
 
 .. image:: http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png
