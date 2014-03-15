@@ -30,7 +30,7 @@ As a `Git submodule <http://git-scm.com/book/en/Git-Tools-Submodules>`_::
 
 	$ git submodule add https://github.com/prestans/prestans.git prestans
 
-When including prestans manually ensure that your web server is able to locate the files. Read on for tips on configuring Apache and AppEngine for prestans based projects.
+When including prestans manually ensure that your web server is able to locate the files. 
 
 Software Requirements
 =====================
@@ -40,16 +40,16 @@ The server side requires a WSGI compliant environment:
 * Python 2.7
 * WSGI compliant server environment (`Apache <http://httpd.apache.org>`_ + `mod_wsgi <http://modwsgi.googlecode.com>`_, or `Google AppEngine <https://developers.google.com/appengine/>`_, etc).
 * WebOb 1.2.3 (if you're using PyPI this should be installed as a dependency, AppEngine already provides WebOb)
-* You may optionally need SQLAlchemy or AppEngine Datastore.
+* Your choice of a persistent store might require you to install `SQLAlchemy <http://www.sqlalchemy.org/>`_ or AppEngine `Datastore <https://developers.google.com/appengine/docs/python/datastore/>`_.
 
-:doc:`client` talks about client side integration with Google Closure projects.
+:doc:`client` covers our client side Javascript library for Google Closure projects.
 
 We mostly test on latest releases of `Ubuntu Server <http://www.ubuntu.com/download/server>`_, and Google's `AppEngine <https://developers.google.com/appengine/>`_.
 
-Deployment tips
-===============
+Deployment notes
+================
 
-This section contains a few things we have learnt about various platforms that we've deployed WSGI projects on.
+The following are environment specific deployment gotchas. Things we've learnt the hard way. We'll ensure to constantly keep updating this section as we find more, we also encourage you to keep a eye out on our mailing lists.
 
 Apache + mod_wsgi
 -----------------
@@ -63,13 +63,14 @@ Consider the following directory stucture, you might wish to checkout a bleeding
 	    +-- prestans
 	+-- client
 	+-- conf
+        project.pth
 
-`mod_wsgi <http://code.google.com/p/modwsgi/wiki/ConfigurationDirectives#WSGIPythonPath>`_ allows you to use path files 
+mod_wsgi's `WSGIPythonPath <http://code.google.com/p/modwsgi/wiki/ConfigurationDirectives#WSGIPythonPath>`_ directive tells mod_wsgi to add any locations delclared in files with the ``.pth`` extension to the runtime Python path. This allows you to put Python modules in a directory e.g ``ext`` and distribute it with your project.
 
 AppEngine
 ---------
 
-Python projects under AppEngine use a YAML configuration file called `app.yaml <https://developers.google.com/appengine/docs/python/config/appconfig>`_ to specify versions of Python libraries you project requires. Ensure that you have one of the following included in your `app.yaml <https://developers.google.com/appengine/docs/python/config/appconfig#Python_app_yaml_Configuring_libraries>`_ file.
+Python projects under AppEngine use a YAML configuration file called `app.yaml <https://developers.google.com/appengine/docs/python/config/appconfig>`_ to specify versions of Python libraries you project requires. Ensure that you have one of the following included in your app.yaml file.
 
 During development::
 
