@@ -52,3 +52,10 @@ When reporting issues:
 * Include as much detail as you can about your environment (e.g Server OS, Web Server and it's Version, WSGI connector)
 * Steps that we can use to replicate the bug
 * Share a bit of your application code with us, it goes a long way to replicate issues
+
+License
+-------
+
+prestans's documentation is distributed under terms of `Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License <http://creativecommons.org/licenses/by-nc-sa/3.0/deed.en_US>`_. Source avialable on `GitHub <https://github.com/prestans/prestans-docs/>`_.
+
+.. image:: http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png
