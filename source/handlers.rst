@@ -122,6 +122,7 @@ Handling Requests
 
 REST requests primarily use the following HTTP verbs to handle requests:
 
+* ``HEAD`` to check if the entity the client has is still current
 * ``GET`` to retrieve entities
 * ``POST`` to create a new entity
 * ``PUT`` to update an entity
@@ -199,17 +200,24 @@ A typical entity handler would look like (implementing ``GET``, ``PUT`` and ``DE
 
 Notice that since deleting an entity only requires an identifier, and does not have to parse the body of a request. The update request can also choose to use attribute filters to pass in partial objects.
 
-.. note:: At this point if you'd rather learn about how to parse requests and responses, then head to the chapter on :doc:`validation`.
+.. note:: At this point if you'd rather learn about how to parse requests and responses, then head to the chapter on :doc:`validation`. This chapter continues to talk about how handlers work assuming you are going to read the chapter on validation shortly after.
 
+Each handler allows accessing the environment as follows:
 
-* Lifecycle of the handler
+* ``self.request`` is the parsed request based on the rules defined by your handler, this is an instance of ``prestans.rest.Request``
+* ``self.response`` is response prestans will eventually write out to the client, this is an instance of ``prestans.rest.Response``
+* ``self.logger`` is an instance of the logger the API expects you to write any information to, this must be an instance of a Python logger
+* ``self.debug`` is a boolean value passed on by the router to indicate if we are running in debug mode
 
-Registering additional serializers and deserializers
+Each request handler instance is run in the following order:
 
+* ``register_seriailzers`` is called on the handler, this allows the handler to a list of additional serializers it would like to use
+* ``register_deserializers`` is called on the handler, this allows the handler to a list of additional deserializers it would like to use
+* ``handler_will_run`` is called, perform any handler specific warm up acts here
+* The function that represents the requests HTTP verb is called
+* ``handler_did_run`` is called, perform any handler specific tear downs here
 
-Logger
-------
-
+.. note:: since you can
 
 Constructing Response
 =====================
