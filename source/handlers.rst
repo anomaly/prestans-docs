@@ -209,18 +209,47 @@ Each handler allows accessing the environment as follows:
 * ``self.logger`` is an instance of the logger the API expects you to write any information to, this must be an instance of a Python logger
 * ``self.debug`` is a boolean value passed on by the router to indicate if we are running in debug mode
 
-Each request handler instance is run in the following order:
+Each request handler instance is run in the following order (all of these methods can be overridden by your handler):
 
 * ``register_seriailzers`` is called on the handler, this allows the handler to a list of additional serializers it would like to use
 * ``register_deserializers`` is called on the handler, this allows the handler to a list of additional deserializers it would like to use
 * ``handler_will_run`` is called, perform any handler specific warm up acts here
-* The function that represents the requests HTTP verb is called
+* The function that corresponds to the requests HTTP verb is called
 * ``handler_did_run`` is called, perform any handler specific tear downs here
 
-.. note:: since you can
+``prestans.rest.RequestHandler`` can be subclassed as your project's Base Handler class, this generally contains common code e.g getting access to a database sessions, etc. A SQLAlchemy specific example would look like:
+
+.. code-block:: python
+
+    import prestans.rest
+    import prestans.parser
+
+    import myapp.rest.models
+
+
+    class Base(prestans.rest.RequestHandler):
+
+        def handler_will_run(self):
+            self.db_session =myapp.db.Session()
+            self.__provider_config__.authentication =myapp.rest.auth.AuthContextProvider(self.request.environ, self.db_session)
+
+        def handler_did_run(self):
+           myapp.db.Session.remove()
+
+        @property
+        def user_profile(self):
+            return self.__provider_config__.authentication.get_current_user()
+
+        @property
+        def auth_context(self):
+            return self.__provider_config__.authentication
+
+.. note:: You'd typically place this in myapp.rest.handlers.__init__.py and place all your handlers grouped by entity type in that package.
 
 Constructing Response
 =====================
+
+
 
 Minifying Content
 -----------------
