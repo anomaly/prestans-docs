@@ -226,12 +226,11 @@ Each request handler instance is run in the following order (all of these method
 
     import myapp.rest.models
 
-
     class Base(prestans.rest.RequestHandler):
 
         def handler_will_run(self):
-            self.db_session =myapp.db.Session()
-            self.__provider_config__.authentication =myapp.rest.auth.AuthContextProvider(self.request.environ, self.db_session)
+            self.db_session = myapp.db.Session()
+            self.__provider_config__.authentication = myapp.rest.auth.AuthContextProvider(self.request.environ, self.db_session)
 
         def handler_did_run(self):
            myapp.db.Session.remove()
@@ -244,7 +243,7 @@ Each request handler instance is run in the following order (all of these method
         def auth_context(self):
             return self.__provider_config__.authentication
 
-.. note:: You'd typically place this in myapp.rest.handlers.__init__.py and place all your handlers grouped by entity type in that package.
+.. note:: You'd typically place this in ``myapp.rest.handlers.__init__.py`` and place all your handlers grouped by entity type in that package.
 
 Constructing Response
 =====================
