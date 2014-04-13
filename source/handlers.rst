@@ -75,8 +75,6 @@ The constructor takes the following parameters:
 * ``logger``, an instance of a Python logger, defaulted to ``None`` which results in prestans creating a default logger instance.
 * ``debug``, runs prestans under debug mode (results in increased logging, error reporting), it's defaulted to ``False``
 
-A sample initialisation of the router might look like: 
-
 .. code-block:: python
 
     import prestans.rest
@@ -95,7 +93,13 @@ A sample initialisation of the router might look like:
         debug=True)
 
 
-The router is the WSGI application you pass onto server environment. 
+The router is a standalone WSGI application you pass onto server environment. 
+
+If your application prefers a diaclet other than JSON as it's default, ensure you configure this as part of the router. It's recommended that the default diaclet for serialization and deserialization is the same.
+
+The default logger uses is a configured `Python Logger <http://docs.python.org/howto/logging>`_, it logs in detail the lifecycle of a request along with the requested URL. Refer to documentation on how to configure your system logger to control verbosity.
+
+Once your router is setup, prestans is ready to route requests to nominated handlers.
 
 If were deploying under mod_wsgi, your the above would be the contents of your WSGI file. mod_wsgi requires the endpoint to be called ``application``. The WSGI configuration variable might look something like.
 
@@ -110,12 +114,6 @@ Under AppEngine, if this above was declared under a script named ``entry.py``, y
     - url: /api/.*
       script: entry.api
       login: required
-
-If your application prefers a diaclet other than JSON as it's default, ensure you configure this as part of the router. It's recommended that the default diaclet for serialization and deserialization is the same.
-
-The default logger uses is a configured `Python Logger <http://docs.python.org/howto/logging>`_, it logs in detail the lifecycle of a request along with the requested URL. Refer to documentation on how to configure your system logger to control verbosity.
-
-Once your router is setup, prestans is ready to route requests to nominated handlers.
 
 Handling Requests
 =================
@@ -248,6 +246,57 @@ Each request handler instance is run in the following order (all of these method
 Constructing Response
 =====================
 
+The end result of all handler call is to send a response back to the client. This can be as simple as a status code, or as elaborate as a group of entities. prestans is unforgiving (unless requested otherwise) while accepting requests and writing responses.
+
+In accordance with the REST standard, each handler must declare what sort of entities (if any) the handler will return if it successfully processes a request. We will cover error scenarios later in this chapter.
+
+Declaration of response types are defined as part of your parser configuration per HTTP verb. Handlers typically return a collection of entities, defined as:
+
+.. code-block:: python
+
+    import prestans.rest
+    import prestans.parser
+    import prestans.types
+
+    import myapp.rest.models
+
+    class MyEntityRESTRequestHandler(prestans.rest.RequestHandler):
+
+        __parser_config__ = prestans.parser.Config(
+            GET=prestans.parser.VerbConfig(
+                response_template=prestans.types.Array(element_template=myapp.rest.models.Album())
+            )
+        )
+
+        def get(self):
+
+            albums = prestans.types.Array(element_template=myapp.rest.models.Album())
+            albums.append(myacc.rest.models.Album(name="Journeyman", artist="Eric Clapton"))
+            albums.append(myacc.rest.models.Album(name="Dark Side of the Moon", artist="Pink Floyd"))
+            return albums            
+
+or an individual entity, defined as:
+
+.. code-block:: python
+
+    import prestans.rest
+    import prestans.parser
+
+    import myapp.rest.models
+
+    class MyEntityRESTRequestHandler(prestans.rest.RequestHandler):
+
+        __parser_config__ = prestans.parser.Config(
+            GET=prestans.parser.VerbConfig(
+                response_template=myapp.rest.models.Album()
+            )
+        )
+
+        def get(self, album_id):
+            
+            return myapp.rest.models.Album(name="Journeyman", artist="Eric Clapton")
+
+More often than not, the content your handler would sent back would have been read back from a persistent data store.
 
 
 Minifying Content

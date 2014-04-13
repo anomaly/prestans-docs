@@ -12,6 +12,8 @@ prestans is a WSGI (`PEP-333 <http://www.python.org/dev/peps/pep-0333/>`_) compl
 
 prestans is currently hosted on `Github <http://github.com/prestans>`_ and distributed under the terms defined by the `New BSD license <http://opensource.org/licenses/bsd-license.php>`_. A list of current downloads is `available here <https://github.com/prestans/prestans/tags>`_.  We highly recommend using `PyPI <http://pypi.python.org>`_ to install prestans.
 
+This document assumes that you have a working knowledge of REST and WSGI.
+
 .. toctree::
    :numbered:
    :maxdepth: 3
