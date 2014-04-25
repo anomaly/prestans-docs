@@ -357,12 +357,13 @@ If you set ``as_attachment`` to False the file will be delivered inline into the
 Raising Exceptions
 ==================
 
+As alluded to in our :doc:`api_design` chapter, prestans provides two distinct set of Exceptions. The first raised if you've configured your API incorrectly and the later used to send back meaningful error messages to the requesting client.
 
-`PEP 008 <http://www.python.org/dev/peps/pep-0008/#exception-names>`_ says Exceptions that are errors should end with the Error suffix.
+This section deals with Exceptions that prestans expects you to use to raise meaningful REST error messages. These are generally caused by the client sending you an inappropriate e.g the logged in user is not allowed to access or update an entity, or something simply not being found on the persistent data store.
 
-Configuration Exceptions are TypeErrors
+.. note:: `PEP 008 <http://www.python.org/dev/peps/pep-0008/#exception-names>`_ recommends that Exceptions that are errors should end with the Error suffix.
 
-If you hve 
+You do not have to raise exceptions for request and response data validation. If the data does not match the rules defined by your models, parameter sets or attribute filters, it's prestans' responsibility to graceful fail and respond back to the client.
 
 Unsupported Vocabulary
 ----------------------
