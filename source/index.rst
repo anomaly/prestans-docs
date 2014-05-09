@@ -24,7 +24,7 @@ This document assumes that you have a working knowledge of REST and WSGI.
    validation
    types
    providers
-   dataadapters
+   data_adapters
    client
    api_design
    reference_material
