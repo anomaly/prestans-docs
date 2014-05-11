@@ -1,35 +1,50 @@
 Data Adapters
 =============
 
-Our :doc:`models` chapter discusses in detail, the use of Models to validate and build responses returned by handlers. Models can use AttributeFilters to make exceptions to the validation rules set out by your Model's original definition.
+The :doc:`validation` chapter demonstrates the use of prestans ``Models`` to validate requests, build rules complaint responses and the use of ``AttributeFilters`` are used to make temporary case by case exceptions to the validation rules
 
-We identified the scenario and data validation benefits of converting persistently stored data to REST models, and in turn identified that it's a code laborious process.
-
-DataAdapters fills that gap in prestans, it automates the process of converting persistent models into REST models by providing:
+``DataAdapters`` automate morphing persistent objects to prestans models, it provides the following feature
 
 * A static registry ``prestans.ext.data.adapters.registry``, that maps persistent models to REST models
-* QueryResultsIterator, that iterates through collections of persistent results and turns them into REST models. QueryResultsIterator is specific to backends and uses the registry to determine relationships between persistent and REST models. 
+* An instance convertor, used to convert an instance. Convertors are specific to backends and uses the registry to determine relationships between persistent and REST models. 
+* A collection iterator, that iterates through collections of persistent results and turns them into REST models. It follows all the same rules as the instance convertor.
 
-.. note:: You can map multiple REST models to the same persistent model.
+.. note:: REST services provide views of persistent data, DataAdapters allow you to map multiple REST models to the same persistent model.
 
-For our sample code assume that rest models live in the ``pdemo.rest.models`` and the persistent models live in ``pdemo.models``, and is written for AppEngine.
+For our sample code assume that rest models live in the ``musicdb.rest.models`` and the persistent models live in ``musicdb.models``, and is written for AppEngine.
 
-prestans supports ``SQLAlchemy`` and AppEngine's ``ndb`` and ``datastore``. You can write your DataAdapter to support custom backends.
+Out of the box prestans supports 
+
+* `SQLAlchemy <http://www.sqlalchemy.org/>`_ which in turn should allow you to support most popular RDBMS backends.
+* AppEngine's `Python NDB <https://developers.google.com/appengine/docs/python/ndb/>`_ which is built on top of DataStore.
+
+Writing DataAdapters for other backends is discussed later in this chapter.
 
 Pairing REST models to persistent models
 ----------------------------------------
 
-The registry allows you to provide a map acceptable translations between persistent and REST models. If a persistent model maps to more than one REST model, DataAdapters try and make the sensible choice unless you explicitly provide the REST model you wish to adapt the data to.
+Before you can ask prestans to convert persistent objects to REST model instances, you must use the registry you to pair persistent definitions to REST definitions. prestans uses the REST model as the template for the data that will be transformed. While adapting data prestans will:
 
-General practice is to register the persistent models along side their definition. An excerpt from ``pdemo.models``.
+* Inspect the REST model for a list of attributes
+* Inspect the persistent model for the data
+* Ensure that the data provided by the persistent model matches the rules definied by the REST model
+* If the persistent model does not define an attribute, prestans reverts to using the default value or ``None``
+* If the value provided by the persistent model fails to validate, prestans raises an ``prestans.exception.DataValidationException`` which will graceful respond to the requesting client.
 
-Registering the persistent model is as easy as calling the ``register_adapter`` method on ``prestans.ext.data.adapters.registry``, and providing it an instance of the appropriate ``ModelAdapter``.
+If a persistent definition maps to more than one REST model defintion, DataAdapters will try and make the sensible choice unless you explicitly provide the REST model you wish to adapt the data to.
 
-Consider a REST model defined ``prestans.rest.models``:
+Registering the persistent model is done by calling the ``register_adapter`` method on ``prestans.ext.data.adapters.registry``, and an appropriate ``ModelAdapter`` instance.
+
+Consider the following REST models defined in ``musicdb.rest.models``:
 
 .. code-block:: python
 
     import prestans.types
+
+    class Album(prestans.types.Model):
+
+        id = prestans.types.Integer(required=False)
+        name = prestans.types.String(required=True, max_length=30)        
 
     class Band(prestans.types.Model):
 
@@ -39,7 +54,7 @@ Consider a REST model defined ``prestans.rest.models``:
         albums = prestans.types.Array(element_template=Album(), required=False)
 
 
-And then in your persistent model package, use ``prestans.ext.data.adapters.registry`` to join the dots. Ensure that all children models are present in the registry (e.g Album):
+along with it's corresponding NDB persistent model defined in ``musicdb.models``:
 
 .. code-block:: python
 
@@ -48,6 +63,14 @@ And then in your persistent model package, use ``prestans.ext.data.adapters.regi
 
     import prestans.ext.data.adapters
     import prestans.ext.data.adapters.ndb
+
+    class Album(ndb.Model):
+
+        name = ndb.StringProperty()
+
+        @property
+        def id(self):
+            return self.key.id()
 
     class Band(ndb.Model):
 
@@ -64,12 +87,20 @@ And then in your persistent model package, use ``prestans.ext.data.adapters.regi
         def id(self):
             return self.key.id()
 
+We recommend that you create a package called ``yourproject.rest.adapters`` to hold all your adapter registrations. This is purely convention.
+
+.. code-block:: python
+    
+    import musicdb.models
+    import musicdb.rest.models
+
+
     # Register the persistent model to adapt to the Band rest model, also
     # ensure that Album is registered for the children models to adapt
     prestans.ext.data.adapters.registry.register_adapter(
         prestans.ext.data.adapters.ndb.ModelAdapter(
-            rest_model_class=pdemo.rest.models.Band, 
-            persistent_model_class=Band
+            rest_model_class=musicdb.rest.models.Band, 
+            persistent_model_class=musicdb.models.Band
         )
     )
 
@@ -87,52 +118,51 @@ Once your models have been declared in the adapter registry, your REST handler:
 
     from google.appengine.ext import ndb
 
-    import pdemo.models
-    import pdemo.rest.handlers
-    import pdemo.rest.models
+    import musicdb.models
+    import musicdb.rest.handlers
+    import musicdb.rest.models
+    import musicdb.rest.adapters
 
     import prestans.ext.data.adapters.ndb
     import prestans.handlers
     import prestans.parsers
     import prestans.rest
 
-    class CollectionRequestParser(prestans.parsers.RequestParser):
 
-        GET = prestans.parsers.ParserRuleSet(        
-            response_attribute_filter_template=prestans.parsers.AttributeFilter.from_model(pdemo.rest.models.Band())
-        )
-
-    class BandCollection(pdemo.rest.handlers.Base):
+    class BandCollection(musicdb.rest.handlers.Base):
 
         request_parser = CollectionRequestParser()
 
         def get(self):
 
-            bands = pdemo.models.Band().query()
+            bands = musicdb.models.Band().query()
         
             self.response.http_status = prestans.rest.STATUS.OK
-            self.response.body = prestans.ext.data.adapters.ndb.QueryResultIterator(
+            self.response.body = prestans.ext.data.adapters.ndb.adapt_collection(
                 collection=bands, 
-                target_rest_instance=pdemo.rest.models.Band
+                target_rest_instance=musicdb.rest.models.Band
             )
 
-If you are using AttributeFilters (read our chapter on :doc:`validation` to learn how you can make exceptions to Model validation rules) you can pass them onto the QueryResultsIterator which results in the QueryResultsIterator skipping accessing that property all together significantly reducing the load on the Data Layer:
+If you are using AttributeFilters, you should pass the filter along onto the ``adapt_collection`` method which allowing ``adapt_collection`` to skip accessing that property all together, this can significantly reduce read load on like NDB, or even SQLAlchemy if you lazy load relationships:
 
 .. code-block:: python
 
-    class BandCollection(pdemo.rest.handlers.Base):
+    class BandCollection(musicdb.rest.handlers.Base):
 
         request_parser = CollectionRequestParser()
 
         def get(self):
 
-            bands = pdemo.models.Band().query()
+            bands = musicdb.models.Band().query()
         
             self.response.http_status = prestans.rest.STATUS.OK
             self.response.body = prestans.ext.data.adapters.ndb.QueryResultIterator(
                 collection=bands, 
-                target_rest_instance=pdemo.rest.models.Band,
+                target_rest_instance=musicdb.rest.models.Band,
                 attribute_filter = self.response.attribute_filter
             )
 
 
+
+Writing your own DataAdapter
+----------------------------
