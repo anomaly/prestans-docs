@@ -101,26 +101,40 @@ The Types API is a client side implementation of the prestans types API found on
 Array
 -----
 
-``prestans.types.Array`` extends ``goog.iter.Iterator``, allowing you to use ``goog.iter.forEach`` to iterate.
+``prestans.types.Array`` extends ``goog.iter.Iterator``, allowing you to use the methods from ``goog.iter`` including:
 
-* ``isEmpty``
-* ``isValid``
-* ``append``
+* ``goog.iter.filter``
+* ``goog.iter.forEach``
+* ``goog.iter.limit``
+
+Prestans provides wrappers for the following Google closure ``goog.array`` methods:
+
+* ``isEmpty`` -> ``Boolean``
+* ``binarySearch``
+* ``binaryInsert``
+* ``binaryRemove``
 * ``insertAt``
 * ``insertAfter``
-* ``length``
-* ``asArray``
-* ``clone``
-
-Google Closur provides a number of useful methods
-
+* ``indexOf``
 * ``removeIf``
 * ``remove``
 * ``sort``
 * ``clear``
-* ``containsIf``
+* ``find``
+* ``slice`` -> ``prestans.types.Array``
 * ``contains``
+
+Prestans then provides the following additional methods:
+
+* ``append (element)`` -> ``Boolean``
+* ``length`` -> ``Number``
+* ``containsIf``
 * ``objectAtIndex``
+* ``asArray`` -> ``Array``
+* ``clone`` -> ``prestans.types.Array``
+* ``getElementTemplate``
+* ``getJSONObject`` -> ``Object``
+* ``getJSONString`` -> ``String``
 
 REST Client
 ===========
