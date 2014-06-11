@@ -39,9 +39,12 @@ Closure library does the same, and we ensure that we are leveraging off their la
 Unit testing
 ------------
 
+Adjust the ``DEPSWRITER`` variable in the calcdeps.sh script and run it in the prestans-client directory.
+
 .. code-block:: javascript
 
-    /path/to/depswriter.py --root_with_prefix=". ../prestans" > deps.js
+    cd prestans-client
+    ./calcdeps.sh
 
 To run these unit tests you will need to start Google Chrome with ``--allow-file-access-from-files`` parameter. Example on Mac OS X:
 
@@ -54,20 +57,20 @@ Extending JavaScript namespaces
 
 :doc:`models` ensure the validity of data sent to and from the server. The application client should be as responsible validate data on the client side, ensuring that you never send an invalid request or you never accept an invalid response. Discussed later in this chapter are tools provided by prestans that auto generate Closure library compatible versions of your server side Models and Attribute Filters, needless to say our JSON client works seamlessly with these auto generated Models and Filters.
 
-Auto generated code is accompanied with the curse of loosing local modifications (e.g adding a helper method or computed property) when you next run the auto generate process. 
+Auto generated code is accompanied with the curse of losing local modifications (e.g adding a helper method or computed property) when you next run the auto generate process. 
 
 Consider the following scenario, prestans auto generates a Model class called ``User``, this uses the JavaScript namespace ``pdemo.data.model.User``, you now wish to write a function to say concatenate a user's first and last name. The obvious approach is to use ``goog.inherits`` to create a subclass of ``pdemo.data.model.User``. However for dynamic operations like parsing server responses maintaining the namespace is crucial.
 
 Thanks to JavaScript's dynamic nature and Closure's excellent dependency management it's quite easy to implement a pattern that closely resembles `Objective-C Categories <http://developer.apple.com/library/ios/#documentation/cocoa/conceptual/ProgrammingWithObjectiveC/CustomizingExistingClasses/CustomizingExistingClasses.html>`_. The idea is to be able to maintain the custom code in a separate file and be able to dynamically merge it with the auto generated code during runtime.
 
-To achieve this for our hypothetical User class, create a file called ``UserExtensions.js``, this will provide the namespace ``pdemo.data.model.UserExtension`` and depend on ``pdemo.data.model.User``. 
+To achieve this for our hypothetical User class, create a file called ``User.js`` in directory ``pdemo/data/extension``, this will provide the namespace ``pdemo.data.extension.User`` and depend on ``pdemo.data.model.User``. 
 
 .. code-block:: javascript
 
-    goog.provide('pdemo.data.model.UserExtension');
+    goog.provide('pdemo.data.extension.User');
     goog.require('pdemo.data.model.User');
 
-    # Closure will ensure that the namespace pdemo.data.model.UserExtension
+    # Closure will ensure that the namespace pdemo.data.extension.User
     # is available here, feel free to extend it
 
     pdemo.data.model.User.prototype.getFullName = function() { 
@@ -81,7 +84,7 @@ Now where you want to create an instance of ``pdemo.data.model.User``, use the e
     goog.provide('pdemo.ui.web.Renderer');
 
     # This will make available the pdemo.data.model.User namespace with your extensions
-    goog.require('pdemo.data.model.UserExtension');
+    goog.require('pdemo.data.extension.User');
 
 
 Types API
@@ -139,14 +142,15 @@ Prestans provides wrappers for the following Google closure `goog.array <http://
 
 Prestans then provides the following additional methods:
 
+* ``getMinLength`` -> ``Number``
+* ``getMaxLength`` -> ``Number``
 * ``append (element)`` -> ``Boolean``
-* ``insertAfter()``
+* ``insertAfter(newValue, existingValue)`` -> ``Boolean``
 * ``length`` -> ``Number``
-* ``containsIf``
-* ``objectAtIndex``
+* ``containsIf(condition, opt_context)`` -> ``Element|null``
+* ``objectAtIndex(index)`` -> ``Element``
 * ``asArray`` -> ``Array``
 * ``clone`` -> ``prestans.types.Array``
-* ``getElementTemplate``
 * ``getJSONObject`` -> ``Object``
 * ``getJSONString`` -> ``String``
 
@@ -276,20 +280,6 @@ Code Generation
 
 Wisdom
 ======
-
-Extensions
-----------
-You can easily extend the generated models using the closure namespace tools. This will allow you to add your own methods that will not be affected when the model files are regenerated.
-
-.. code-block:: javascript
-
-    goog.provide('pdemo.data.extension.Person');
-
-    goog.require('pdemo.data.model.Person');
-
-    pdemo.data.model.Task.prototype.getFullName = function() {
-        return this.firstName_ + " " + this.lastName_;
-    };
 
 Event Handling in Components
 ----------------------------
