@@ -265,7 +265,17 @@ Wisdom
 
 Extensions
 ----------
+You can easily extend the generated models using the closure namespace tools. This will allow you to add your own methods that will not be affected when the model files are regenerated.
 
+.. code-block:: javascript
+
+    goog.provide('pdemo.data.extension.Person');
+
+    goog.require('pdemo.data.model.Person');
+
+    pdemo.data.model.Task.prototype.getFullName = function() {
+        return this.firstName_ + " " + this.lastName_;
+    };
 
 Event Handling in Components
 ----------------------------
