@@ -115,6 +115,7 @@ An array takes the following object as its constructor.
         elementTemplate: Subclass of prestans.types.Model or instance of prestans.types.Integer, prestans.types.Float, prestans.types.String, prestans.types.Boolean,
         opt_elements: Array of elements to append to the array,
         opt_json: Array of json elements to append to the array,
+        opt_minified: Whether or not the json has been minified,
         opt_maxLength: An integer value representing the maximum length of the array,
         opt_minLength: An integer value representing the minimum length of the array
     }
@@ -122,23 +123,24 @@ An array takes the following object as its constructor.
 Prestans provides wrappers for the following Google closure `goog.array <http://docs.closure-library.googlecode.com/git/namespace_goog_array.html>`_ methods:
 
 * ``isEmpty`` -> ``Boolean``
-* ``binarySearch``
-* ``binaryInsert``
-* ``binaryRemove``
-* ``insertAt``
-* ``insertAfter``
-* ``indexOf``
-* ``removeIf``
-* ``remove``
-* ``sort(opt_sortFunction)``
+* ``binarySearch(target, opt_compareFn)`` -> ``Number``
+* ``binaryInsert(value, opt_compareFn)`` -> ``Boolean``
+* ``binaryRemove(value, opt_compareFn)`` -> ``Boolean``
+* ``insertAt(obj, opt_i)``
+* ``indexOf(obj, opt_fromIndex)`` -> ``Number``
+* ``removeAt(i)`` -> ``Boolean``
+* ``removeIf(f, opt_obj)`` -> ``Boolean``
+* ``remove(obj)`` -> ``Boolean``
+* ``sort(opt_compareFn)``
 * ``clear``
-* ``find``
+* ``find(f, opt_obj)`` -> ``Element|null``
 * ``slice(start, opt_end)`` -> ``prestans.types.Array``
-* ``contains(element)`` -> ``Boolean``
+* ``contains(obj)`` -> ``Boolean``
 
 Prestans then provides the following additional methods:
 
 * ``append (element)`` -> ``Boolean``
+* ``insertAfter()``
 * ``length`` -> ``Number``
 * ``containsIf``
 * ``objectAtIndex``
