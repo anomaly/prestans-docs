@@ -101,13 +101,25 @@ The Types API is a client side implementation of the prestans types API found on
 Array
 -----
 
-``prestans.types.Array`` extends ``goog.iter.Iterator``, allowing you to use the methods from ``goog.iter`` including:
+``prestans.types.Array`` extends `goog.iter.Iterator <http://docs.closure-library.googlecode.com/git/class_goog_iter_Iterator.html>`_, allowing you to use the methods from `goog.iter <http://docs.closure-library.googlecode.com/git/namespace_goog_iter.html>`_ including:
 
 * ``goog.iter.filter``
 * ``goog.iter.forEach``
 * ``goog.iter.limit``
 
-Prestans provides wrappers for the following Google closure ``goog.array`` methods:
+An array takes the following object as its constructor.
+
+.. code-block:: javascript
+
+    {
+        elementTemplate: Subclass of prestans.types.Model or instance of prestans.types.Integer, prestans.types.Float, prestans.types.String, prestans.types.Boolean,
+        opt_elements: Array of elements to append to the array,
+        opt_json: Array of json elements to append to the array,
+        opt_maxLength: An integer value representing the maximum length of the array,
+        opt_minLength: An integer value representing the minimum length of the array
+    }
+
+Prestans provides wrappers for the following Google closure `goog.array <http://docs.closure-library.googlecode.com/git/namespace_goog_array.html>`_ methods:
 
 * ``isEmpty`` -> ``Boolean``
 * ``binarySearch``
@@ -118,11 +130,11 @@ Prestans provides wrappers for the following Google closure ``goog.array`` metho
 * ``indexOf``
 * ``removeIf``
 * ``remove``
-* ``sort``
+* ``sort(opt_sortFunction)``
 * ``clear``
 * ``find``
-* ``slice`` -> ``prestans.types.Array``
-* ``contains``
+* ``slice(start, opt_end)`` -> ``prestans.types.Array``
+* ``contains(element)`` -> ``Boolean``
 
 Prestans then provides the following additional methods:
 
