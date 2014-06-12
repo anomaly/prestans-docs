@@ -101,6 +101,8 @@ The Types API is a client side implementation of the prestans types API found on
 * ``Model``, wraps JavaScript ``object``
 * ``Filter`` is an configurable filter that you can pass with API calls, this translates back into attribute strings, discussed in :doc:`validation`.
 
+.. note:: prestans.types.Integer only support integers in signed 32 bit range as anything outside this range does not work correctly with JavaScript bitwise operators.
+
 Array
 -----
 
