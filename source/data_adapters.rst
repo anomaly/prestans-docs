@@ -149,8 +149,6 @@ If you are using AttributeFilters, you should pass the filter along onto the ``a
 
     class BandCollection(musicdb.rest.handlers.Base):
 
-        request_parser = CollectionRequestParser()
-
         def get(self):
 
             bands = musicdb.models.Band().query()

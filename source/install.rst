@@ -86,3 +86,15 @@ During deployment::
 
 
 Leaving this directive out loads version 1.1 of WebOb; prestans 2.0 onwards specifically uses WebOb 1.2.3+.
+
+
+Unit testing
+============
+
+prestans ships a `unit testing framework <https://docs.python.org/2/library/unittest.html>`_ 
+
+.. code-block:: bash
+
+    python -m unitest prestans.testsuite
+
+
