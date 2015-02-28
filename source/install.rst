@@ -16,8 +16,8 @@ If you need to run multiple versions of prestans on a server, consider using `Vi
 
 Alternatively you can download and build prestans using distutils::
 
-    $ tar -zxvf prestans-2.0.tgz
-    $ cd prestans-2.0
+    $ tar -zxvf prestans-2.x.x.tgz
+    $ cd prestans-2.x.x
     $ sudo python setup.py install
 
 Environments like Google's AppEngine require you to include custom packages as part of your source. Things to consider when distributing prestans with your application:
