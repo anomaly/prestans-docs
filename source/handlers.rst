@@ -6,29 +6,29 @@ Web Server Gateway Interface or WSGI (:pep:`333`) is the glue between a Web Serv
 
 If you are not familiar with WSGI we recommend reading `Armin Ronarcher <http://lucumr.pocoo.org/>`_'s `introduction to WSGI <http://lucumr.pocoo.org/2007/5/21/getting-started-with-wsgi/>`_. We also have a great collection of :doc:`reference_material` on Python Web development.
 
-WSGI interfaces will generally handover requests that match a URL pattern to the mapped WSGI callable. From the callable is responsible for dispatching the request to the appropriate handler based on part of the URL, HTTP verb, headers or any other property of an HTTP request or a combination properties. This middle ware code is refered to as a request router and prestans provides one of it's own.
+WSGI interfaces will generally handover requests that match a URL pattern to the mapped WSGI callable. From the callable is responsible for dispatching the request to the appropriate handler based on part of the URL, HTTP verb, headers or any other property of an HTTP request or a combination properties. This middle ware code is refered to as a request router and Prestans provides one of it's own.
 
-prestans makes use of standard HTTP headers for content negotiation. In addition it uses a handful of custom headers that the client can use to control the prestans based API's behavior (features include Content Minification and Attribute Subsets for requests and responses). We'll first introduce you to the relevant HTTP and how it effects your API requests followed by how you can handle API requests in prestans.
+Prestans makes use of standard HTTP headers for content negotiation. In addition it uses a handful of custom headers that the client can use to control the Prestans based API's behavior (features include Content Minification and Attribute Subsets for requests and responses). We'll first introduce you to the relevant HTTP and how it effects your API requests followed by how you can handle API requests in Prestans.
 
 Serializers & DeSerializers
 ===========================
 
-Serializers and DeSerializers are pluggable prestans constructs that assist the framework in packing or unpacking data. Serialzier or deserializer handle content of a particular mime type and are generally wrappers to vocabularies already available in Python (although it possible to write a custom serializer entirely in Python). Serializers always write out a parseable version of models.
+Serializers and DeSerializers are pluggable Prestans constructs that assist the framework in packing or unpacking data. Serialzier or deserializer handle content of a particular mime type and are generally wrappers to vocabularies already available in Python (although it possible to write a custom serializer entirely in Python). Serializers always write out a parseable version of models.
 
-prestans application may speak as many vocabularies as they wish; vocabularies can also be local to handlers (as opposed to applicaiton wide). You must also define a default format.
+Prestans application may speak as many vocabularies as they wish; vocabularies can also be local to handlers (as opposed to applicaiton wide). You must also define a default format.
 
-Each request must send an ``Accept`` header for prestans to decide the response format. If the registered handler cannot respond in the requeted format prestans raises an ``UnsupportedVocabularyError`` exception inturn producing a ``501 Not Implemented`` response. All prestans APIs have a set of default formats all handlers accept, each end-point might accept additional formats.
+Each request must send an ``Accept`` header for Prestans to decide the response format. If the registered handler cannot respond in the requeted format Prestans raises an ``UnsupportedVocabularyError`` exception inturn producing a ``501 Not Implemented`` response. All Prestans APIs have a set of default formats all handlers accept, each end-point might accept additional formats.
 
-If a request has send a body (e.g ``PUT``, ``POST``) you must send a ``Content-Type`` header to declare the format in use. If you do not send a ``Content-Type`` header prestans will attempt to use the default deserializer to deserialize the body. If the ``Content-Type`` is not supported by the API an ``UnsupportedContentTypeError`` exception is raised inturn producing a ``501 Not Implemented`` response.
+If a request has send a body (e.g ``PUT``, ``POST``) you must send a ``Content-Type`` header to declare the format in use. If you do not send a ``Content-Type`` header Prestans will attempt to use the default deserializer to deserialize the body. If the ``Content-Type`` is not supported by the API an ``UnsupportedContentTypeError`` exception is raised inturn producing a ``501 Not Implemented`` response.
 
 Routing Requests
 ================
 
-prestans is built right on top of WSGI and ships with it's own WSGI Request Router. The router is responsible for parsing the HTTP request, setting up a HTTP response, setup a logger (if one wasn't provided as part of the configuraiton), finally check to see if the API services the requested URL and hand the request over to the handler.
+Prestans is built right on top of WSGI and ships with it's own WSGI Request Router. The router is responsible for parsing the HTTP request, setting up a HTTP response, setup a logger (if one wasn't provided as part of the configuraiton), finally check to see if the API services the requested URL and hand the request over to the handler.
 
 The handler is responsible for constructing the response and one return the router, asks the response to serialize itself. If an exception is raised (see :doc:`framework_design`) is raised by the framework (because it couldn't parse the request or response) or the handler, the router where appropriate, writes a detailed error trace back to the client.
 
-prestans verbosely logs events per API request. Your system logger is responsible for verbosity of the logger.
+Prestans verbosely logs events per API request. Your system logger is responsible for verbosity of the logger.
 
 Regex & URL design primer
 -------------------------
@@ -59,34 +59,34 @@ A Regex example of these URL patterns would look like:
 Using Request Router
 --------------------
 
-The router is provided by the ``prestans.rest`` package. It's the keeper of all prestans API requests, it (with the help of other members of the ``prestans.rest`` package) parases the HTTP request, setups the appropriate handler and hands over control.
+The router is provided by the ``Prestans.rest`` package. It's the keeper of all Prestans API requests, it (with the help of other members of the ``Prestans.rest`` package) parases the HTTP request, setups the appropriate handler and hands over control.
 
 The router also handles error states raised by the API and informs the requesting client to what went wrong. These can include issues with parsing the request or exceptions raised by the handler (this is covered later in the chapter) while dealing with the request.
 
 The constructor takes the following parameters:
 
 * ``routes`` a list of tuples that maps a URL with 
-* ``serializers`` takes a list of serializer instances, if you omit this parameter prestans will assign JSON as serializer to the API.
+* ``serializers`` takes a list of serializer instances, if you omit this parameter Prestans will assign JSON as serializer to the API.
 * ``default_serializer`` takes a serializer instance which it uses if the client does not provide an ``Accept`` header.
-* ``deserializers``, a set of deserializers that the clients use via the ``Content-Type`` header, this default to ``None`` and will result in prestans using JSON as the default deserializer. 
-* ``default_deserializer``, default serializer to be used if a client doesn't provide a ``Content-Type`` header, defaults to ``None`` which results in prestans using the JSON deserializer. 
+* ``deserializers``, a set of deserializers that the clients use via the ``Content-Type`` header, this default to ``None`` and will result in Prestans using JSON as the default deserializer. 
+* ``default_deserializer``, default serializer to be used if a client doesn't provide a ``Content-Type`` header, defaults to ``None`` which results in Prestans using the JSON deserializer. 
 * ``charset``, to be used to parse strings, defaulted to ``utf-8``
-* ``application_name`` the name of your API, ``prestans``
-* ``logger``, an instance of a Python logger, defaulted to ``None`` which results in prestans creating a default logger instance.
-* ``debug``, runs prestans under debug mode (results in increased logging, error reporting), it's defaulted to ``False``
+* ``application_name`` the name of your API, ``Prestans``
+* ``logger``, an instance of a Python logger, defaulted to ``None`` which results in Prestans creating a default logger instance.
+* ``debug``, runs Prestans under debug mode (results in increased logging, error reporting), it's defaulted to ``False``
 
 .. code-block:: python
 
-    import prestans.rest
+    import Prestans.rest
     import myapp.rest.handlers
 
-    api = prestans.rest.RequestRouter(routes=[
+    api = Prestans.rest.RequestRouter(routes=[
             (r'/([0-9]+)', myapp.rest.handlers.DefaultHandler)
         ], 
-        serializers=[prestans.serializer.JSON()],
-        default_serializer=prestans.serializer.JSON(),
-        deserializers=[prestans.deserializer.JSON()],
-        default_deserializer=prestans.deserializer.JSON(),
+        serializers=[Prestans.serializer.JSON()],
+        default_serializer=Prestans.serializer.JSON(),
+        deserializers=[Prestans.deserializer.JSON()],
+        default_deserializer=Prestans.deserializer.JSON(),
         charset="utf-8",
         application_name="music-db", 
         logger=None,
@@ -99,7 +99,7 @@ If your application prefers a diaclet other than JSON as it's default, ensure yo
 
 The default logger uses is a configured `Python Logger <http://docs.python.org/howto/logging>`_, it logs in detail the lifecycle of a request along with the requested URL. Refer to documentation on how to configure your system logger to control verbosity.
 
-Once your router is setup, prestans is ready to route requests to nominated handlers.
+Once your router is setup, Prestans is ready to route requests to nominated handlers.
 
 If were deploying under mod_wsgi, your the above would be the contents of your WSGI file. mod_wsgi requires the endpoint to be called ``application``. The WSGI configuration variable might look something like.
 
@@ -127,7 +127,7 @@ REST requests primarily use the following HTTP verbs to handle requests:
 * ``PATCH`` to update part of an entity
 * ``DELETE`` to delete an entity
 
-prestans maps each one of these verbs to a python function of the same name in your REST handler class. Each REST request handler in your application derives from ``prestans.rest.RequestHandler``. Unless your handler overrides the functions ``get``, ``post``, ``put``, ``patch``, ``delete`` the base implementation tells the prestans router that the requested end point does not support the particular HTTP verb.
+Prestans maps each one of these verbs to a python function of the same name in your REST handler class. Each REST request handler in your application derives from ``Prestans.rest.RequestHandler``. Unless your handler overrides the functions ``get``, ``post``, ``put``, ``patch``, ``delete`` the base implementation tells the Prestans router that the requested end point does not support the particular HTTP verb.
 
 Your handler must accept an equal number of parameters as defined the router regular expression.
 
@@ -142,18 +142,18 @@ A typical collection handlers would typically look like (implementing ``GET`` an
 
 .. code-block:: python
 
-    import prestans.rest
-    import prestans.parser
+    import Prestans.rest
+    import Prestans.parser
 
     import myapp.rest.models
 
-    class MyCollectionRESTRequestHandler(prestans.rest.RequestHandler):
+    class MyCollectionRESTRequestHandler(Prestans.rest.RequestHandler):
 
-        __parser_config__ = prestans.parser.Config(
-            GET=prestans.parser.VerbConfig(
-                response_template=prestans.types.Array(element_template=myapp.rest.models.Track())
+        __parser_config__ = Prestans.parser.Config(
+            GET=Prestans.parser.VerbConfig(
+                response_template=Prestans.types.Array(element_template=myapp.rest.models.Track())
             ),
-            POST=prestans.parser.VerbConfig(
+            POST=Prestans.parser.VerbConfig(
                 body_template=myapp.rest.models.Track(),
                 response_template=myapp.rest.models.Track()
             )
@@ -170,18 +170,18 @@ A typical entity handler would look like (implementing ``GET``, ``PUT`` and ``DE
 
 .. code-block:: python
 
-    import prestans.rest
-    import prestans.parser
+    import Prestans.rest
+    import Prestans.parser
 
     import myapp.rest.models
 
-    class MyEntityRESTRequestHandler(prestans.rest.RequestHandler):
+    class MyEntityRESTRequestHandler(Prestans.rest.RequestHandler):
 
-        __parser_config__ = prestans.parser.Config(
-            GET=prestans.parser.VerbConfig(
+        __parser_config__ = Prestans.parser.Config(
+            GET=Prestans.parser.VerbConfig(
                 response_template=myapp.rest.models.Track()
             ),
-            PUT=prestans.parser.VerbConfig(
+            PUT=Prestans.parser.VerbConfig(
                 body_template=myapp.rest.models.Track(),
             )
         )
@@ -202,8 +202,8 @@ Notice that since deleting an entity only requires an identifier, and does not h
 
 Each handler allows accessing the environment as follows:
 
-* ``self.request`` is the parsed request based on the rules defined by your handler, this is an instance of ``prestans.rest.Request``
-* ``self.response`` is response prestans will eventually write out to the client, this is an instance of ``prestans.rest.Response``
+* ``self.request`` is the parsed request based on the rules defined by your handler, this is an instance of ``Prestans.rest.Request``
+* ``self.response`` is response Prestans will eventually write out to the client, this is an instance of ``Prestans.rest.Response``
 * ``self.logger`` is an instance of the logger the API expects you to write any information to, this must be an instance of a Python logger
 * ``self.debug`` is a boolean value passed on by the router to indicate if we are running in debug mode
 
@@ -215,16 +215,16 @@ Each request handler instance is run in the following order (all of these method
 * The function that corresponds to the requests HTTP verb is called
 * ``handler_did_run`` is called, perform any handler specific tear downs here
 
-``prestans.rest.RequestHandler`` can be subclassed as your project's Base Handler class, this generally contains common code e.g getting access to a database sessions, etc. A SQLAlchemy specific example would look like:
+``Prestans.rest.RequestHandler`` can be subclassed as your project's Base Handler class, this generally contains common code e.g getting access to a database sessions, etc. A SQLAlchemy specific example would look like:
 
 .. code-block:: python
 
-    import prestans.rest
-    import prestans.parser
+    import Prestans.rest
+    import Prestans.parser
 
     import myapp.rest.models
 
-    class Base(prestans.rest.RequestHandler):
+    class Base(Prestans.rest.RequestHandler):
 
         def handler_will_run(self):
             self.db_session = myapp.db.Session()
@@ -246,7 +246,7 @@ Each request handler instance is run in the following order (all of these method
 Constructing Response
 =====================
 
-The end result of all handler call is to send a response back to the client. This can be as simple as a status code, or as elaborate as a group of entities. prestans is unforgiving (unless requested otherwise) while accepting requests and writing responses.
+The end result of all handler call is to send a response back to the client. This can be as simple as a status code, or as elaborate as a group of entities. Prestans is unforgiving (unless requested otherwise) while accepting requests and writing responses.
 
 In accordance with the REST standard, each handler must declare what sort of entities (if any) the handler will return if it successfully processes a request. We will cover error scenarios later in this chapter.
 
@@ -254,23 +254,23 @@ Declaration of response types are defined as part of your parser configuration p
 
 .. code-block:: python
 
-    import prestans.rest
-    import prestans.parser
-    import prestans.types
+    import Prestans.rest
+    import Prestans.parser
+    import Prestans.types
 
     import myapp.rest.models
 
-    class MyEntityRESTRequestHandler(prestans.rest.RequestHandler):
+    class MyEntityRESTRequestHandler(Prestans.rest.RequestHandler):
 
-        __parser_config__ = prestans.parser.Config(
-            GET=prestans.parser.VerbConfig(
-                response_template=prestans.types.Array(element_template=myapp.rest.models.Album())
+        __parser_config__ = Prestans.parser.Config(
+            GET=Prestans.parser.VerbConfig(
+                response_template=Prestans.types.Array(element_template=myapp.rest.models.Album())
             )
         )
 
         def get(self):
 
-            albums = prestans.types.Array(element_template=myapp.rest.models.Album())
+            albums = Prestans.types.Array(element_template=myapp.rest.models.Album())
             albums.append(myacc.rest.models.Album(name="Journeyman", artist="Eric Clapton"))
             albums.append(myacc.rest.models.Album(name="Dark Side of the Moon", artist="Pink Floyd"))
             return albums            
@@ -279,15 +279,15 @@ or an individual entity, defined as:
 
 .. code-block:: python
 
-    import prestans.rest
-    import prestans.parser
+    import Prestans.rest
+    import Prestans.parser
 
     import myapp.rest.models
 
-    class MyEntityRESTRequestHandler(prestans.rest.RequestHandler):
+    class MyEntityRESTRequestHandler(Prestans.rest.RequestHandler):
 
-        __parser_config__ = prestans.parser.Config(
-            GET=prestans.parser.VerbConfig(
+        __parser_config__ = Prestans.parser.Config(
+            GET=Prestans.parser.VerbConfig(
                 response_template=myapp.rest.models.Album()
             )
         )
@@ -298,46 +298,46 @@ or an individual entity, defined as:
 
 More often than not, the content your handler sends back, would have been read queried from a persistent data store. Sending persistent data verbatim nearly never fits the user case. A useful API sends back appropriate amount of information to the client to make the request useful without bloating the response. This becomes a cases by case consideration of what a request handler sends back. Sending out persistent objects verbatim could sometimes pose to be a security threat.
 
-prestans requires you to transform each persistent object into a REST model. To ease this tedious task prestans provides a feature called :doc:`data_adapters`. Data Adapters perform the simple task of converting persistent instances or collections of persistent instances to paired prestans REST models, while ensuring that the persistent data matches the validation rules defined by your API.
+Prestans requires you to transform each persistent object into a REST model. To ease this tedious task Prestans provides a feature called :doc:`data_adapters`. Data Adapters perform the simple task of converting persistent instances or collections of persistent instances to paired Prestans REST models, while ensuring that the persistent data matches the validation rules defined by your API.
 
 Data Adapters are specific to backends, and it's possible to write your own your backend specific data adapter. All of this is discussed in the chapter dedicated to :doc:`data_adapters`.
 
 Minifying Content
 -----------------
 
-prestans tries to make your API as efficient as possible. Minimizing content size is one of these tricks. Complimentary to Attribute Filters (which allows clients to dynamically turn attributes on or off in the response) is response key minification.
+Prestans tries to make your API as efficient as possible. Minimizing content size is one of these tricks. Complimentary to Attribute Filters (which allows clients to dynamically turn attributes on or off in the response) is response key minification.
 
 This is particularly useful for large amounts of repetitive data, e.g several hundred order lines.
 
 Setting the ``Prestans-Minification`` header to ``On`` is all that's required to use this feature. This is a per request setting and is set to ``Off`` by default.
 
-prestans also sends ``Prestans-Minification-Map`` header back containing a one to one map of the original attribute names it's minified counterpart.
+Prestans also sends ``Prestans-Minification-Map`` header back containing a one to one map of the original attribute names it's minified counterpart.
 
-.. note:: Our Google Closure extensions provides a JSON REST Client, which can automatically unpack minified requests to fully formed prestans client side models.
+.. note:: Our Google Closure extensions provides a JSON REST Client, which can automatically unpack minified requests to fully formed Prestans client side models.
 
 Serving Binary Content
 ----------------------
 
-It's perfectly legitimate for your REST handler to return binary content. prestans provides a built in model to assign to your handler's ``VerbConfig``. 
+It's perfectly legitimate for your REST handler to return binary content. Prestans provides a built in model to assign to your handler's ``VerbConfig``. 
 
-Your handler must return an instance of ``prestans.types.BinaryContent``, and prestans will do what's right to deliver binary content.
+Your handler must return an instance of ``Prestans.types.BinaryContent``, and Prestans will do what's right to deliver binary content.
 
 Instances of ``BinaryContent`` accept the following parameters:
 
 * ``mime_type``, the mime type of the file that you are sending back
-* ``file_name``, the filename that prestans is to send back in the HTTP header, this is what the browser thinks the name of the file is. File names can be generated by applications or they might have been stored as meta information when the file was uploaded by the user
-* ``as_attachment``, tells prestans if the file is to be delivered as an attachment (forces the user to save the file) or deliver it inline (generally opens in the browser).
+* ``file_name``, the filename that Prestans is to send back in the HTTP header, this is what the browser thinks the name of the file is. File names can be generated by applications or they might have been stored as meta information when the file was uploaded by the user
+* ``as_attachment``, tells Prestans if the file is to be delivered as an attachment (forces the user to save the file) or deliver it inline (generally opens in the browser).
 * ``contents``, binary contents that you've read up from disk or generated.
 
 .. code-block:: python
 
-    import prestans.types
+    import Prestans.types
 
     class Download(st.cs.rest.handlers.Base):
 
-        __parser_config__ = prestans.parser.Config(
-            GET=prestans.parser.VerbConfig(
-                response_template=prestans.types.BinaryResponse()
+        __parser_config__ = Prestans.parser.Config(
+            GET=Prestans.parser.VerbConfig(
+                response_template=Prestans.types.BinaryResponse()
             )
         )
 
@@ -345,8 +345,8 @@ Instances of ``BinaryContent`` accept the following parameters:
 
             file_contents = open(file_path).read()
 
-            self.response.status = prestans.http.STATUS.OK
-            self.response.body = prestans.types.BinaryResponse(
+            self.response.status = Prestans.http.STATUS.OK
+            self.response.body = Prestans.types.BinaryResponse(
                 mime_type='application/pdf', 
                 file_name='invoice.pdf', 
                 as_attachment=True,
@@ -357,13 +357,13 @@ If you set ``as_attachment`` to False the file will be delivered inline into the
 Raising Exceptions
 ==================
 
-As alluded to in our :doc:`api_design` chapter, prestans provides two distinct set of Exceptions. The first raised if you've configured your API incorrectly and the later used to send back meaningful error messages to the requesting client.
+As alluded to in our :doc:`api_design` chapter, Prestans provides two distinct set of Exceptions. The first raised if you've configured your API incorrectly and the later used to send back meaningful error messages to the requesting client.
 
-This section deals with Exceptions that prestans expects you to use to raise meaningful REST error messages. These are generally caused by the client sending you an inappropriate e.g the logged in user is not allowed to access or update an entity, or something simply not being found on the persistent data store.
+This section deals with Exceptions that Prestans expects you to use to raise meaningful REST error messages. These are generally caused by the client sending you an inappropriate e.g the logged in user is not allowed to access or update an entity, or something simply not being found on the persistent data store.
 
 .. note:: :pep:`008` recommends that Exceptions that are errors should end with the Error suffix.
 
-You do not have to raise exceptions for request and response data validation. If the data does not match the rules defined by your models, parameter sets or attribute filters, it's prestans' responsibility to graceful fail and respond back to the client.
+You do not have to raise exceptions for request and response data validation. If the data does not match the rules defined by your models, parameter sets or attribute filters, it's Prestans' responsibility to graceful fail and respond back to the client.
 
 Unsupported Vocabulary
 ----------------------

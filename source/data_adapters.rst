@@ -1,11 +1,11 @@
 Data Adapters
 =============
 
-The :doc:`validation` chapter demonstrates the use of prestans ``Models`` to validate requests, build rules complaint responses and the use of ``AttributeFilters`` are used to make temporary case by case exceptions to the validation rules
+The :doc:`validation` chapter demonstrates the use of Prestans ``Models`` to validate requests, build rules complaint responses and the use of ``AttributeFilters`` are used to make temporary case by case exceptions to the validation rules
 
-``DataAdapters`` automate morphing persistent objects to prestans models, it provides the following feature
+``DataAdapters`` automate morphing persistent objects to Prestans models, it provides the following feature
 
-* A static registry ``prestans.ext.data.adapters.registry``, that maps persistent models to REST models
+* A static registry ``Prestans.ext.data.adapters.registry``, that maps persistent models to REST models
 * An instance convertor, used to convert an instance. Convertors are specific to backends and uses the registry to determine relationships between persistent and REST models. 
 * A collection iterator, that iterates through collections of persistent results and turns them into REST models. It follows all the same rules as the instance convertor.
 
@@ -13,7 +13,7 @@ The :doc:`validation` chapter demonstrates the use of prestans ``Models`` to val
 
 For our sample code assume that rest models live in the ``musicdb.rest.models`` and the persistent models live in ``musicdb.models``, and is written for AppEngine.
 
-Out of the box prestans supports 
+Out of the box Prestans supports 
 
 * `SQLAlchemy <http://www.sqlalchemy.org/>`_ which in turn should allow you to support most popular RDBMS backends.
 * AppEngine's `Python NDB <https://developers.google.com/appengine/docs/python/ndb/>`_ which is built on top of DataStore.
@@ -23,35 +23,35 @@ Writing DataAdapters for other backends is discussed later in this chapter.
 Pairing REST models to persistent models
 ----------------------------------------
 
-Before you can ask prestans to convert persistent objects to REST model instances, you must use the registry you to pair persistent definitions to REST definitions. prestans uses the REST model as the template for the data that will be transformed. While adapting data prestans will:
+Before you can ask Prestans to convert persistent objects to REST model instances, you must use the registry you to pair persistent definitions to REST definitions. Prestans uses the REST model as the template for the data that will be transformed. While adapting data Prestans will:
 
 * Inspect the REST model for a list of attributes
 * Inspect the persistent model for the data
 * Ensure that the data provided by the persistent model matches the rules definied by the REST model
-* If the persistent model does not define an attribute, prestans reverts to using the default value or ``None``
-* If the value provided by the persistent model fails to validate, prestans raises an ``prestans.exception.DataValidationException`` which will graceful respond to the requesting client.
+* If the persistent model does not define an attribute, Prestans reverts to using the default value or ``None``
+* If the value provided by the persistent model fails to validate, Prestans raises an ``Prestans.exception.DataValidationException`` which will graceful respond to the requesting client.
 
 If a persistent definition maps to more than one REST model defintion, DataAdapters will try and make the sensible choice unless you explicitly provide the REST model you wish to adapt the data to.
 
-Registering the persistent model is done by calling the ``register_adapter`` method on ``prestans.ext.data.adapters.registry``, and an appropriate ``ModelAdapter`` instance.
+Registering the persistent model is done by calling the ``register_adapter`` method on ``Prestans.ext.data.adapters.registry``, and an appropriate ``ModelAdapter`` instance.
 
 Consider the following REST models defined in ``musicdb.rest.models``:
 
 .. code-block:: python
 
-    import prestans.types
+    import Prestans.types
 
-    class Album(prestans.types.Model):
+    class Album(Prestans.types.Model):
 
-        id = prestans.types.Integer(required=False)
-        name = prestans.types.String(required=True, max_length=30)        
+        id = Prestans.types.Integer(required=False)
+        name = Prestans.types.String(required=True, max_length=30)        
 
-    class Band(prestans.types.Model):
+    class Band(Prestans.types.Model):
 
-        id = prestans.types.Integer(required=False)
-        name = prestans.types.String(required=True, max_length=30)
+        id = Prestans.types.Integer(required=False)
+        name = Prestans.types.String(required=True, max_length=30)
 
-        albums = prestans.types.Array(element_template=Album(), required=False)
+        albums = Prestans.types.Array(element_template=Album(), required=False)
 
 
 along with it's corresponding NDB persistent model defined in ``musicdb.models``:
@@ -61,8 +61,8 @@ along with it's corresponding NDB persistent model defined in ``musicdb.models``
     from google.appengine.ext import ndb
     from google.appengine.api import users
 
-    import prestans.ext.data.adapters
-    import prestans.ext.data.adapters.ndb
+    import Prestans.ext.data.adapters
+    import Prestans.ext.data.adapters.ndb
 
     class Album(ndb.Model):
 
@@ -97,8 +97,8 @@ We recommend that you create a package called ``yourproject.rest.adapters`` to h
 
     # Register the persistent model to adapt to the Band rest model, also
     # ensure that Album is registered for the children models to adapt
-    prestans.ext.data.adapters.registry.register_adapter(
-        prestans.ext.data.adapters.ndb.ModelAdapter(
+    Prestans.ext.data.adapters.registry.register_adapter(
+        Prestans.ext.data.adapters.ndb.ModelAdapter(
             rest_model_class=musicdb.rest.models.Band, 
             persistent_model_class=musicdb.models.Band
         )
@@ -123,10 +123,10 @@ Once your models have been declared in the adapter registry, your REST handler:
     import musicdb.rest.models
     import musicdb.rest.adapters
 
-    import prestans.ext.data.adapters.ndb
-    import prestans.handlers
-    import prestans.parsers
-    import prestans.rest
+    import Prestans.ext.data.adapters.ndb
+    import Prestans.handlers
+    import Prestans.parsers
+    import Prestans.rest
 
 
     class BandCollection(musicdb.rest.handlers.Base):
@@ -137,8 +137,8 @@ Once your models have been declared in the adapter registry, your REST handler:
 
             bands = musicdb.models.Band().query()
         
-            self.response.http_status = prestans.rest.STATUS.OK
-            self.response.body = prestans.ext.data.adapters.ndb.adapt_collection(
+            self.response.http_status = Prestans.rest.STATUS.OK
+            self.response.body = Prestans.ext.data.adapters.ndb.adapt_collection(
                 collection=bands, 
                 target_rest_instance=musicdb.rest.models.Band
             )
@@ -153,8 +153,8 @@ If you are using AttributeFilters, you should pass the filter along onto the ``a
 
             bands = musicdb.models.Band().query()
         
-            self.response.http_status = prestans.rest.STATUS.OK
-            self.response.body = prestans.ext.data.adapters.ndb.QueryResultIterator(
+            self.response.http_status = Prestans.rest.STATUS.OK
+            self.response.body = Prestans.ext.data.adapters.ndb.QueryResultIterator(
                 collection=bands, 
                 target_rest_instance=musicdb.rest.models.Band,
                 attribute_filter = self.response.attribute_filter
