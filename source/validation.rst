@@ -127,7 +127,15 @@ these would then be assigned to your handler's ``VerbConfig`` as follows:
 
 Using serialized data as values for query string keys is not a good ideas. All web servers have limitations on how large query strings can be, if you experience issues with sending information via the query string you should check your web server configuration before attempting to debug your code.
 
+For each request:
 
+* If the data provided as part of a query string matches, prestans will make an instance of that ``ParameterSet`` available at ``self.request.parameter_set``. 
+* If a query string would result in matching more than one ``ParameterSet`` prestans will stop parsing at the first match and make it available to your handler
+* Failure in matching a ``ParameterSet`` still results in your handler code being called. prestans would simply set ``self.request.parameter_set`` to ``None``.
+
+You can access the attributes defined in your ``ParameterSet`` as you would any ordinary Python object.
+
+If your handler assigned multiple ``ParameterSets`` to a handler ``VerbConfig`` you can always check for the ``type`` of ``self.request.paramter_set`` for conditional code execution.
 
 Request Body
 ^^^^^^^^^^^^
