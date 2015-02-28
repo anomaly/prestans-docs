@@ -125,7 +125,9 @@ these would then be assigned to your handler's ``VerbConfig`` as follows:
 
 .. note:: Parameter Set can only use basic data types i.e ``Strings``, ``Integer``, ``Float``, ``Date``, ``Time``, ``DateTime``. 
 
-Using serialized data as values for query string keys is not a good ideas. All web servers have limitations on how large query strings can be, if you experience issues with sending information via the query string you should check your web server configuration before attempting to debug your code.
+Using serialized data as values for query string keys is not a good idea. 
+
+All web servers have limitations on how large query strings can be, if you experience issues with sending information via the query string you should check your web server configuration before attempting to debug your code.
 
 For each request:
 
