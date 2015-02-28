@@ -142,7 +142,13 @@ If your handler assigned multiple ``ParameterSets`` to a handler ``VerbConfig`` 
 Request Body
 ^^^^^^^^^^^^
 
+By assigning a ``DataCollection`` object to the ``body_template`` configuration of a ``VerbConfig`` asks prestans to strictly parse the data received as part of every request. If the data sent as part of the body successfully parses your handler code is executed and the parsed object is available as ``self.request.parsed_body``.
 
+Should you wish to relax the rules of a model for particular use cases you should consider using :ref:`attribute_filters` as opposed to relaxing the validation rules. The attribute filter used while parsing the request is available as ``self.request.attribute_filter``.
+
+.. note:: ``GET`` requests cannot have a request body and prestans will not attempt to parse the body for ``GET`` requests.
+
+Your handler code can access the ``parsed_body`` as a regular Python object. If your handler accepts collections of elements then prestans makes available a prestans Array in the ``parsed_body`` which is a Python iterable.
 
 Response Body
 ^^^^^^^^^^^^^
