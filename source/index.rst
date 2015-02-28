@@ -3,10 +3,8 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-prestans, a Python WSGI REST micro-framework
-=======================================
-
-.. warning:: This branch of the documentation is under agressive development along with the framework.
+Prestans 2.0, a Python WSGI REST micro-framework
+================================================
 
 prestans is a WSGI (`PEP-333 <http://www.python.org/dev/peps/pep-0333/>`_) complaint micro-framework that allows you to rapidly build quality REST services by introducing a pattern of models, parsers and handlers and in turn taking care of boilerplate code. prestans sits better with complex Ajax applications written with JavaScript infrastructure like `Google Closure <https://developers.google.com/closure/>`_, or native mobile apps.
 
