@@ -1,6 +1,6 @@
 ## prestans 2.0 docs
 
-http://docs.prestans.org/en/2.0
+http://docs.prestans.org/
 
 This repository contains documentation published on Read The Docs, written in reStructured Text and built using Sphinx.
 
