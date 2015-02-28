@@ -1,6 +1,6 @@
 ## Prestans 2.0 documentation
 
-http://docs.prestans.org/
+![https://docs.prestans.org](https://readthedocs.org/projects/prestans/badge/?version=latest)
 
 This repository contains documentation published on Read The Docs, written in reStructured Text and built using Sphinx.
 

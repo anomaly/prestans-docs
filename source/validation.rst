@@ -17,8 +17,26 @@ prestans allows each request handler to elegantly define the rules it wants to a
 Attribute Filters
 -----------------
 
+Attribute Filters are prestans way of making temporary exceptions to validation rules otherwise defined by prestans ``Models``. Quality of code written using prestans thrives on strong validation. Certainly uses cases in every application demands relaxing rules temporarily. Attribute filters are used both incoming and outgoing data.
 
+At it's heart Attribute Filters are a configuration template for exceptions prestans is to make while parsing data. Attribute Filters contain a boolean flag for each attribute defined in instances that will be parsed by prestans. They can be created by subclassing ``prestans.parser.AttributeFilter`` and it containing an identical structure to the corresponding model with boolean flags to denote visibility during a parse operation. 
 
+However we recommend using our convenience method that dynamically creates a filter based on a model (unless of course you have non trivial use case):
+
+.. code-block:: python
+    
+    attribute_fitler = prestans.parser.AttributeFilter.from_model(model_instance=mysicdb.rest.models.Album(), default_value=False)
+
+the above will generate an attribute filter with all attributes turned off for parsing. We can then selectively turn attributes on by setting the keys to ``True``:
+
+.. code-block:: python
+
+    attribute_filter.id = True
+    attribute_filter.name = True
+
+The attribute filter will have a corresponding definition for every attribute visible in the ``Model`` with the default boolean value assigned to it. This goes for children objects. 
+
+If a child attribute is a collection then the child Attribute Filter is based on an instance that would appear in the collection, this allows fine grained control of toggling parse rules. Assigning a ``boolean`` value to a collection applies the state to all attributes of it's instances.
 
 Setting up validation rules
 ---------------------------
