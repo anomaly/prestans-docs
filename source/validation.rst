@@ -17,7 +17,13 @@ Setting up validation rules
 
 Validation rules are set up per HTTP verb your handler intends to service. By default there are no validation rules defined for any HTTP verb, this does not mean that your handler can't respond to a particular verb, it simply means that prestans takes no responsibility of validating incoming or outgoing data. By design if you wish to send data back to the client prestans insist on validating what a handler sends down, however it's perfectly valid for a handler to return no content (which is what prestans expects if you aren't specific).
 
-Each handler has a meta attribute called __verb_config__ this must be an instance of ``prestans.parser.Config`` which accepts six named parameters one for each supported HTTP verb (HEAD, GET, POST, PUT, DELETE, PATCH) each one of which must be an instance of ``prestans.parser.VerbConfig``
+Each handler has a meta attribute called __verb_config__ this must be an instance of ``prestans.parser.Config`` which accepts six named parameters one for each supported HTTP verb (``HEAD``, ``GET``, ``POST``, ``PUT``, ``DELETE``, ``PATCH``) each one of which must be an instance of ``prestans.parser.VerbConfig``. A ``VerbConfig`` accepts the following named parameters (not all of them are supported across all HTTP verbs):
+
+* ``response_template`` an instance of a ``prestans.types.DataCollection`` subclass i.e a Model or an Array of prestans ``DataType``. This is what prestans will use to validate the response your handler sends back to the client.
+* ``response_attribute_filter_default_value`` prestans automatically creates an attribute filter based on the ``response_template`` by default prestans exposes all it's attributes in the response, setting this to ``False`` will hide all attributes be default. Your handler code is responsible for toggling visibility in either instance.
+* ``parameter_sets`` an array of ``prestans.parser.ParameterSet`` instances
+* ``body_template`` an instance of a ``prestans.types.DataCollection`` subclass i.e a Model or an Array of prestans ``DataType``, this is what prestans will use to validate the request sent to your handler. If validation of the incoming data fails, prestans will not execute the associated verb in your handler.
+* ``request_attribute_filter`` is an attribute filter used to relax or tighten rules for the incoming data. This is particularly useful if you want to use portions of a model. Particularly useful for ``UPDATE`` requests.
 
 .. code-block:: python
 
