@@ -1,4 +1,4 @@
-## prestans 2.0 docs
+## Prestans 2.0 documentation
 
 http://docs.prestans.org/
 
