@@ -86,8 +86,47 @@ The following sections detail how you access the parsed data and how you provide
 
 .. _parameter_sets:
 
-Parameters
-^^^^^^^^^^
+Parameters Sets
+^^^^^^^^^^^^^^^
+
+``ParmeterSets`` refer to sets of data sent as key value pairs in the query string. Typically if you handler is expecting data as part of the query string you would expect it to be follow similar patterns as ``Models``. prestans extends the use of it's ``types`` (see :doc:`types`) to validate data passed in a query string.
+
+Each ``ParameterSet`` is made of a group of keys that you're expecting along with rules to be used to parse the value. ``ParameterSets`` are defined by subclassing ``prestans.parser.ParameterSet``.
+
+.. code-block:: python
+
+    class SearchByKeywordParameterSet(prestans.parser.ParameterSet):
+
+        keyword = prestans.types.String(min_length=5)
+        offset = prestans.types.Integer(defauflt=0)
+        limit = prestans.types.Integer(default=10)
+
+    class SearchByCategoryParameterSet(prestans.parser.ParameterSet):
+
+        category_id = prestans.types.Integer(min_length=5)
+        offset = prestans.types.Integer(defauflt=0)
+        limit = prestans.types.Integer(default=10)
+
+these would then be assigned to your handler's ``VerbConfig`` as follows:
+
+.. code-block:: python
+
+    __verb_config__ = prestans.parser.Config( 
+        GET = prestans.parser.VerbConfig(
+            response_template=musicdb.rest.models.Album(),
+            response_attribute_filter_default_value=False,
+            parameters_sets=[SearchByKeywordParameterSet(), SearchByCategoryParameterSet()]
+        ),
+        PUT =  prestans.parser.VerbConfig(
+            body_template=musicdb.rest.models.Album(),
+            request_attribute_fitler=update_filter
+        )
+    )
+
+.. note:: Parameter Set can only use basic data types i.e ``Strings``, ``Integer``, ``Float``, ``Date``, ``Time``, ``DateTime``. 
+
+Using serialized data as values for query string keys is not a good ideas. All web servers have limitations on how large query strings can be, if you experience issues with sending information via the query string you should check your web server configuration before attempting to debug your code.
+
 
 
 Request Body
