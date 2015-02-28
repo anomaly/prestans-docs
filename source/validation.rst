@@ -21,7 +21,7 @@ Each handler has a meta attribute called __verb_config__ this must be an instanc
 
 * ``response_template`` an instance of a ``prestans.types.DataCollection`` subclass i.e a Model or an Array of prestans ``DataType``. This is what prestans will use to validate the response your handler sends back to the client.
 * ``response_attribute_filter_default_value`` prestans automatically creates an attribute filter based on the ``response_template`` by default prestans exposes all it's attributes in the response, setting this to ``False`` will hide all attributes be default. Your handler code is responsible for toggling visibility in either instance.
-* ``parameter_sets`` an array of ``prestans.parser.ParameterSet`` instances
+* ``parameter_sets`` an array of ``prestans.parser.ParameterSet`` instances (see :ref:`parameter_sets`)
 * ``body_template`` an instance of a ``prestans.types.DataCollection`` subclass i.e a Model or an Array of prestans ``DataType``, this is what prestans will use to validate the request sent to your handler. If validation of the incoming data fails, prestans will not execute the associated verb in your handler.
 * ``request_attribute_filter`` is an attribute filter used to relax or tighten rules for the incoming data. This is particularly useful if you want to use portions of a model. Particularly useful for ``UPDATE`` requests.
 
@@ -50,7 +50,7 @@ Each handler has a meta attribute called __verb_config__ this must be an instanc
         def post(self):
             ... do stuff here
 
-prestans is aggressive when it comes to validating requests and responses. However in the cases where you wish to relax the rules we recommend that you use 
+prestans is aggressive when it comes to validating requests and responses. However in the cases where you wish to relax the rules we recommend that you use :ref:`attribute_filters`. You can define an ``AttributeFilter`` in context and assign it to the appropriate ``VerbConfig``.
 
 .. code-block:: python
 
@@ -80,9 +80,15 @@ prestans is aggressive when it comes to validating requests and responses. Howev
         def delete(self, album_id):
             ... do stuff here
 
+Lastly a reminder parameters that were part of your URL scheme will be passed in as positional arguments to your handler verb (see :doc:`handlers`). prestans runs your handler code if the the request succeeds to parse and will only respond back to the client if the response you intend to return passes the validation test.
+
+The following sections detail how you access the parsed data and how you provide prestans with a valid response to send back to the client. Remember that your handler's objective is to send back information the client can reliably use.
+
+.. _parameter_sets:
 
 Parameters
 ^^^^^^^^^^
+
 
 Request Body
 ^^^^^^^^^^^^
@@ -92,6 +98,7 @@ Response Body
 
 
 
+.. _attribute_filters:
 
 Attribute Filters
 -----------------
