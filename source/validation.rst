@@ -36,14 +36,21 @@ Each handler has a meta attribute called __verb_config__ this must be an instanc
     class CollectionRequestHandler(prestans.rest.RequestHandler):
 
         __verb_config__ = prestans.parser.Config(
+            GET =  prestans.parser.VerbConfig(
+                body_template=prestans.types.Array(element_template=musicdb.rest.models.Album())
+            ),            
             POST =  prestans.parser.VerbConfig(
                 body_template=musicdb.rest.models.Album()
             )            
         )
 
+        def get(self):
+            ... do stuff here
+
         def post(self):
             ... do stuff here
 
+prestans is aggressive when it comes to validating requests and responses. However in the cases where you wish to relax the rules we recommend that you use 
 
 .. code-block:: python
 

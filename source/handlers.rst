@@ -2,7 +2,7 @@
 Routing & Handling Requests
 ===========================
 
-Web Server Gateway Interface or WSGI (`PEP-333 <http://www.python.org/dev/peps/pep-0333/>`_) is the glue between a Web Server and your Python Web application. The responding application simply has to be a Python `callable <http://docs.python.org/2/library/functions.html#callable>`_ (a python function or a class that implements the ``__call__`` method). Each *callable* is passed the Web server environment (much like CGI applications) and a ``start_response``. 
+Web Server Gateway Interface or WSGI (:pep:`333`) is the glue between a Web Server and your Python Web application. The responding application simply has to be a Python `callable <http://docs.python.org/2/library/functions.html#callable>`_ (a python function or a class that implements the ``__call__`` method). Each *callable* is passed the Web server environment (much like CGI applications) and a ``start_response``. 
 
 If you are not familiar with WSGI we recommend reading `Armin Ronarcher <http://lucumr.pocoo.org/>`_'s `introduction to WSGI <http://lucumr.pocoo.org/2007/5/21/getting-started-with-wsgi/>`_. We also have a great collection of :doc:`reference_material` on Python Web development.
 
@@ -361,7 +361,7 @@ As alluded to in our :doc:`api_design` chapter, prestans provides two distinct s
 
 This section deals with Exceptions that prestans expects you to use to raise meaningful REST error messages. These are generally caused by the client sending you an inappropriate e.g the logged in user is not allowed to access or update an entity, or something simply not being found on the persistent data store.
 
-.. note:: `PEP 008 <http://www.python.org/dev/peps/pep-0008/#exception-names>`_ recommends that Exceptions that are errors should end with the Error suffix.
+.. note:: :pep:`008` recommends that Exceptions that are errors should end with the Error suffix.
 
 You do not have to raise exceptions for request and response data validation. If the data does not match the rules defined by your models, parameter sets or attribute filters, it's prestans' responsibility to graceful fail and respond back to the client.
 

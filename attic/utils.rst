@@ -79,5 +79,5 @@ then map it as you would any other handler to a URL that you see fit, remember t
 Each auto generated blueprint:
 
 * Is grouped by Python package that contains your handlers, each module is the key in a dictionary.
-* Uses Python docstrings (`PEP 257 <http://www.python.org/dev/peps/pep-0257/>`_) to fetch descriptions on each handler class and method.
+* Uses Python docstrings (:pep:`257`) to fetch descriptions on each handler class and method.
 * Includes information on supported handler methods, Parameter Sets, Models, Attribute Filters, constraints of each attribute.
