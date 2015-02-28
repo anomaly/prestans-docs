@@ -91,7 +91,11 @@ Leaving this directive out loads version 1.1 of WebOb; prestans 2.0 onwards spec
 Unit testing
 ============
 
-prestans ships a `unit testing framework <https://docs.python.org/2/library/unittest.html>`_ 
+prestans ships a `unit testing suite <https://docs.python.org/2/library/unittest.html>`_, due to the nature of the project only the following can be reliably unit tested:
+
+* Prestans Data Type validation
+
+to run the testsuite checkout prestans via Git and use the Python unitest framework:
 
 .. code-block:: bash
 

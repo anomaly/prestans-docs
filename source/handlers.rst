@@ -298,9 +298,9 @@ or an individual entity, defined as:
 
 More often than not, the content your handler sends back, would have been read queried from a persistent data store. Sending persistent data verbatim nearly never fits the user case. A useful API sends back appropriate amount of information to the client to make the request useful without bloating the response. This becomes a cases by case consideration of what a request handler sends back. Sending out persistent objects verbatim could sometimes pose to be a security threat.
 
-prestans requires you to transform each persistent object into a REST model. To ease this tedious task prestans provides a feature called :doc:`dataadapters`. Data Adapters perform the simple task of converting persistent instances or collections of persistent instances to paired prestans REST models, while ensuring that the persistent data matches the validation rules defined by your API.
+prestans requires you to transform each persistent object into a REST model. To ease this tedious task prestans provides a feature called :doc:`data_adapters`. Data Adapters perform the simple task of converting persistent instances or collections of persistent instances to paired prestans REST models, while ensuring that the persistent data matches the validation rules defined by your API.
 
-Data Adapters are specific to backends, and it's possible to write your own your backend specific data adapter. All of this is discussed in the chapter dedicated to :doc:`dataadapters`.
+Data Adapters are specific to backends, and it's possible to write your own your backend specific data adapter. All of this is discussed in the chapter dedicated to :doc:`data_adapters`.
 
 Minifying Content
 -----------------
