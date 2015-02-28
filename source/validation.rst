@@ -182,5 +182,31 @@ Your handler code can access the ``parsed_body`` as a regular Python object. If 
 Response Body
 ^^^^^^^^^^^^^
 
+Once your handler has completed what it needed to do, it can optionally return a response body. If you aren't returning a body then your handler is simply required to set ``self.response.status`` to a valid HTTP status, prestans has wrapper constants available in ``prestans.http.STATUS``.
+
+Prestans will respect the ``response_template`` configuration set by your handler's ``VerbConfig``. You must return an object that matches the rules. There are generally two scenarios:
+
+* Your handler will return an entity that is an instance of a ``prestans.rest.Model`` subclass. This is typically the case for Entity handlers.
+* Your handler returns a collection (i.e a prestans Array) which contains instances of a prestans ``DataType`` usually a Model. This is typically the case for Collection handlers.
+
+REST end-points must always return the same ``type`` of response. This is discussed in detail in :doc:api_design.
+
+.. note :: prestans does not allow sending down instances of python types because they do not conform to a serialization format making it difficult for the client to determine the reliability of the response.
+
+.. code-block:: python
+
+        def get(self, album_id):
+
+            ... assuming you have an object that you can return
+
+            self.response.status = prestans.http.STATUS.OK
+            self.response.body = new musicdb.rest.models.Album(name="Journeyman", artist="Eric Clapton")
+
+If you read your response from a persistent store you would be required to convert that object (typically by copying the values) to a similarly formatted prestans REST model. prestans features :doc:`data_adapters` which automate this process.
+
+prestans allows clients to dynamically configure the response payload by sending a serialized version of an Attribute Filter as the HTTP header ``Prestans-Response-Attribute-List``. This allows the client to adjust the response from your API without you having to do extra work. Of course the server has the final say, if your handler outright sets a rule there's nothing a client can do to override it.
+
+The response object that your handler has access to has a reference to an :ref:`attribute_filters` which is made up of the rules defined by your ``response_template`` with the client's request preferences applied, accessible at ``self.response.attribute_filter``. If your handler changes the state of the attribute filter before the verb method returns, prestans used the modified state of the attribute filter, giving you the final say.
+
 
 
