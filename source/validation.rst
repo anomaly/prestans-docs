@@ -12,6 +12,14 @@ APIs have three major areas where data validation is paramount:
 
 prestans allows each request handler to elegantly define the rules it wants to adhere to by declaring what we refer to as a ``VerbConfig`` (the Verb refers to the HTTP verb). 
 
+.. _attribute_filters:
+
+Attribute Filters
+-----------------
+
+
+
+
 Setting up validation rules
 ---------------------------
 
@@ -81,6 +89,9 @@ prestans is aggressive when it comes to validating requests and responses. Howev
             ... do stuff here
 
 Lastly a reminder parameters that were part of your URL scheme will be passed in as positional arguments to your handler verb (see :doc:`handlers`). prestans runs your handler code if the the request succeeds to parse and will only respond back to the client if the response you intend to return passes the validation test.
+
+Working with parsed data
+------------------------
 
 The following sections detail how you access the parsed data and how you provide prestans with a valid response to send back to the client. Remember that your handler's objective is to send back information the client can reliably use.
 
@@ -153,11 +164,5 @@ Your handler code can access the ``parsed_body`` as a regular Python object. If 
 Response Body
 ^^^^^^^^^^^^^
 
-
-
-.. _attribute_filters:
-
-Attribute Filters
------------------
 
 
