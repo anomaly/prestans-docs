@@ -2,7 +2,7 @@
 Validating Requests & Responses
 ===============================
 
-A robust and secure API is responsible for validating all incoming and outgoing data to ensure that it matches the business rules. Validation is at the heart of prestans design, it's a cornerstone feature. 
+A robust and secure API is responsible for validating all incoming and outgoing data to ensure that it matches business rules. Validation is at the heart of prestans design and a cornerstone feature. 
 
 APIs have three major areas where data validation is paramount:
 
@@ -15,6 +15,9 @@ prestans allows each request handler to elegantly define the rules it wants to a
 Setting up validation rules
 ---------------------------
 
+Validation rules are set up per HTTP verb your handler intends to service. By default there are no validation rules defined for any HTTP verb, this does not mean that your handler can't respond to a particular verb, it simply means that prestans takes no responsibility of validating incoming or outgoing data. By design if you wish to send data back to the client prestans insist on validating what a handler sends down, however it's perfectly valid for a handler to return no content (which is what prestans expects if you aren't specific).
+
+Each handler has a meta attribute called __verb_config__ this must be an instance of ``prestans.parser.Config`` which accepts six named parameters one for each supported HTTP verb (HEAD, GET, POST, PUT, DELETE, PATCH) each one of which must be an instance of ``prestans.parser.VerbConfig``
 
 .. code-block:: python
 
@@ -34,6 +37,9 @@ Setting up validation rules
 
         def post(self):
             ... do stuff here
+
+
+.. code-block:: python
 
     update_filter = prestans.parser.AttributeFitler(model_instance=musicdb.prest.models.Album(), default_value=False)
     update_filter.name = True
