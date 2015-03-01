@@ -373,6 +373,18 @@ Unsupported Vocabulary
 Data Validation Exceptions
 --------------------------
 
+* ``RequiredAttributeError``
+* ``ParseFailedError``
+* ``LessThanMinimumError``
+* ``MoreThanMaximumError``
+* ``InvalidChoiceError``
+* ``UnacceptableLengthError``
+* ``InvalidType``
+* ``MissingParameterError``
+* ``InvalidFormatError``
+* ``InvalidMetaValueError``
+* ``UnregisteredAdapterError``
+
 Parser Exceptions
 -----------------
 
