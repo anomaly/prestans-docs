@@ -190,7 +190,9 @@ Writing your own DataAdapter
 
 * an ``adapt_persistent_collection`` method that iterates over a collection of persistent objects and transforms them into a collection of REST objects
 * an ``adapt_persistent_instance`` method that converts a single instance of a persistent object to a REST object
-* an implementation of a ``ModelAdapter`` class that implements ``adapt_persistent_to_rest`` method which converts a persistent object to a REST object. An instance of this is returned by the ``registry`` and is used by the convenience methods.
+* an implementation of a ``ModelAdapter`` class that implements ``adapt_persistent_to_rest`` method which converts a persistent object to a REST object. An instance of this is returned by the ``registry`` and is used by the convenience methods. This method detail how each property is transformed.
+
+It's very likely that you will be able to reuse the code for the convenience methods from one of the ``DataAdapters`` shipped with Prestans. They are responsible for wrapping backend specific operations like accessing collection lengths.
 
 A scaffold of the a custom ``DataAdapter`` looks as follows:
 
