@@ -369,6 +369,7 @@ Unsupported Vocabulary
 ----------------------
 
 
+
 Data Validation Exceptions
 --------------------------
 
@@ -379,5 +380,12 @@ Parser Exceptions
 Handler Exceptions
 ------------------
 
-
+* ``ServiceUnavailable``
+* ``BadRequest``
+* ``Conflict``
+* ``NotFound``
+* ``Unauthorized``
+* ``MovedPermanently``
+* ``PaymentRequired``
+* ``Forbidden``
 
