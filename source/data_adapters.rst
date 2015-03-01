@@ -112,7 +112,13 @@ Once your models have been declared in the adapter registry, your REST handler:
 * Query the data that your handler is expected to return
 * Set the appropriate HTTP status code
 * Use the ``adapt_persistent_instance`` or ``adapt_persistent_collection`` from the appropriate package to transform your persitent objects to REST objects.
+* Prestans will query the registry for any children objects that appear in the object it's attempt to adapt.
 * Assign the returned collection to ``self.response.body`` to send a response to the client
+
+Each ``DataAdapter`` provides two methods:
+
+* ``adapt_persistent_collection`` which iterates over a collection of persistent objects to a collection of REST models
+* ``adapt_persistent_instance`` which iterates over an instance of a persistent object to a REST model
 
 .. code-block:: python
 
@@ -143,10 +149,11 @@ Once your models have been declared in the adapter registry, your REST handler:
                 target_rest_instance=musicdb.rest.models.Band
             )
 
-If you are using ``AttributeFilters``, you should pass the filter along to the ``adapt_persistent_collection`` method enabling it to skip accessing that property all together. This can significantly reduce read stress on backends that support lazy loading properties:
+If you are using ``AttributeFilters``, you should pass the filter along to the adapter method enabling it to skip accessing that property all together. This can significantly reduce read stress on backends that support lazy loading properties:
 
 .. code-block:: python
 
+    # Collection of objects
     class BandCollection(musicdb.rest.handlers.Base):
 
         def get(self):
@@ -160,14 +167,19 @@ If you are using ``AttributeFilters``, you should pass the filter along to the `
                 attribute_filter = self.response.attribute_filter
             )
 
+    # Adapting a single instance
+    class BandEntity(musicdb.rest.handlers.Base):
+
+        def get(self):
+
+            self.response.http_status = prestans.rest.STATUS.OK
+            self.response.body = prestans.ext.data.adapters.ndb.adapt_persistent_instance(
+                collection=band, 
+                target_rest_instance=musicdb.rest.models.Band,
+                attribute_filter = self.response.attribute_filter
+            )
+
 .. note:: Each handler has access to the approprite attribute filter at ``self.response.attribute_filter`` (see :doc:`validation`)
-
-Collections
-^^^^^^^^^^^
-
-
-Instances
-^^^^^^^^^
 
 Writing your own DataAdapter
 ----------------------------
