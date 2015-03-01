@@ -4,7 +4,7 @@
 
 This repository contains documentation published on Read The Docs, written in reStructured Text and built using Sphinx.
 
-Sphix can be installed via PIP:
+Sphix can be installed via PyPi:
 
 	$ sudo pip install sphinx
 
