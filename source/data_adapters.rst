@@ -23,7 +23,7 @@ Writing custom ``DataAdapters`` is quite straight forward. The Prestans project 
 Pairing REST models to persistent models
 ----------------------------------------
 
-Before you can ask Prestans to convert persistent objects to REST model instances, you must use the registry you to pair persistent definitions to REST definitions. Prestans uses the REST model as the template for the data that will be transformed. While adapting data Prestans will:
+Before you can ask Prestans to convert persistent objects to REST model instances, you must use the ``registry`` you to pair persistent definitions to REST definitions. Prestans uses the REST model as the template for the data that will be transformed. While adapting data Prestans will:
 
 * Inspect the REST model for a list of attributes
 * Inspect the persistent model for the data
@@ -87,7 +87,7 @@ along with it's corresponding NDB persistent model defined in ``musicdb.models``
         def id(self):
             return self.key.id()
 
-We recommend that you create a package called ``yourproject.rest.adapters`` to hold all your adapter registrations. This is purely convention.
+.. note:: By convention we recommend the use of the namespace ``yourproject.rest.adapters`` to hold all your adapter registrations.
 
 .. code-block:: python
     
@@ -110,9 +110,9 @@ Adapting Models
 Once your models have been declared in the adapter registry, your REST handler:
 
 * Query the data that your handler is expected to return
-* Set the HTTP status code
-* Use the appropriate QueryResultIterator to construct your REST adapted models
-* Assign the returned collection to ``self.response.body``
+* Set the appropriate HTTP status code
+* Use the ``adapt_persistent_instance`` or ``adapt_persistent_collection`` from the appropriate package to transform your persitent objects to REST objects.
+* Assign the returned collection to ``self.response.body`` to send a response to the client
 
 .. code-block:: python
 
@@ -143,7 +143,7 @@ Once your models have been declared in the adapter registry, your REST handler:
                 target_rest_instance=musicdb.rest.models.Band
             )
 
-If you are using AttributeFilters, you should pass the filter along onto the ``adapt_collection`` method which allowing ``adapt_collection`` to skip accessing that property all together, this can significantly reduce read load on like NDB, or even SQLAlchemy if you lazy load relationships:
+If you are using ``AttributeFilters``, you should pass the filter along to the ``adapt_persistent_collection`` method enabling it to skip accessing that property all together. This can significantly reduce read stress on backends that support lazy loading properties:
 
 .. code-block:: python
 
@@ -154,13 +154,20 @@ If you are using AttributeFilters, you should pass the filter along onto the ``a
             bands = musicdb.models.Band().query()
         
             self.response.http_status = prestans.rest.STATUS.OK
-            self.response.body = prestans.ext.data.adapters.ndb.QueryResultIterator(
+            self.response.body = prestans.ext.data.adapters.ndb.adapt_persistent_collection(
                 collection=bands, 
                 target_rest_instance=musicdb.rest.models.Band,
                 attribute_filter = self.response.attribute_filter
             )
 
+.. note:: Each handler has access to the approprite attribute filter at ``self.response.attribute_filter`` (see :doc:`validation`)
 
+Collections
+^^^^^^^^^^^
+
+
+Instances
+^^^^^^^^^
 
 Writing your own DataAdapter
 ----------------------------
