@@ -170,7 +170,9 @@ If you are using ``AttributeFilters``, you should pass the filter along to the a
     # Adapting a single instance
     class BandEntity(musicdb.rest.handlers.Base):
 
-        def get(self):
+        def get(self, band_id):
+
+            .. use the appropriate query to get the appropriate instance
 
             self.response.http_status = prestans.rest.STATUS.OK
             self.response.body = prestans.ext.data.adapters.ndb.adapt_persistent_instance(
