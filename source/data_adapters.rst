@@ -115,7 +115,7 @@ Once your models have been declared in the adapter registry, your REST handler:
 * Prestans will query the registry for any children objects that appear in the object it's attempt to adapt.
 * Assign the returned collection to ``self.response.body`` to send a response to the client
 
-Each ``DataAdapter`` provides two methods:
+Each ``DataAdapter`` provides two convenience methods:
 
 * ``adapt_persistent_collection`` which iterates over a collection of persistent objects to a collection of REST models
 * ``adapt_persistent_instance`` which iterates over an instance of a persistent object to a REST model
@@ -144,7 +144,7 @@ Each ``DataAdapter`` provides two methods:
             bands = musicdb.models.Band().query()
         
             self.response.http_status = prestans.rest.STATUS.OK
-            self.response.body = prestans.ext.data.adapters.ndb.adapt_collection(
+            self.response.body = prestans.ext.data.adapters.ndb.adapt_persistent_collection(
                 collection=bands, 
                 target_rest_instance=musicdb.rest.models.Band
             )
@@ -185,3 +185,29 @@ If you are using ``AttributeFilters``, you should pass the filter along to the a
 
 Writing your own DataAdapter
 ----------------------------
+
+``DataAdapter`` can be easily extended to support custom backends. Writing an adapter for a custom backend involves providing:
+
+* an ``adapt_persistent_collection`` method that iterates over a collection of persistent objects and transforms them into a collection of REST objects
+* an ``adapt_persistent_instance`` method that converts a single instance of a persistent object to a REST object
+* an implementation of a ``ModelAdapter`` class that implements ``adapt_persistent_to_rest`` method which converts a persistent object to a REST object. An instance of this is returned by the ``registry`` and is used by the convenience methods.
+
+A scaffold of the a custom ``DataAdapter`` looks as follows:
+
+.. code-block:: python
+
+    def adapt_persistent_instance(persistent_object, target_rest_class=None, attribute_filter=None):
+        ... your custom implementation
+
+    def adapt_persistent_collection(persistent_collection, target_rest_class=None, attribute_filter=None):
+        ... your custom implementation
+
+
+    class ModelAdapter(adapters.ModelAdapter):
+           
+        def adapt_persistent_to_rest(self, persistent_object, attribute_filter=None):
+            ... your custom implementation here
+
+
+
+
