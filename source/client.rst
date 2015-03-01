@@ -16,13 +16,13 @@ Google Closure is unlike other JavaScript frameworks (e.g jQuery). An extremely 
 
 .. note:: It's assumed that you are familiar with developing applications with Google Closure tools.
 
-prestans provides a number of extensions to Closure Library, that ease and automate building rich JavaScript clients that consume your prestans API. Our current line up includes:
+prestans provides a number of extensions to Closure Library, that ease and automate building rich JavaScript clients that consume your Prestans API. Our current line up includes:
 
 * REST Client, provides a pattern to create Xhr requests, manages the life cycle and parsers responses, also supports Attribute Fitlers.
-* Types API, a client side replica of the prestans server types package assisting with parsing responses.
+* Types API, a client side replica of the Prestans server types package assisting with parsing responses.
 * Code generation tools to quickly produce client side stubs from your REST application models.
 
-It's expected that you will use the Google Closure `dependency manager <https://developers.google.com/closure/library/docs/introduction>`_ to load the prestans namespaces.
+It's expected that you will use the Google Closure `dependency manager <https://developers.google.com/closure/library/docs/introduction>`_ to load the Prestans namespaces.
 
 
 Installation
@@ -55,11 +55,11 @@ To run these unit tests you will need to start Google Chrome with ``--allow-file
 Extending JavaScript namespaces
 ===============================
 
-:doc:`models` ensure the validity of data sent to and from the server. The application client should be as responsible validate data on the client side, ensuring that you never send an invalid request or you never accept an invalid response. Discussed later in this chapter are tools provided by prestans that auto generate Closure library compatible versions of your server side Models and Attribute Filters, needless to say our JSON client works seamlessly with these auto generated Models and Filters.
+:doc:`models` ensure the validity of data sent to and from the server. The application client should be as responsible validate data on the client side, ensuring that you never send an invalid request or you never accept an invalid response. Discussed later in this chapter are tools provided by Prestans that auto generate Closure library compatible versions of your server side Models and Attribute Filters, needless to say our JSON client works seamlessly with these auto generated Models and Filters.
 
 Auto generated code is accompanied with the curse of losing local modifications (e.g adding a helper method or computed property) when you next run the auto generate process. 
 
-Consider the following scenario, prestans auto generates a Model class called ``User``, this uses the JavaScript namespace ``pdemo.data.model.User``, you now wish to write a function to say concatenate a user's first and last name. The obvious approach is to use ``goog.inherits`` to create a subclass of ``pdemo.data.model.User``. However for dynamic operations like parsing server responses maintaining the namespace is crucial.
+Consider the following scenario, Prestans auto generates a Model class called ``User``, this uses the JavaScript namespace ``pdemo.data.model.User``, you now wish to write a function to say concatenate a user's first and last name. The obvious approach is to use ``goog.inherits`` to create a subclass of ``pdemo.data.model.User``. However for dynamic operations like parsing server responses maintaining the namespace is crucial.
 
 Thanks to JavaScript's dynamic nature and Closure's excellent dependency management it's quite easy to implement a pattern that closely resembles `Objective-C Categories <http://developer.apple.com/library/ios/#documentation/cocoa/conceptual/ProgrammingWithObjectiveC/CustomizingExistingClasses/CustomizingExistingClasses.html>`_. The idea is to be able to maintain the custom code in a separate file and be able to dynamically merge it with the auto generated code during runtime.
 
@@ -90,7 +90,7 @@ Now where you want to create an instance of ``pdemo.data.model.User``, use the e
 Types API
 =========
 
-The Types API is a client side implementation of the prestans types API found on the server side. It assists in directly translating validation rules for Web based clients consuming REST services defined using prestans. Later in this chapter we demonstrate a set of tools that cut out the laborious job of creating client side stubs of your prestans models.
+The Types API is a client side implementation of the Prestans types API found on the server side. It assists in directly translating validation rules for Web based clients consuming REST services defined using prestans. Later in this chapter we demonstrate a set of tools that cut out the laborious job of creating client side stubs of your Prestans models.
 
 * ``String``, wraps a string
 * ``Integer``, wraps a number
@@ -159,13 +159,13 @@ Prestans then provides the following additional methods:
 REST Client
 ===========
 
-prestans contains a ready made REST Client to allow you to easily make requests and unpack responses from a prestans enabled server API. Our client implementation is specific to be used with Google Closure and only speaks `JSON`.
+prestans contains a ready made REST Client to allow you to easily make requests and unpack responses from a Prestans enabled server API. Our client implementation is specific to be used with Google Closure and only speaks `JSON`.
 
 The client has three important parts:
 
 * Request Manager provided by ``prestans.rest.json.Client``, this queues, manages, cancels requests and is responsible for firing callbacks on success and failure. Your application lodges all API call requests with an instance of ``prestans.rest.json.Client``. It's designed to be shared by your entire application.
 * Request provided by ``prestans.rest.json.Request`` is a formalised request that can be passed to a Request Manager. The Request constructor accepts a JSON payload with configuration information, this includs partial URL schemes, parameters, optional body and a format for the response. The Request Manager uses the responses format to parse the server response.
-* Response provided by ``prestans.rest.json.Response`` encapsulates a server response. It also contains a parsed copy of the server response expressed using prestans types.
+* Response provided by ``prestans.rest.json.Response`` encapsulates a server response. It also contains a parsed copy of the server response expressed using Prestans types.
 
 The general idea is:
 

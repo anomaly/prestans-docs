@@ -34,6 +34,6 @@ Response Size
 
 Running local development HTTP servers is common practice. Due to negligible latency; local server are notorious for masking server round trip issues, specially ones related to response size. Only when you've deployed your application to a remote server can you judge how long noticing how long round trips take.
 
-Database, Web Servers, prestans your handlers, servers are generally pretty quick (if you have written most things well). Network latency caused by the sheer size of the response can make your REST services appear to be slow. 
+Database, Web Servers, Prestans your handlers, servers are generally pretty quick (if you have written most things well). Network latency caused by the sheer size of the response can make your REST services appear to be slow. 
 
 It's important not to loose sight of the response size written out by your REST services.

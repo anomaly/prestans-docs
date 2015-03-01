@@ -28,7 +28,7 @@ Advanced Python
 
 * `Python WSGI reference implementation <http://docs.python.org/2/library/wsgiref.html>`_ - available in Python 2.5
 * `Effbot <http://effbot.org/pyfaq/>`_ - (A Semi-Official) Python FAQ Zone
-* `Python Decorators <http://www.python.org/dev/peps/pep-0318/>`_ - various prestans utilities are provided as decorators
+* `Python Decorators <http://www.python.org/dev/peps/pep-0318/>`_ - various Prestans utilities are provided as decorators
 * `Python Types and Objects <http://www.cafepy.com/article/python_types_and_objects/python_types_and_objects.html>`_ - an excellent article by Shalabh Chaturvedi on how Python sees Objects and Types.
 * `Python Attributes and Methods <http://www.cafepy.com/article/python_attributes_and_methods/>`_ - another excellent article by Shalabh Chaturvedi providing an indepth understanding of how attributes and methods work.
 * `Python Regular Expressions <https://developers.google.com/edu/python/regular-expressions>`_ - Google Developer article on regular expressions.

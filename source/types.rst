@@ -3,21 +3,21 @@ Types & Models
 ==============
 
 
-Models allow you to define rules for your API's data. prestans uses these rules to ensure the integrity of the data exchanged between the client and the server. If you've' used the `Django <http://djangoproject.com>`_ or `Google AppEngine <https://developers.google.com/appengine/>`_ prestans models will look very familiar. prestans models are *not* persistent.
+Models allow you to define rules for your API's data. Prestans uses these rules to ensure the integrity of the data exchanged between the client and the server. If you've' used the `Django <http://djangoproject.com>`_ or `Google AppEngine <https://developers.google.com/appengine/>`_ Prestans models will look very familiar. Prestans models are *not* persistent.
 
 .. image:: prestans_datatypes.png
 
 prestans types are one of the following:
 
-* ``prestans.types.DataType`` all prestans types are a subclass of ``DataType``, this is the most basic DataType in the prestans world.
+* ``prestans.types.DataType`` all Prestans types are a subclass of ``DataType``, this is the most basic DataType in the Prestans world.
 * ``prestans.types.DateStructure`` are a subclass of ``DataType`` but represent complex types like Date Time.
-* ``prestans.types.DateCollection`` are a subclass of ``DataType`` and represent collections like Arrays or Dictionaries (refered to as Models in the prestans world).
+* ``prestans.types.DateCollection`` are a subclass of ``DataType`` and represent collections like Arrays or Dictionaries (refered to as Models in the Prestans world).
 
-Each type has configurable properties that prestans uses to validate data. It's important to design your models with the strictest case in mind. Use request and response filters to relax the rules for specific cases, refer to our chapter on :doc:`validation`.
+Each type has configurable properties that Prestans uses to validate data. It's important to design your models with the strictest case in mind. Use request and response filters to relax the rules for specific cases, refer to our chapter on :doc:`validation`.
 
-This chapter introduces you to writing Models and using it in various parts of your prestans application. It is possible to write custom ``DataType``.
+This chapter introduces you to writing Models and using it in various parts of your Prestans application. It is possible to write custom ``DataType``.
 
-All prestans types are wrappers on Pythonic data types, that you get a chance to define strict rules for each attribute. These rules ensure that the data you exchange with a client is sane, ensures the integrity of your business logic and minimizes issues when persisting data. All of this happens even before your handler is even called.
+All Prestans types are wrappers on Pythonic data types, that you get a chance to define strict rules for each attribute. These rules ensure that the data you exchange with a client is sane, ensures the integrity of your business logic and minimizes issues when persisting data. All of this happens even before your handler is even called.
 
 *Most importantly* it cuts out the need for writing trivial boilerplate code to validate incoming and outgoing data. If your handler is called you can trust the data is sane and safe to use.
 
@@ -34,12 +34,12 @@ prestans types are divided into, *Basic Types*, and *Collections*, currently sup
 * ``Array``, wraps Python ``lists``
 * ``Model``, wraps Python ``dict``
 
-The second half of this chapter has a detailed reference of configuration parameters for each prestans ``DataType``.
+The second half of this chapter has a detailed reference of configuration parameters for each Prestans ``DataType``.
 
 Writing Models
 ==============
 
-``Models`` are defined by extending ``prestans.types.Model``. Models contain attributes which either be a basic prestans type (a direct subclass of ``prestans.types.DataType``) or a reference to an instance of another Model, or an ``Array`` of objects.
+``Models`` are defined by extending ``prestans.types.Model``. Models contain attributes which either be a basic Prestans type (a direct subclass of ``prestans.types.DataType``) or a reference to an instance of another Model, or an ``Array`` of objects.
 
 The REST standard talks about URLs refering to entities, this is often interpreted literally as REST API URLs refer to persistent models. Your REST API is the *business logic* layer of your Web client / server application. Providing direct access to persistently stored data through your REST API is simply replicating XML-RPC and not only is it bad design in the RESTful world but also extremely insecure.
 
@@ -51,7 +51,7 @@ Depending on the implementation of this applicaiton it might be easier to send d
 
 .. note:: Read our section of Design Notes, to learn more about designing better REST APIs.
 
-General convention for prestans apps is to keep all your REST models in a single package. To start creating models, simply define a class that extends from ``prestans.types.Model``
+General convention for Prestans apps is to keep all your REST models in a single package. To start creating models, simply define a class that extends from ``prestans.types.Model``
 
 .. code-block:: python
 
@@ -68,9 +68,9 @@ Defining Attributes
 
 All atributes of a ``Model`` must be an instance of a ``prestans.type``, Attributes can also be relationships to instances or collections of Models.
 
-Attributes are defined at a class level, these are the rules used by prestans for each instance attributes of your ``Model``. By default prestans is absolutely unforgiving and will ensure that each attribute satifies all it's conditions. Failure results in aborting the creation of an instance.
+Attributes are defined at a class level, these are the rules used by Prestans for each instance attributes of your ``Model``. By default Prestans is absolutely unforgiving and will ensure that each attribute satifies all it's conditions. Failure results in aborting the creation of an instance.
 
-At the class level define attributes by instantiating prestans types with your rules, ensure they are as strict as possible, the more your define here the less you have to do in your handler. The objective is not to pass through data that your handler can't work with.
+At the class level define attributes by instantiating Prestans types with your rules, ensure they are as strict as possible, the more your define here the less you have to do in your handler. The objective is not to pass through data that your handler can't work with.
 
 .. code-block:: python
 
@@ -80,16 +80,16 @@ At the class level define attributes by instantiating prestans types with your r
         name = prestans.types.String(required=True, min_length=1)
         duration = prestans.types.Float(required=True)
 
-Our :ref:`type-config-reference` guide documents in detail configuration validation options provided by each prestans ``DataType``.
+Our :ref:`type-config-reference` guide documents in detail configuration validation options provided by each Prestans ``DataType``.
 
-.. note:: prestans Models do not provide back references when defining relationships between Models (like many ORM layers), defining cross references in Models can cause an infinite recursion. REST models are views on your persistent data, in most cases cross references might mean re-thinking your API design. You can also use DataAdapters to prevent an infinite recursion.
+.. note:: Prestans Models do not provide back references when defining relationships between Models (like many ORM layers), defining cross references in Models can cause an infinite recursion. REST models are views on your persistent data, in most cases cross references might mean re-thinking your API design. You can also use DataAdapters to prevent an infinite recursion.
 
 To One Relationship
 -------------------
 
 One to One relationships are defined assigning an instance of an existing ``Model`` to an attribute of another.
 
-Validation rules accepted as instantiation values are for the attribute of the container ``Model``, they are evaluated the same way as basic prestans ``DataTypes``.
+Validation rules accepted as instantiation values are for the attribute of the container ``Model``, they are evaluated the same way as basic Prestans ``DataTypes``.
 
 .. code-block:: python
 
@@ -106,7 +106,7 @@ To Many Relationship (using Arrays)
 
 prestans provides ``prestans.types.Array`` to provide lists of objects. Because REST end points refer to Entities, Collections in REST responses or requests must have elements of the same data type.
 
-You must provide an instance prestans DataType (e.g Array of Strings for tagging) or defined Model as the ``element_template`` property of an ``Array``. Each instance in the ``Array`` must comply with the rules defined by the template. Failure to validate any instance in the ``Array``, results as a failure to validate the entire ``Array``.
+You must provide an instance Prestans DataType (e.g Array of Strings for tagging) or defined Model as the ``element_template`` property of an ``Array``. Each instance in the ``Array`` must comply with the rules defined by the template. Failure to validate any instance in the ``Array``, results as a failure to validate the entire ``Array``.
 
 .. code-block:: python
 
@@ -116,7 +116,7 @@ You must provide an instance prestans DataType (e.g Array of Strings for tagging
 
         tracks = prestans.types.Array(element_template=Track(), min_length=1)
 
-Arrays of Models are validated using the rules defined by each attribute. If you are creating an Array of a basic prestans type, the validation rules are defined in the instance provided as the ``element_template``:
+Arrays of Models are validated using the rules defined by each attribute. If you are creating an Array of a basic Prestans type, the validation rules are defined in the instance provided as the ``element_template``:
 
 .. code-block:: python
 
@@ -129,7 +129,7 @@ Arrays of Models are validated using the rules defined by each attribute. If you
 Self References
 ---------------
 
-Self references in prestans Model definition are the same as self referencing Python objects. 
+Self references in Prestans Model definition are the same as self referencing Python objects. 
 
 .. code-block:: python
 
@@ -157,12 +157,12 @@ Use arrays to make a list:
 Special Types
 =============
 
-Apart the usual suspects (``String``, ``Integer``, ``Float``, ``Boolean``) prestans also provides a few complex ``DataTypes``. These are wrappers on data types that have extensive libraries both on browsers and the Python runtime, but are serialized as strings or numbers.
+Apart the usual suspects (``String``, ``Integer``, ``Float``, ``Boolean``) Prestans also provides a few complex ``DataTypes``. These are wrappers on data types that have extensive libraries both on browsers and the Python runtime, but are serialized as strings or numbers.
 
 DateTime
 --------
 
-DateTime wraps around python ``datetime``, serialization formats like JSON serialize dates as strings, there are various standard formats for serializing dates as Strings, by default prestans ``DateTime`` uses :rfc:`822` expressed as ``%Y-%m-%d %H:%M:%S`` format string in Python. This is because Google Closure's `Date API <http://closure-library.googlecode.com/svn/docs/class_goog_date_DateTime.html>`_ conveniently provides ``goog.date.fromIsoString`` to parse these Strings.
+DateTime wraps around python ``datetime``, serialization formats like JSON serialize dates as strings, there are various standard formats for serializing dates as Strings, by default Prestans ``DateTime`` uses :rfc:`822` expressed as ``%Y-%m-%d %H:%M:%S`` format string in Python. This is because Google Closure's `Date API <http://closure-library.googlecode.com/svn/docs/class_goog_date_DateTime.html>`_ conveniently provides ``goog.date.fromIsoString`` to parse these Strings.
 
 To use another format string, override the ``format`` parameter when defining ``DateTime`` attributes.
 
@@ -172,7 +172,7 @@ To use another format string, override the ``format`` parameter when defining ``
         
         last_updated =  prestans.types.DateTime(default=prestans.types.DATETIME.CONSTANT.NOW)
 
-Assigning python ``datetime`` instances as the default value for prestans ``DateTime`` attributes works on the server, our problem lies in auto-generating client side stub code.  The use of the constant ``prestans.types.CONSTANT.DATETIME_NOW`` instruct prestans to handle this properly.
+Assigning python ``datetime`` instances as the default value for Prestans ``DateTime`` attributes works on the server, our problem lies in auto-generating client side stub code.  The use of the constant ``prestans.types.CONSTANT.DATETIME_NOW`` instruct Prestans to handle this properly.
 
 DataURLFile
 -----------
@@ -206,7 +206,7 @@ Using Models to write Responses
 
 REST APIs should validate any data being sent back down to clients. Your application's persistent layer can't always guarantee that stored data meets your business logic rules.
 
-Models are a great way of constructing sound responses. They are also serializable by prestans. Your handlers can simply pass a collection (using Arrays) or instance of a Model and prestans will serialize the results.
+Models are a great way of constructing sound responses. They are also serializable by prestans. Your handlers can simply pass a collection (using Arrays) or instance of a Model and Prestans will serialize the results.
 
 .. code-block:: python
 
@@ -224,7 +224,7 @@ Models are a great way of constructing sound responses. They are also serializab
             self.response.http_status = prestans.rest.STATUS.OK
             self.response.body = album
 
-From the above example it's clear that code to convert persistent objects into REST models becomes repetitive, and as a result error prone. prestans provides ``DataAdapters``, that automate the conversion of persistent models to REST models. Read about it in the :doc:`data_adapters` chapter.
+From the above example it's clear that code to convert persistent objects into REST models becomes repetitive, and as a result error prone. Prestans provides ``DataAdapters``, that automate the conversion of persistent models to REST models. Read about it in the :doc:`data_adapters` chapter.
 
 If you use Google's Closure Library for client side development, we provide a complete client side implementation of our types library to create and parse, requests and responses. Details available in the :doc:`client` section.
 
@@ -233,7 +233,7 @@ If you use Google's Closure Library for client side development, we provide a co
 Type Configuration Reference
 ============================
 
-Basic prestans types extend from ``prestans.types.DataType``, these are the building blocks of all data represented in systems, e.g Strings, Numbers, Booleans, Date and Times.
+Basic Prestans types extend from ``prestans.types.DataType``, these are the building blocks of all data represented in systems, e.g Strings, Numbers, Booleans, Date and Times.
 
 Collections contain a series of attributes of both Basic and Collection types.
 
@@ -307,7 +307,7 @@ Date Time is a complex structure that parses strings to Python ``datetime`` and 
 .. note:: Extends ``prestans.types.DataStructure``
 
 * ``required`` flags if this is a mandatory field, accepts ``True`` or ``False`` and is set to ``True`` by default
-* ``default`` specifies the value to be assigned to the attribute if one isn't provided on instantiation, this must be a date. prestans provides a constans ``prestans.types.Date.CONSTANT.TODAY`` if you want to use the date / time of execusion.
+* ``default`` specifies the value to be assigned to the attribute if one isn't provided on instantiation, this must be a date. Prestans provides a constans ``prestans.types.Date.CONSTANT.TODAY`` if you want to use the date / time of execusion.
 * ``format`` default format  ``%Y-%m-%d``
 
 Time
@@ -318,7 +318,7 @@ Date Time is a complex structure that parses strings to Python ``datetime`` and 
 .. note:: Extends ``prestans.types.DataStructure``
 
 * ``required`` flags if this is a mandatory field, accepts ``True`` or ``False`` and is set to ``True`` by default
-* ``default`` specifies the value to be assigned to the attribute if one isn't provided on instantiation, this must be a date. prestans provides a constans ``prestans.types.Time.CONSTANT.NOW`` if you want to use the date / time of execusion.
+* ``default`` specifies the value to be assigned to the attribute if one isn't provided on instantiation, this must be a date. Prestans provides a constans ``prestans.types.Time.CONSTANT.NOW`` if you want to use the date / time of execusion.
 * ``format`` default format  ``%H:%M:%S``
 
 DateTime
@@ -329,31 +329,31 @@ Date Time is a complex structure that parses strings to Python ``datetime`` and 
 .. note:: Extends ``prestans.types.DataStructure``
 
 * ``required`` flags if this is a mandatory field, accepts ``True`` or ``False`` and is set to ``True`` by default
-* ``default`` specifies the value to be assigned to the attribute if one isn't provided on instantiation, this must be a date. prestans provides a constans ``prestans.types.DateTime.CONSTANT.NOW`` if you want to use the date / time of execusion.
+* ``default`` specifies the value to be assigned to the attribute if one isn't provided on instantiation, this must be a date. Prestans provides a constans ``prestans.types.DateTime.CONSTANT.NOW`` if you want to use the date / time of execusion.
 * ``format`` default format  ``%Y-%m-%d %H:%M:%S``
 
 Collections
 ===========
 
-Collections are formalised representations to complex itterable data structures. prestans provides two Collections, Arrays and Models (dictionaries).
+Collections are formalised representations to complex itterable data structures. Prestans provides two Collections, Arrays and Models (dictionaries).
 
 Array
 -----
 
-Arrays are collections of any prestans type. To ensure the integrity of RESTful responses, ``Array`` elements must always be of the same kind, this is defined by specifying an ``element_template``. prestans Arrays are itterable.
+Arrays are collections of any Prestans type. To ensure the integrity of RESTful responses, ``Array`` elements must always be of the same kind, this is defined by specifying an ``element_template``. Prestans Arrays are itterable.
 
 .. note:: Extends ``prestans.types.DataCollection``
 
 * ``required`` flags if this is a mandatory field, accepts ``True`` or ``False`` and is set to ``True`` by default
 * ``default`` a default object of type ``prestans.types.Array`` to be used if a value is not provided
-* ``element_template`` a instance of a ``prestans.types`` subclass that's use to validate each element. prestans does not allow arrays of mixed types because it does not form valid URL responses.
+* ``element_template`` a instance of a ``prestans.types`` subclass that's use to validate each element. Prestans does not allow arrays of mixed types because it does not form valid URL responses.
 * ``min_length`` minimum length of an array, if using default it must conform to this constraint
 * ``max_length`` maximum length of an array, 
 
 Model
 -----
 
-Models are wrapper on dictionaries, it provides a list of key, value pairs formalised as a Python ``class`` made up of any number of prestans ``DataType`` attributes. Models can have instances of other models or Arrays of Basic or Complex prestans types.
+Models are wrapper on dictionaries, it provides a list of key, value pairs formalised as a Python ``class`` made up of any number of Prestans ``DataType`` attributes. Models can have instances of other models or Arrays of Basic or Complex Prestans types.
 
 .. note:: Extends ``prestans.types.DataCollection``
 

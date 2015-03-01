@@ -2,35 +2,35 @@
 Installation
 ============
 
-For a typical server production deployment, we recommend installing prestans via `PyPI <https://pypi.python.org/pypi/prestans>`_::
+For a typical server production deployment, we recommend installing Prestans via `PyPI <https://pypi.python.org/pypi/prestans>`_::
 
     $ sudo pip install prestans
 
-this will build and install prestans for your default Python interpreter. To keep up-to-date; use the ``---upgrade`` option::
+this will build and install Prestans for your default Python interpreter. To keep up-to-date; use the ``---upgrade`` option::
 
-	$ sudo pip install prestans --upgrade
+	$ sudo pip install Prestans --upgrade
 
-If you need to run multiple versions of prestans on a server, consider using `Virtualenv <http://www.virtualenv.org/en/latest/>`_.
+If you need to run multiple versions of Prestans on a server, consider using `Virtualenv <http://www.virtualenv.org/en/latest/>`_.
 
-.. warning:: prestans 2.0 is backwards incompatible. 1.x is still available for download, upgrading to 2.x will break your 1.x application.
+.. warning:: Prestans 2.0 is backwards incompatible. 1.x is still available for download, upgrading to 2.x will break your 1.x application.
 
-Alternatively you can download and build prestans using distutils::
+Alternatively you can download and build Prestans using distutils::
 
     $ tar -zxvf prestans-2.x.x.tgz
     $ cd prestans-2.x.x
     $ sudo python setup.py install
 
-Environments like Google's AppEngine require you to include custom packages as part of your source. Things to consider when distributing prestans with your application:
+Environments like Google's AppEngine require you to include custom packages as part of your source. Things to consider when distributing Prestans with your application:
 
 * Make sure you target a particular release of prestans, distributing our development branch is not recommended (unless of course you require a bleeding edge feature). 
-* If you prefer to include prestans as a Git submodule, ensure you use reference one of the ``tags``.
+* If you prefer to include Prestans as a Git submodule, ensure you use reference one of the ``tags``.
 * If your server environment has hard limits on number of files, consider using `zipimport <http://docs.python.org/2/library/zipimport.html>`_.
 
 As a `Git submodule <http://git-scm.com/book/en/Git-Tools-Submodules>`_::
 
 	$ git submodule add https://github.com/prestans/prestans.git prestans
 
-When including prestans manually ensure that your web server is able to locate the files. 
+When including Prestans manually ensure that your web server is able to locate the files. 
 
 Software Requirements
 =====================
@@ -54,7 +54,7 @@ The following are environment specific deployment gotchas. Things we've learnt t
 Apache + mod_wsgi
 -----------------
 
-Consider the following directory stucture, you might wish to checkout a bleeding edge prestans into a source controlled directory (in this instance Git)::
+Consider the following directory stucture, you might wish to checkout a bleeding edge Prestans into a source controlled directory (in this instance Git)::
 
 	+-- app
 	+-- conf
@@ -85,7 +85,7 @@ During deployment::
       version: "1.2.3"
 
 
-Leaving this directive out loads version 1.1 of WebOb; prestans 2.0 onwards specifically uses WebOb 1.2.3+.
+Leaving this directive out loads version 1.1 of WebOb; Prestans 2.0 onwards specifically uses WebOb 1.2.3+.
 
 
 Unit testing
@@ -95,7 +95,7 @@ prestans ships a `unit testing suite <https://docs.python.org/2/library/unittest
 
 * Prestans Data Type validation
 
-to run the testsuite checkout prestans via Git and use the Python unitest framework:
+to run the testsuite checkout Prestans via Git and use the Python unitest framework:
 
 .. code-block:: bash
 

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# prestans documentation build configuration file, created by
+# Prestans documentation build configuration file, created by
 # sphinx-quickstart on Sat Aug 11 13:23:11 2012.
 #
 # This file is execfile()d with the current directory set to its containing dir.

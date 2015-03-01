@@ -1,15 +1,15 @@
 Data Adapters
 =============
 
-The :doc:`validation` chapter demonstrates the use of prestans ``Models`` to validate requests, build rules complaint responses and the use of ``AttributeFilters`` to make temporary exceptions to the validation rules.
+The :doc:`validation` chapter demonstrates the use of Prestans ``Models`` to validate requests, build rules complaint responses and the use of ``AttributeFilters`` to make temporary exceptions to the validation rules.
 
-``DataAdapters`` automate morphing persistent objects to prestans models, it provides the following features:
+``DataAdapters`` automate morphing persistent objects to Prestans models, it provides the following features:
 
 * A static registry ``prestans.ext.data.adapters.registry``, that maps persistent models to REST models
 * An instance convertor, used to convert an instance. Convertors are specific to backends and uses the registry to determine relationships between persistent and REST models. 
 * A collection iterator, that iterates through collections of persistent results and turns them into REST models. It follows all the same rules as the instance convertor.
 
-Out of the box prestans supports:
+Out of the box Prestans supports:
 
 * `SQLAlchemy <http://www.sqlalchemy.org/>`_ which in turn should allow you to support most popular RDBMS backends.
 * AppEngine's `Python NDB <https://developers.google.com/appengine/docs/python/ndb/>`_ which is built on top of DataStore.
@@ -18,18 +18,18 @@ Out of the box prestans supports:
 
 For the purposes of this example lets assume our rest models live in the namespace ``musicdb.rest.models`` and the persistent models live in ``musicdb.models``, and is written for AppEngine.
 
-Writing custom ``DataAdapters`` is quite straight forward. The prestans project welcomes third party contributions.
+Writing custom ``DataAdapters`` is quite straight forward. The Prestans project welcomes third party contributions.
 
 Pairing REST models to persistent models
 ----------------------------------------
 
-Before you can ask prestans to convert persistent objects to REST model instances, you must use the registry you to pair persistent definitions to REST definitions. prestans uses the REST model as the template for the data that will be transformed. While adapting data prestans will:
+Before you can ask Prestans to convert persistent objects to REST model instances, you must use the registry you to pair persistent definitions to REST definitions. Prestans uses the REST model as the template for the data that will be transformed. While adapting data Prestans will:
 
 * Inspect the REST model for a list of attributes
 * Inspect the persistent model for the data
 * Ensure that the data provided by the persistent model matches the rules definied by the REST model
-* If the persistent model does not define an attribute, prestans reverts to using the default value or ``None``
-* If the value provided by the persistent model fails to validate, prestans raises an ``prestans.exception.DataValidationException`` which will graceful respond to the requesting client.
+* If the persistent model does not define an attribute, Prestans reverts to using the default value or ``None``
+* If the value provided by the persistent model fails to validate, Prestans raises an ``prestans.exception.DataValidationException`` which will graceful respond to the requesting client.
 
 If a persistent definition maps to more than one REST model defintion, DataAdapters will try and make the sensible choice unless you explicitly provide the REST model you wish to adapt the data to.
 
