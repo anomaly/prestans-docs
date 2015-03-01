@@ -1,24 +1,24 @@
 Data Adapters
 =============
 
-The :doc:`validation` chapter demonstrates the use of prestans ``Models`` to validate requests, build rules complaint responses and the use of ``AttributeFilters`` are used to make temporary case by case exceptions to the validation rules
+The :doc:`validation` chapter demonstrates the use of prestans ``Models`` to validate requests, build rules complaint responses and the use of ``AttributeFilters`` to make temporary exceptions to the validation rules.
 
-``DataAdapters`` automate morphing persistent objects to prestans models, it provides the following feature
+``DataAdapters`` automate morphing persistent objects to prestans models, it provides the following features:
 
 * A static registry ``prestans.ext.data.adapters.registry``, that maps persistent models to REST models
 * An instance convertor, used to convert an instance. Convertors are specific to backends and uses the registry to determine relationships between persistent and REST models. 
 * A collection iterator, that iterates through collections of persistent results and turns them into REST models. It follows all the same rules as the instance convertor.
 
-.. note:: REST services provide views of persistent data, DataAdapters allow you to map multiple REST models to the same persistent model.
-
-For our sample code assume that rest models live in the ``musicdb.rest.models`` and the persistent models live in ``musicdb.models``, and is written for AppEngine.
-
-Out of the box prestans supports 
+Out of the box prestans supports:
 
 * `SQLAlchemy <http://www.sqlalchemy.org/>`_ which in turn should allow you to support most popular RDBMS backends.
 * AppEngine's `Python NDB <https://developers.google.com/appengine/docs/python/ndb/>`_ which is built on top of DataStore.
 
-Writing DataAdapters for other backends is discussed later in this chapter.
+.. note:: REST services provide views of persistent data, DataAdapters allow you to map multiple REST models to the same persistent model.
+
+For the purposes of this example lets assume our rest models live in the namespace ``musicdb.rest.models`` and the persistent models live in ``musicdb.models``, and is written for AppEngine.
+
+Writing custom ``DataAdapters`` is quite straight forward. The prestans project welcomes third party contributions.
 
 Pairing REST models to persistent models
 ----------------------------------------
