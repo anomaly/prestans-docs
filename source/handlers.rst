@@ -376,6 +376,15 @@ Data Validation Exceptions
 Parser Exceptions
 -----------------
 
+* ``UnimplementedVerbError``
+* ``NoEndpointError``
+* ``AuthenticationError``
+* ``AuthorizationError``
+* ``SerializationFailedError``
+* ``DeSerializationFailedError``
+* ``AttributeFilterDiffers``
+* ``InconsistentPersistentDataError``
+
 
 Handler Exceptions
 ------------------
