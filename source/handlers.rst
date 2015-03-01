@@ -401,6 +401,8 @@ Parser Exceptions
 Handler Exceptions
 ------------------
 
+The following exceptions are designed
+
 * ``ServiceUnavailable``
 * ``BadRequest``
 * ``Conflict``
