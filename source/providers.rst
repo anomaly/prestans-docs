@@ -15,8 +15,8 @@ Security is defined per HTTP method of a handler (i.e a User can read a list of 
 
 Once you've defined and assigned an authentication provider for your handler you can use the following decorators (see :pep::`318`) provided by ``prestans.providers.auth``:
 
-* ``login_required`` 
-* ``role_required``
+* ``prestans.provider.auth.login_required`` checks with the the registered authentication provider if a user is logged in
+* ``prestans.provider.auth.role_required``checks with the registered authentication provider if the user has the appropriate role
 
 .. note:: Providers are inherited, consider assigning the provider to a base handler class of your application.
 
@@ -25,9 +25,13 @@ Fitting into your environment
 
 An API end point should respond if the user is unauthenticated, obviously with a message to tell them they are unauthenticated. API's are client agnostic, so It's nearly "*never*"" the API end point's responsibility to send the user to a login page. If a uesr is accessing a resource they are not meant to be, prestans will send a properly formed message as the response.
 
-``prestans.auth`` provides a stub for the ``AuthContextProvider``, this class is never meant to be used directly, your application is expected to provide a ``class`` that extends from ``AuthContextProvider``.
+``prestans.provider.auth`` provides a stub for the ``AuthContextProvider``, this class is never meant to be used directly, your application is expected to provide a ``class`` that extends from ``AuthContextProvider``. It defines the following method stubs:
 
-``AuthContextProvider`` defines the following method stubs
+* ``is_authenticated_user`` must return ``True`` or ``False`` to indicate if a user is current logged in, the function is additionally provided a reference to the hander. Your application has the opportunity to use any supporting libraries to determine if the user is logged in and return a response.
+
+* ``get_current_user`` should return a reference to the ``user`` object for your application. This can be a persistent object, or user identifier, whatever your application would find most useful when persistenting data.
+
+* ``current_user_has_role`` is provided a set of rolenames that the handle is allowed to use, role_name can be a refernce to a list of strings, constants whatever your app deems relevant. This method will only run after prestans has checked that the user is authenticated. Obviously you can use ``self.get_current_user`` to get a reference tot he currently logged in user.
 
 .. code-block:: python
 
@@ -42,14 +46,6 @@ An API end point should respond if the user is unauthenticated, obviously with a
         def current_user_has_role(self, role_name):
             raise Exception("Direct use of AuthContextProvider not allowed")        
             
-Let's discuss these in order of relevance:
-
-* ``is_authenticated_user`` must return ``True`` or ``False`` to indicate if a user is current logged in, the function is additionally provided a reference to the hander. Your application has the opportunity to use any supporting libraries to determine if the user is logged in and return a response.
-
-* ``get_current_user`` should return a reference to the ``user`` object for your application. This can be a persistent object, or user identifier, whatever your application would find most useful when persistenting data.
-
-* ``current_user_has_role`` is provided a set of rolenames that the handle is allowed to use, role_name can be a refernce to a list of strings, constants whatever your app deems relevant. This method will only run after prestans has checked that the user is authenticated. Obviously you can use ``self.get_current_user`` to get a reference tot he currently logged in user.
-
 Writing your own provider
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -92,9 +88,11 @@ Attaching AuthContextProvider to Handlers
 
 Like all things prestans, attaching a auth context provider to a handler is as simple as assigning an instance of your ``AuthContextProvider`` to your ``RESTRequestHandler``'s auth_context property::
 
-    class MyHandler(prestans.handlers.RESTRequestHandler):
+    class MyHandler(prestans.rest.RequestHandler):
 
-        __provider_config__ = myapp.auth.MyAuthContextProvider()
+        self.__provider_config__ = prestans.provider.Config(
+            authentication=musicdb.rest.auth.AuthContextProvider(self.request.environ)
+            )
         
 This tells your handler which ``AuthContextProvider`` to use. Remember that authentication configuration is per HTTP method supported by your request handler:
 
@@ -106,9 +104,11 @@ The following example allows any logged in user to get resources, users with rol
 
 .. code-block:: python
 
-    class MyRESTHandler(prestans.handlers.RESTRequestHandler):
+    class MyRESTHandler(prestans.rest.RequestHandler):
 
-        auth_context = myapp.auth.MyAuthContextProvider()
+        self.__provider_config__ = prestans.provider.Config(
+            authentication=musicdb.rest.auth.AuthContextProvider(self.request.environ)
+            )
 
         @prestans.auth.login_required
         def get(self):
