@@ -90,15 +90,15 @@ Like all things prestans, attaching a auth context provider to a handler is as s
 
     class MyHandler(prestans.rest.RequestHandler):
 
-        self.__provider_config__ = prestans.provider.Config(
+        __provider_config__ = prestans.provider.Config(
             authentication=musicdb.rest.auth.AuthContextProvider(self.request.environ)
             )
         
 This tells your handler which ``AuthContextProvider`` to use. Remember that authentication configuration is per HTTP method supported by your request handler:
 
-* If your handler method just wants to ensure that a user is logged in, all you need to do is decorate your HTTP method with ``@prestans.auth.login_required``.
+* If your handler method just wants to ensure that a user is logged in, all you need to do is decorate your HTTP method with ``@prestans.provider.auth.login_required``.
 
-* If your handler method wants to test final grained roles use the ``@prestans.auth.role_required`` decorator. This implies that a user is already logged in.
+* If your handler method wants to test final grained roles use the ``@prestans.provider.auth.role_required`` decorator. This implies that a user is already logged in.
 
 The following example allows any logged in user to get resources, users with role authors to create and update resources, but only users with role admin to delete resources.
 
@@ -106,22 +106,22 @@ The following example allows any logged in user to get resources, users with rol
 
     class MyRESTHandler(prestans.rest.RequestHandler):
 
-        self.__provider_config__ = prestans.provider.Config(
+        __provider_config__ = prestans.provider.Config(
             authentication=musicdb.rest.auth.AuthContextProvider(self.request.environ)
             )
 
-        @prestans.auth.login_required
+        @prestans.provider.auth.login_required
         def get(self):
             .... do what you need to here
 
-        @prestans.auth.role_required(role_name=['authors'])
+        @prestans.provider.auth.role_required(role_name=['authors'])
         def post(self):
             .... do what you need to here
 
-        @prestans.auth.role_required(role_name=['authors'])
+        @prestans.provider.auth.role_required(role_name=['authors'])
         def put(self):
             .... do what you need to here
 
-        @prestans.auth.role_required(role_name=['admin'])
+        @prestans.provider.auth.role_required(role_name=['admin'])
         def delete(self):
             .... do what you need to here
