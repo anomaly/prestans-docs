@@ -28,7 +28,7 @@ Environments like Google's AppEngine require you to include custom packages as p
 
 As a `Git submodule <http://git-scm.com/book/en/Git-Tools-Submodules>`_::
 
-	$ git submodule add https://github.com/prestans/prestans.git prestans
+	$ git submodule add https://github.com/anomaly/prestans.git ext/prestans
 
 When including Prestans manually ensure that your web server is able to locate the files. 
 
