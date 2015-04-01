@@ -401,14 +401,14 @@ Parser Exceptions
 Handler Exceptions
 ------------------
 
-The following exceptions are designed
+Prestans make the following exceptions available for your handler to use. They are associated to error codes defined in the HTTP specification and when raised Prestans gracefully returns to the client with an appropriate error message and where applicable a stack trace. Each exception allows you to pass a custom error message which is returned to the client. Prestans will also set the appropriate HTTP error code in the response header.
 
-* ``ServiceUnavailable``
-* ``BadRequest``
-* ``Conflict``
-* ``NotFound``
-* ``Unauthorized``
-* ``MovedPermanently``
-* ``PaymentRequired``
-* ``Forbidden``
+* ``ServiceUnavailable`` to be raised if the service called cannot satisfy the request at the present time, this could be caused due to exhausted quotas on cloud services or a database services that may have failed to respond
+* ``BadRequest`` raised when the client placed an inappropriate request, a typical example is that the data Prestans parsed is in the right format but your service is unable to process the combination.
+* ``Conflict`` raised when the data provided to the end point is valid but conflicts with the business logic
+* ``NotFound`` raised when a requested entity is not found, for example the entity ID provided as part of the request is valid in format but does not exists on the system
+* ``Unauthorized`` raised if the particular user is not allowed to access an entity or related children
+* ``MovedPermanently`` raised if the particular endpoint has moved, this should cause the client to request the newly appointed URL
+* ``PaymentRequired`` raised if your service requires the user to subscribe to the service and their subscription has expired
+* ``Forbidden`` raised if the the particular entity the client requested should not be accessed by the currently logged in user
 
