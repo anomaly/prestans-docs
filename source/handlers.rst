@@ -388,13 +388,17 @@ Data Validation Exceptions
 Parser Exceptions
 -----------------
 
-* ``UnimplementedVerbError``
-* ``NoEndpointError``
-* ``AuthenticationError``
-* ``AuthorizationError``
-* ``SerializationFailedError``
-* ``DeSerializationFailedError``
-* ``AttributeFilterDiffers``
+Prestans raises the following exceptions when parsing data. If the exception is raise while parsing a request Prestans will fail gracefully by responding to the client with an error message and a track trace. If the exception is raised while your handler returns a response Prestans will stop the execution and expect you fix the issue.
+
+.. note:: Since all data is strictly validated your application should to maintain consistent data at all times.
+
+* ``UnimplementedVerbError`` raised if a client requests an HTTP verb that an end point does not handle
+* ``NoEndpointError`` raised if a client requests an endpoint that does not exists
+* ``AuthenticationError`` raised if the client does not have an authenticated session and the handler requires them to do so
+* ``AuthorizationError`` raised if the logged is user fails to pass the authorisation rules 
+* ``SerializationFailedError``  raised if serialization of the data fails, would only happen if the handler passed a data type that cannot be handled by the nominated serializer.
+* ``DeSerializationFailedError`` raised if deserialization failed, this would only happen if the client passed data that cannot be parsed by the nominated deserializer
+* ``AttributeFilterDiffers`` raised if the attribute filter differs from the nominated response template
 * ``InconsistentPersistentDataError``
 
 
