@@ -268,6 +268,20 @@ Requests ``prestans.rest.Request``
 * ``prestans.net.HttpMethod.DELETE``
 * ``prestans.net.HttpMethod.PATCH``
 
+Example of a GET request:
+
+.. code-block:: javascript
+
+    var config_ = {
+        identifier: "AlbumFetch",
+        httpMethod: prestans.net.HttpMethod.GET,
+        responseFilter: opt_filter,
+        responseModel: pdemo.data.model.Album,
+        urlFormat: "/album/%i",
+        urlArgs: [id]
+    };
+
+
 Reading a Response
 ------------------
 
