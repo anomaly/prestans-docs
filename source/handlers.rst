@@ -8,14 +8,14 @@ If you are not familiar with WSGI we recommend reading `Armin Ronarcher <http://
 
 WSGI interfaces will generally handover requests that match a URL pattern to the mapped WSGI callable. From the callable is responsible for dispatching the request to the appropriate handler based on part of the URL, HTTP verb, headers or any other property of an HTTP request or a combination properties. This middle ware code is refered to as a request router and Prestans provides one of it's own.
 
-prestans makes use of standard HTTP headers for content negotiation. In addition it uses a handful of custom headers that the client can use to control the Prestans based API's behavior (features include Content Minification and Attribute Subsets for requests and responses). We'll first introduce you to the relevant HTTP and how it effects your API requests followed by how you can handle API requests in prestans.
+Prestans makes use of standard HTTP headers for content negotiation. In addition it uses a handful of custom headers that the client can use to control the Prestans based API's behavior (features include Content Minification and Attribute Subsets for requests and responses). We'll first introduce you to the relevant HTTP and how it effects your API requests followed by how you can handle API requests in prestans.
 
 Serializers & DeSerializers
 ===========================
 
 Serializers and DeSerializers are pluggable Prestans constructs that assist the framework in packing or unpacking data. Serialzier or deserializer handle content of a particular mime type and are generally wrappers to vocabularies already available in Python (although it possible to write a custom serializer entirely in Python). Serializers always write out a parseable version of models.
 
-prestans application may speak as many vocabularies as they wish; vocabularies can also be local to handlers (as opposed to applicaiton wide). You must also define a default format.
+Prestans application may speak as many vocabularies as they wish; vocabularies can also be local to handlers (as opposed to applicaiton wide). You must also define a default format.
 
 Each request must send an ``Accept`` header for Prestans to decide the response format. If the registered handler cannot respond in the requeted format Prestans raises an ``UnsupportedVocabularyError`` exception inturn producing a ``501 Not Implemented`` response. All Prestans APIs have a set of default formats all handlers accept, each end-point might accept additional formats.
 
@@ -24,11 +24,11 @@ If a request has send a body (e.g ``PUT``, ``POST``) you must send a ``Content-T
 Routing Requests
 ================
 
-prestans is built right on top of WSGI and ships with it's own WSGI Request Router. The router is responsible for parsing the HTTP request, setting up a HTTP response, setup a logger (if one wasn't provided as part of the configuraiton), finally check to see if the API services the requested URL and hand the request over to the handler.
+Prestans is built right on top of WSGI and ships with it's own WSGI Request Router. The router is responsible for parsing the HTTP request, setting up a HTTP response, setup a logger (if one wasn't provided as part of the configuraiton), finally check to see if the API services the requested URL and hand the request over to the handler.
 
 The handler is responsible for constructing the response and one return the router, asks the response to serialize itself. If an exception is raised (see :doc:`framework_design`) is raised by the framework (because it couldn't parse the request or response) or the handler, the router where appropriate, writes a detailed error trace back to the client.
 
-prestans verbosely logs events per API request. Your system logger is responsible for verbosity of the logger.
+Prestans verbosely logs events per API request. Your system logger is responsible for verbosity of the logger.
 
 Regex & URL design primer
 -------------------------
@@ -127,7 +127,7 @@ REST requests primarily use the following HTTP verbs to handle requests:
 * ``PATCH`` to update part of an entity
 * ``DELETE`` to delete an entity
 
-prestans maps each one of these verbs to a python function of the same name in your REST handler class. Each REST request handler in your application derives from ``prestans.rest.RequestHandler``. Unless your handler overrides the functions ``get``, ``post``, ``put``, ``patch``, ``delete`` the base implementation tells the Prestans router that the requested end point does not support the particular HTTP verb.
+Prestans maps each one of these verbs to a python function of the same name in your REST handler class. Each REST request handler in your application derives from ``prestans.rest.RequestHandler``. Unless your handler overrides the functions ``get``, ``post``, ``put``, ``patch``, ``delete`` the base implementation tells the Prestans router that the requested end point does not support the particular HTTP verb.
 
 Your handler must accept an equal number of parameters as defined the router regular expression.
 
@@ -298,20 +298,20 @@ or an individual entity, defined as:
 
 More often than not, the content your handler sends back, would have been read queried from a persistent data store. Sending persistent data verbatim nearly never fits the user case. A useful API sends back appropriate amount of information to the client to make the request useful without bloating the response. This becomes a cases by case consideration of what a request handler sends back. Sending out persistent objects verbatim could sometimes pose to be a security threat.
 
-prestans requires you to transform each persistent object into a REST model. To ease this tedious task Prestans provides a feature called :doc:`data_adapters`. Data Adapters perform the simple task of converting persistent instances or collections of persistent instances to paired Prestans REST models, while ensuring that the persistent data matches the validation rules defined by your API.
+Prestans requires you to transform each persistent object into a REST model. To ease this tedious task Prestans provides a feature called :doc:`data_adapters`. Data Adapters perform the simple task of converting persistent instances or collections of persistent instances to paired Prestans REST models, while ensuring that the persistent data matches the validation rules defined by your API.
 
 Data Adapters are specific to backends, and it's possible to write your own your backend specific data adapter. All of this is discussed in the chapter dedicated to :doc:`data_adapters`.
 
 Minifying Content
 -----------------
 
-prestans tries to make your API as efficient as possible. Minimizing content size is one of these tricks. Complimentary to Attribute Filters (which allows clients to dynamically turn attributes on or off in the response) is response key minification.
+Prestans tries to make your API as efficient as possible. Minimizing content size is one of these tricks. Complimentary to Attribute Filters (which allows clients to dynamically turn attributes on or off in the response) is response key minification.
 
 This is particularly useful for large amounts of repetitive data, e.g several hundred order lines.
 
 Setting the ``Prestans-Minification`` header to ``On`` is all that's required to use this feature. This is a per request setting and is set to ``Off`` by default.
 
-prestans also sends ``Prestans-Minification-Map`` header back containing a one to one map of the original attribute names it's minified counterpart.
+Prestans also sends ``Prestans-Minification-Map`` header back containing a one to one map of the original attribute names it's minified counterpart.
 
 .. note:: Our Google Closure extensions provides a JSON REST Client, which can automatically unpack minified requests to fully formed Prestans client side models.
 
@@ -365,14 +365,21 @@ This section deals with Exceptions that Prestans expects you to use to raise mea
 
 You do not have to raise exceptions for request and response data validation. If the data does not match the rules defined by your models, parameter sets or attribute filters, it's prestans' responsibility to graceful fail and respond back to the client.
 
-Unsupported Vocabulary
-----------------------
+Unsupported Vocabulary or Content Type
+--------------------------------------
+
+Prestans uses the ``Accept`` and ``Content-Type`` HTTP headers to negotiate the format the client is sending their request as or the format they expect the response in. Prestans ships with a standard set of vocabularies (serialization formats) and allow you to add your own. Prestans automatically adjusts the serializer or de-serializer to use based on the mime types. If Prestans is unable to service the request, the following exceptions are raised:
+
+* ``UnsupportedVocabularyError`` raised is Prestans can't find a 
+* ``UnsupportedContentTypeError``
 
 
 Configuration Exceptions
 ------------------------
 
-* ``InvalidType``
+Along with Python's `TypeError` Prestans raises the following exceptions if you've configured portions of your application incorrectly.
+
+* ``InvalidType`` raised if the Python typed passed in for validate is incorrect.
 * ``ParseFailedError`` raised if the data type fails to evaluate the value as an appropriate Python data type
 * ``InvalidMetaValueError`` raised if you've passed a unacceptable configuration option for an attribute
 * ``MissingParameterError`` raised if a required parameter for an attribute is missing 

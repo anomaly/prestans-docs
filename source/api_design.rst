@@ -2,7 +2,7 @@
 Thoughts on API design
 ======================
 
-prestans was a result of our careful study into the REST standards, popular frameworks and appraoches. Following are useful lessons we've learnt along the way. We've also compiled an extensive list of extremely useful :doc:`reference_material` we found during our research.
+Prestans was a result of our careful study into the REST standards, popular frameworks and appraoches. Following are useful lessons we've learnt along the way. We've also compiled an extensive list of extremely useful :doc:`reference_material` we found during our research.
 
 REST resources are *not* persistent models
 ==========================================

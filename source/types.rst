@@ -7,7 +7,7 @@ Models allow you to define rules for your API's data. Prestans uses these rules 
 
 .. image:: prestans_datatypes.png
 
-prestans types are one of the following:
+Prestans types are one of the following:
 
 * ``prestans.types.DataType`` all Prestans types are a subclass of ``DataType``, this is the most basic DataType in the Prestans world.
 * ``prestans.types.DateStructure`` are a subclass of ``DataType`` but represent complex types like Date Time.
@@ -21,7 +21,7 @@ All Prestans types are wrappers on Pythonic data types, that you get a chance to
 
 *Most importantly* it cuts out the need for writing trivial boilerplate code to validate incoming and outgoing data. If your handler is called you can trust the data is sane and safe to use.
 
-prestans types are divided into, *Basic Types*, and *Collections*, currently supported types are:
+Prestans types are divided into, *Basic Types*, and *Collections*, currently supported types are:
 
 * ``String``, wraps a Python ``str``
 * ``Integer``, wraps a Python number
@@ -104,7 +104,7 @@ On success the attribute will refer to an instance of the child ``Model``. Failu
 To Many Relationship (using Arrays)
 -----------------------------------
 
-prestans provides ``prestans.types.Array`` to provide lists of objects. Because REST end points refer to Entities, Collections in REST responses or requests must have elements of the same data type.
+Prestans provides ``prestans.types.Array`` to provide lists of objects. Because REST end points refer to Entities, Collections in REST responses or requests must have elements of the same data type.
 
 You must provide an instance Prestans DataType (e.g Array of Strings for tagging) or defined Model as the ``element_template`` property of an ``Array``. Each instance in the ``Array`` must comply with the rules defined by the template. Failure to validate any instance in the ``Array``, results as a failure to validate the entire ``Array``.
 

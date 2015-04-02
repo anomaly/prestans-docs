@@ -2,7 +2,7 @@
 Framework Design
 ================
 
-prestans is a developer-to-developer product. Before we start talking about how you can start harnessing it's features, we thought it might be a good idea to introduce you to some of the design decisions and patterns. This chapter highlights some of under the hood design decisions, it's written so you can gain an understanding of why Prestans behaves the way it does.
+Prestans is a developer-to-developer product. Before we start talking about how you can start harnessing it's features, we thought it might be a good idea to introduce you to some of the design decisions and patterns. This chapter highlights some of under the hood design decisions, it's written so you can gain an understanding of why Prestans behaves the way it does.
 
 It covers the use of HTTP headers to control features of prestans, and when Prestans will decide to bail out processing a request and when it will choose to fail gracefully (still responding back to the requesting client).
 
@@ -11,27 +11,27 @@ If you trust that we have made all the right decisions and you'd rather start wo
 Exceptions
 ==========
 
-prestans raises two kinds of exceptions. It handles both of them in very different ways:
+Prestans raises two kinds of exceptions. It handles both of them in very different ways:
 
 * The first are inbuilt Python exceptions e.g ``TypeError``, ``AssertionError``, Prestans does not handle these exceptions, causing your API to fail process that particular request. This is because these are only raised if you have incorrectly configured your Prestans handler, or more importantly your handler is not respecting it's own rules e.g objects returned by an end point don't match your parser configuration.
 
 * The second are Prestans defined exceptions. These are handled by Prestans and the router will return a proper error response to the requesting client. These are raised if the client placed an incorrect request e.g An attribute wasn't the right length or type. These excpetions are defined in ``prestans.exceptions``, along with a guide for it's suggested use.
 
-prestans defined exceptions can also be used by your handler to notify the client of trivial REST usecases e.g requested entity does not exists. We talk about these in :doc:`handlers`.
+Prestans defined exceptions can also be used by your handler to notify the client of trivial REST usecases e.g requested entity does not exists. We talk about these in :doc:`handlers`.
 
 HTTP Header Reference
 =====================
 
 HTTP headers are components of the message header for both HTTP requests and responses. They define the rules (e.g preferred content, cookies, software version) for each HTTP requests. These assist the server to best respond to the request and ensures that the client is able to consume it properly.
 
-prestans uses a combination of standard and custom headers to allow the requesting client to control the behavior of the API (without you having to write any extra code). Some of these headers can be specific to an HTTP Verb (e.g GET requests don't have request bodies and shouldn't send headers specifying the mime type of the body).
+Prestans uses a combination of standard and custom headers to allow the requesting client to control the behavior of the API (without you having to write any extra code). Some of these headers can be specific to an HTTP Verb (e.g GET requests don't have request bodies and shouldn't send headers specifying the mime type of the body).
 
 prestans' `client side <https://github.com/prestans/prestans-client/>`_ add-ons for `Google Closure <https://developers.google.com/closure/library/>`_ wrap these up properly client library calls.
 
 Content Negotiation
 -------------------
 
-prestans APIs can speak as many serialization formats as they please. We support JSON and Plist XML out of the box. It's possible to write custom serializers and deserializers if you wish to support any other formats. 
+Prestans APIs can speak as many serialization formats as they please. We support JSON and Plist XML out of the box. It's possible to write custom serializers and deserializers if you wish to support any other formats. 
 
 Each API request uses the following standard HTTP headers to negotiate the content type of the request and response payload:
 
@@ -46,7 +46,7 @@ Both these headers are part of the HTTP standards, the handler section in this c
 Custom headers
 --------------
 
-prestans allows the requesting the client to control what parts of an entity they, they want returned as part of a response. The Prestans features we are referring to are (these are talked about in detail in other chapters):
+Prestans allows the requesting the client to control what parts of an entity they, they want returned as part of a response. The Prestans features we are referring to are (these are talked about in detail in other chapters):
 
 * **Attribute Filters**, allows the client to toggle the visibility of attributes in a response, thus controlling the size and in turn the responsiveness of the API call. The typical use case of an attribute filter:
   

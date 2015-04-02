@@ -10,7 +10,7 @@ APIs have three major areas where data validation is paramount:
 * Serialized data in the body of the request, which is unpacked and made available for use to the handler
 * Data that's serialized down to the client as the response to each request. This is typically but not necessarily read back from persistent data stores.
 
-prestans allows each request handler to elegantly define the rules it wants to adhere to by declaring what we refer to as a ``VerbConfig`` (the Verb refers to the HTTP verb). 
+Prestans allows each request handler to elegantly define the rules it wants to adhere to by declaring what we refer to as a ``VerbConfig`` (the Verb refers to the HTTP verb). 
 
 .. _attribute_filters:
 
@@ -76,7 +76,7 @@ Each handler has a meta attribute called __verb_config__ this must be an instanc
         def post(self):
             ... do stuff here
 
-prestans is aggressive when it comes to validating requests and responses. However in the cases where you wish to relax the rules we recommend that you use :ref:`attribute_filters`. You can define an ``AttributeFilter`` in context and assign it to the appropriate ``VerbConfig``.
+Prestans is aggressive when it comes to validating requests and responses. However in the cases where you wish to relax the rules we recommend that you use :ref:`attribute_filters`. You can define an ``AttributeFilter`` in context and assign it to the appropriate ``VerbConfig``.
 
 .. code-block:: python
 
@@ -204,7 +204,7 @@ REST end-points must always return the same ``type`` of response. This is discus
 
 If you read your response from a persistent store you would be required to convert that object (typically by copying the values) to a similarly formatted Prestans REST model. Prestans features :doc:`data_adapters` which automate this process.
 
-prestans allows clients to dynamically configure the response payload by sending a serialized version of an Attribute Filter as the HTTP header ``Prestans-Response-Attribute-List``. This allows the client to adjust the response from your API without you having to do extra work. Of course the server has the final say, if your handler outright sets a rule there's nothing a client can do to override it.
+Prestans allows clients to dynamically configure the response payload by sending a serialized version of an Attribute Filter as the HTTP header ``Prestans-Response-Attribute-List``. This allows the client to adjust the response from your API without you having to do extra work. Of course the server has the final say, if your handler outright sets a rule there's nothing a client can do to override it.
 
 The response object that your handler has access to has a reference to an :ref:`attribute_filters` which is made up of the rules defined by your ``response_template`` with the client's request preferences applied, accessible at ``self.response.attribute_filter``. If your handler changes the state of the attribute filter before the verb method returns, Prestans used the modified state of the attribute filter, giving you the final say.
 

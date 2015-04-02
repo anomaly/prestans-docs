@@ -16,7 +16,7 @@ Google Closure is unlike other JavaScript frameworks (e.g jQuery). An extremely 
 
 .. note:: It's assumed that you are familiar with developing applications with Google Closure tools.
 
-prestans provides a number of extensions to Closure Library, that ease and automate building rich JavaScript clients that consume your Prestans API. Our current line up includes:
+Prestans provides a number of extensions to Closure Library, that ease and automate building rich JavaScript clients that consume your Prestans API. Our current line up includes:
 
 * REST Client, provides a pattern to create Xhr requests, manages the life cycle and parsers responses, also supports Attribute Fitlers.
 * Types API, a client side replica of the Prestans server types package assisting with parsing responses.
@@ -159,7 +159,7 @@ Prestans then provides the following additional methods:
 REST Client
 ===========
 
-prestans contains a ready made REST Client to allow you to easily make requests and unpack responses from a Prestans enabled server API. Our client implementation is specific to be used with Google Closure and only speaks `JSON`.
+Prestans contains a ready made REST Client to allow you to easily make requests and unpack responses from a Prestans enabled server API. Our client implementation is specific to be used with Google Closure and only speaks `JSON`.
 
 The client has three important parts:
 

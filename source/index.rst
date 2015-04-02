@@ -8,7 +8,7 @@ Prestans 2.0, a Python WSGI REST micro-framework
 
 Prestans is a WSGI (`PEP-333 <http://www.python.org/dev/peps/pep-0333/>`_) complaint micro-framework that allows you to rapidly build quality REST services by introducing a pattern of models, parsers and handlers and in turn taking care of boilerplate code. Prestans sits better with complex Ajax applications written with JavaScript infrastructure like `Google Closure <https://developers.google.com/closure/>`_, or native mobile apps.
 
-prestans is currently hosted on `Github <http://github.com/anomaly/prestans.git>`_ and distributed under the terms defined by the `New BSD license <http://opensource.org/licenses/bsd-license.php>`_. A list of current downloads is `available here <https://github.com/anomaly/prestans/tags>`_.  We highly recommend using `PyPI <http://pypi.python.org>`_ to install prestans.
+Prestans is currently hosted on `Github <http://github.com/anomaly/prestans.git>`_ and distributed under the terms defined by the `New BSD license <http://opensource.org/licenses/bsd-license.php>`_. A list of current downloads is `available here <https://github.com/anomaly/prestans/tags>`_.  We highly recommend using `PyPI <http://pypi.python.org>`_ to install prestans.
 
 This document assumes that you have a working knowledge of REST and WSGI.
 

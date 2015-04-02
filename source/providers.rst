@@ -11,7 +11,7 @@ Provided by the ``prestans.provider.auth`` package and is designed to plug into 
 
 Security typically has two parts to the problem, Authentication to check if a user is allowed in the system at all, and Authorization to see if the user is allowed to access a particular resource. If you are checking for Authority, Prestans assumes that the user is required to be authenticated.
 
-Security is defined per HTTP method of a handler (i.e a User can read a list of resources, but is not allowed to update them), prestans provides a set of decorators that your REST handler methods use to express their authentication/authorization requirements.
+Security is defined per HTTP method of a handler (i.e a User can read a list of resources, but is not allowed to update them), Prestans provides a set of decorators that your REST handler methods use to express their authentication/authorization requirements.
 
 Once you've defined and assigned an authentication provider for your handler you can use the following decorators (see :pep::`318`) provided by ``prestans.providers.auth``:
 
@@ -23,7 +23,7 @@ Once you've defined and assigned an authentication provider for your handler you
 Fitting into your environment
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-An API end point should respond if the user is unauthenticated, obviously with a message to tell them they are unauthenticated. API's are client agnostic, so It's nearly "*never*"" the API end point's responsibility to send the user to a login page. If a uesr is accessing a resource they are not meant to be, prestans will send a properly formed message as the response.
+An API end point should respond if the user is unauthenticated, obviously with a message to tell them they are unauthenticated. API's are client agnostic, so It's nearly "*never*"" the API end point's responsibility to send the user to a login page. If a uesr is accessing a resource they are not meant to be, Prestans will send a properly formed message as the response.
 
 ``prestans.provider.auth`` provides a stub for the ``AuthContextProvider``, this class is never meant to be used directly, your application is expected to provide a ``class`` that extends from ``AuthContextProvider``. It defines the following method stubs:
 
@@ -31,7 +31,7 @@ An API end point should respond if the user is unauthenticated, obviously with a
 
 * ``get_current_user`` should return a reference to the ``user`` object for your application. This can be a persistent object, or user identifier, whatever your application would find most useful when persistenting data.
 
-* ``current_user_has_role`` is provided a set of rolenames that the handle is allowed to use, role_name can be a refernce to a list of strings, constants whatever your app deems relevant. This method will only run after prestans has checked that the user is authenticated. Obviously you can use ``self.get_current_user`` to get a reference tot he currently logged in user.
+* ``current_user_has_role`` is provided a set of rolenames that the handle is allowed to use, role_name can be a refernce to a list of strings, constants whatever your app deems relevant. This method will only run after Prestans has checked that the user is authenticated. Obviously you can use ``self.get_current_user`` to get a reference tot he currently logged in user.
 
 .. code-block:: python
 
@@ -79,7 +79,7 @@ The ``__init__`` method is not used by the parent class, so if you need to pass 
 Working with Google AppEngine
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-prestans ships with an inbuilt provider for Google AppEngine. AppEngine is a WSGI environment and has a very fixed authentication lifecycle encapsulated by ``prestans.ext.appengine.AppEngineAuthContextProvider``. The AppEngine AuthContextProvider implements support for OAuth and Google account authentication.
+Prestans ships with an inbuilt provider for Google AppEngine. AppEngine is a WSGI environment and has a very fixed authentication lifecycle encapsulated by ``prestans.ext.appengine.AppEngineAuthContextProvider``. The AppEngine AuthContextProvider implements support for OAuth and Google account authentication.
 
 Obviously this does not implement the ``current_user_has_role``. If you wish to support role based authorization you must extend this class and implement this function.
 
