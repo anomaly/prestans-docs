@@ -369,23 +369,27 @@ Unsupported Vocabulary
 ----------------------
 
 
+Configuration Exceptions
+------------------------
+
+* ``InvalidType``
+* ``ParseFailedError`` raised if the data type fails to evaluate the value as an appropriate Python data type
+* ``InvalidMetaValueError`` raised if you've passed a unacceptable configuration option for an attribute
+* ``MissingParameterError`` raised if a required parameter for an attribute is missing 
+* ``UnregisteredAdapterError`` raised if the :doc:`data_adapters` registry can't locate a REST to persistent map
+
 
 Data Validation Exceptions
 --------------------------
 
-Prestans raises the following exceptions (:pep:008)
+Prestans raises the following exceptions (See :pep:`008` for naming conventions of Exceptions) if data passed through Prestans types fails to validate. If the validation fails as part of the request Prestans captures the stack trace and responses to the client with an appropriate error code. If a request fails to parse your handler code will not be executed. If the exception is raised a result of your code (e.g using :doc:`data_adapters` or writing responses) Prestans will halt the execution and write the error message to the logger. 
 
-* ``RequiredAttributeError``
-* ``ParseFailedError``
-* ``LessThanMinimumError``
-* ``MoreThanMaximumError``
-* ``InvalidChoiceError``
-* ``UnacceptableLengthError``
-* ``InvalidType``
-* ``MissingParameterError``
-* ``InvalidFormatError``
-* ``InvalidMetaValueError``
-* ``UnregisteredAdapterError``
+* ``RequiredAttributeError`` raised if an attribute is required and an appropriate value wasn't provided, note that you can relax these by using attribute filters
+* ``LessThanMinimumError`` raised if the value provided for an attribute is less than the floor
+* ``MoreThanMaximumError`` raised if the value provided for an attribute is greater than the ceiling
+* ``InvalidChoiceError`` raised if the value provided is not defined in the set of choices for the attribute
+* ``UnacceptableLengthError`` raised if the value provided is longer than the acceptable length
+* ``InvalidFormatError`` raised if the value provided does not pass the regular expression format
 
 Parser Exceptions
 -----------------
