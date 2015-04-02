@@ -373,6 +373,8 @@ Unsupported Vocabulary
 Data Validation Exceptions
 --------------------------
 
+Prestans raises the following exceptions (:pep:008)
+
 * ``RequiredAttributeError``
 * ``ParseFailedError``
 * ``LessThanMinimumError``
