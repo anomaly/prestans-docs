@@ -370,8 +370,10 @@ Unsupported Vocabulary or Content Type
 
 Prestans uses the ``Accept`` and ``Content-Type`` HTTP headers to negotiate the format the client is sending their request as or the format they expect the response in. Prestans ships with a standard set of vocabularies (serialization formats) and allow you to add your own. Prestans automatically adjusts the serializer or de-serializer to use based on the mime types. If Prestans is unable to service the request, the following exceptions are raised:
 
-* ``UnsupportedVocabularyError`` raised is Prestans can't find a 
-* ``UnsupportedContentTypeError``
+* ``UnsupportedVocabularyError`` raised if Prestans can't find a suitable serializer for the requested mime type in the ``Accept`` header
+* ``UnsupportedContentTypeError`` raised if Prestans can't find a suitable de-serializer for the requested mime type in the ``Content-Type`` header
+
+If these exceptions are raised as part of parsing the request Prestans generates an appropriate message using the default serializer (internally set to JSON by default).
 
 
 Configuration Exceptions
