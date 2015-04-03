@@ -30,7 +30,7 @@ This document assumes that you have a working knowledge of REST and WSGI.
 Feedback
 --------
 
-If you find any inconsistencies in our documentation please feel free to lodge an issue via our `Issue Tracker <https://github.com/anomaly/prestans-docs/issues>`_ on Github.
+If you find any inconsistencies in our documentation please feel free to lodge an issue via our `Issue Tracker <https://github.com/anomaly/prestans-docs/issues>`_ on Github. Or Tweet at us `@anomalymade <https://twitter.com/anomalymade>`_.
 
 Discussions
 -----------
@@ -43,6 +43,8 @@ We encourge the use of our mailing lists (run on Google Groups) as the primary m
 License
 -------
 
-Prestans's documentation is distributed under terms outlined by `Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License <http://creativecommons.org/licenses/by-nc-sa/3.0/deed.en_US>`_. `Source avialable on GitHub <https://github.com/prestans/prestans-docs/>`_.
+Prestans's documentation is distributed under terms outlined by `Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License <http://creativecommons.org/licenses/by-nc-sa/3.0/deed.en_US>`_. 
+
+Sphinx `Source available on GitHub <https://github.com/anomaly/prestans-docs.git>`_.
 
 .. image:: http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png
