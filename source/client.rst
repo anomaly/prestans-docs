@@ -50,7 +50,7 @@ To run these unit tests you will need to start Google Chrome with ``--allow-file
 
 .. code-block:: bash
     
-    spock:docs devraj$ /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --allow-file-access-from-files
+    /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --allow-file-access-from-files
 
 Extending JavaScript namespaces
 ===============================
@@ -127,34 +127,34 @@ An array takes the following object as its constructor.
 
 Prestans provides wrappers for the following Google closure `goog.array <http://docs.closure-library.googlecode.com/git/namespace_goog_array.html>`_ methods:
 
-* ``isEmpty`` -> ``Boolean``
-* ``binarySearch(target, opt_compareFn)`` -> ``Number``
-* ``binaryInsert(value, opt_compareFn)`` -> ``Boolean``
-* ``binaryRemove(value, opt_compareFn)`` -> ``Boolean``
-* ``insertAt(obj, opt_i)``
-* ``indexOf(obj, opt_fromIndex)`` -> ``Number``
-* ``removeAt(i)`` -> ``Boolean``
-* ``removeIf(f, opt_obj)`` -> ``Boolean``
-* ``remove(obj)`` -> ``Boolean``
-* ``sort(opt_compareFn)``
-* ``clear``
-* ``find(f, opt_obj)`` -> ``Element|null``
-* ``slice(start, opt_end)`` -> ``prestans.types.Array``
-* ``contains(obj)`` -> ``Boolean``
+* ``isEmpty`` checks to see if an Array is empty returns a ``Boolean`` 
+* ``binarySearch(target, opt_compareFn)`` performs a binary search for an object returns an index ``Number``
+* ``binaryInsert(value, opt_compareFn)`` performs a binary insert and returns a ``Boolean``
+* ``binaryRemove(value, opt_compareFn)`` performs a binary remove and returns a ``Boolean``
+* ``insertAt(obj, opt_i)`` inserts and object at the given index
+* ``indexOf(obj, opt_fromIndex)`` returns the index as a ``Number`` for a particular object
+* ``removeAt(i)`` removes an object at a particular index and returns a ``Boolean``
+* ``removeIf(f, opt_obj)`` removes an object if the supplied function returns ``true`` and returns a ``Boolean``
+* ``remove(obj)`` removes the provided object from the collection and returns a ``Boolean``
+* ``sort(opt_compareFn)`` performs a sort based on a comparison function
+* ``clear`` clears the contents of an array
+* ``find(f, opt_obj)`` performs a fund using a user provided function, returns the ``Element`` or ``null``
+* ``slice(start, opt_end)`` returns an ``prestans.types.Array`` which is a portion of the original ``Array``
+* ``contains(obj)`` returns a ``Boolean`` to see if the collection contains a particular ``object``
 
 Prestans then provides the following additional methods:
 
-* ``getMinLength`` -> ``Number``
-* ``getMaxLength`` -> ``Number``
-* ``append (element)`` -> ``Boolean``
-* ``insertAfter(newValue, existingValue)`` -> ``Boolean``
-* ``length`` -> ``Number``
-* ``containsIf(condition, opt_context)`` -> ``Element|null``
-* ``objectAtIndex(index)`` -> ``Element``
-* ``asArray`` -> ``Array``
-* ``clone`` -> ``prestans.types.Array``
-* ``getJSONObject`` -> ``Object``
-* ``getJSONString`` -> ``String``
+* ``getMinLength`` returns a ``Number``
+* ``getMaxLength`` returns a ``Number``
+* ``append (element)`` returns a ``Boolean``
+* ``insertAfter(newValue, existingValue)`` returns a ``Boolean``
+* ``length`` returns a ``Number``
+* ``containsIf(condition, opt_context)`` returns an ``Element|null``
+* ``objectAtIndex(index)`` returns an ``Element``
+* ``asArray`` returns an ``Array``
+* ``clone`` returns an ``prestans.types.Array``
+* ``getJSONObject`` returns an ``Object``
+* ``getJSONString`` returns a ``String``
 
 REST Client
 ===========
