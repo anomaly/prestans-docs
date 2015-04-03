@@ -55,7 +55,7 @@ The ``__init__`` method is not used by the parent class, so if you need to pass 
 
 .. code-block:: python
 
-    class MyAuthContextProvider(prestans.auth.AuthContextProvider):
+    class MyAuthContextProvider(prestans.provider.auth.Bae):
         
         ## @brief custom constructor that takes in a reference to the beaker environment var
         #
@@ -91,7 +91,7 @@ Like all things prestans, attaching a auth context provider to a handler is as s
     class MyHandler(prestans.rest.RequestHandler):
 
         __provider_config__ = prestans.provider.Config(
-            authentication=musicdb.rest.auth.AuthContextProvider(self.request.environ)
+                authentication=musicdb.rest.auth.AuthContextProvider()
             )
         
 This tells your handler which ``AuthContextProvider`` to use. Remember that authentication configuration is per HTTP method supported by your request handler:
@@ -102,13 +102,16 @@ This tells your handler which ``AuthContextProvider`` to use. Remember that auth
 
 The following example allows any logged in user to get resources, users with role authors to create and update resources, but only users with role admin to delete resources.
 
+.. note:: If your ``AuthenticationContextProvider`` needs access to the request or server envrionment you can choose to set it in the setup method called ``handler_will_run`` which is executed before handler specific code but after the environment and request have been parsed.
+
 .. code-block:: python
 
     class MyRESTHandler(prestans.rest.RequestHandler):
 
-        __provider_config__ = prestans.provider.Config(
-            authentication=musicdb.rest.auth.AuthContextProvider(self.request.environ)
-            )
+        def handler_will_run(self):
+            self.__provider_config__ = prestans.provider.Config(
+                    authentication=musicdb.rest.auth.AuthContextProvider(self.request.environ)
+                )
 
         @prestans.provider.auth.login_required
         def get(self):
