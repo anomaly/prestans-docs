@@ -244,6 +244,36 @@ Our request manager can work this, this is done by using a shared instance of th
         })
     };
 
+
+Composing a Request
+-------------------
+
+To place an Xhr request you compose a request by instantiating a ``prestans.rest.Request`` object, it accepts the following parameters as a JSON configuration:
+
+* ``identifier`` unique string identifier for this request type, these are used to cancel requests
+* ``cancelable`` boolean value to determine if this request can be canceled
+* ``httpMethod`` a ``prestans.net.HttpMethod`` constant
+* ``parameters`` an array of key value pairs send as part of the URL
+* ``requestFilter`` optional instance of ``prestans.types.Filter``
+* ``requestModel`` optional instance of ``prestans.types.Model``, this will be used to parse the response message body
+* ``responseFilter`` optional instance of ``prestans.types.Filter``, used to ignore fields in the response
+* ``responseModel`` Used to unpack the returned response
+* ``arrayElementTemplate`` Used if response model is an array
+* ``responseModelElementTemplates`` 
+* ``urlFormat`` sprintf like string used internally with `goog.string.format <http://closure-library.googlecode.com/svn/docs/namespace_goog_string.html>`_
+* ``urlArgs`` a JavaScript array of parameters used with ``urlFormat``
+
+``prestans.net.HttpMethod`` encapsulate HTTP verbs as constants, currently supported verbs are:
+
+* ``prestans.net.HttpMethod.GET``
+* ``prestans.net.HttpMethod.PUT``
+* ``prestans.net.HttpMethod.POST``
+* ``prestans.net.HttpMethod.DELETE``
+* ``prestans.net.HttpMethod.PATCH``
+
+Placing a Request
+-----------------
+
 Then use the ``makeRequest`` method on the Request Manager instance to dispatch API calls, it requires the following parameters:
 
 * ``request`` is a ``prestans.rest.json.Request`` object.
@@ -265,8 +295,57 @@ Then use the ``makeRequest`` method on the Request Manager instance to dispatch 
 
 The second method the Request Manager provides is ``abortAllPendingRequests``, this accepts no parameters and is responsible for aborting any currently queued connections. The failure callback is not fired when requests are aborted.
 
+Example of a GET request which optionally passes two parameters and expects the server to return a set of ``Album`` entities:
+
+.. code-block:: javascript
+
+    var config_ = {
+        identifier: "AlbumSearchFetch",
+        httpMethod: prestans.net.HttpMethod.GET,
+        responseFilter: opt_filter,
+        responseModel: pdemo.data.model.Album,
+        isArray: true,
+        urlFormat: "/album",
+        parameters: [
+            {
+                key: "search_text",
+                value: searchText
+            },
+            {
+                key: "limit",
+                value: limit
+            }
+        ]
+    };
+
+Example of a GET request which fetches a particular entity:
+
+.. code-block:: javascript
+
+    var config_ = {
+        identifier: "AlbumFetch",
+        httpMethod: prestans.net.HttpMethod.GET,
+        responseFilter: opt_filter,
+        responseModel: pdemo.data.model.Album,
+        isArray: false,
+        urlFormat: "/album/%i",
+        urlArgs: [albumId]
+    };
+
+
+Reading a Response
+------------------
+
+* ``requestIdentifier`` The string identifier for the request type,
+* ``statusCode`` HTTP status code,
+* ``responseModel`` Class used to unpack response body,
+* ``arrayElementTemplate`` prestans.types.Model,
+* ``responseModelElementTemplates``
+* ``responseBody`` JSON Object (Optional)
+
+
 Xhr Communication Events
-^^^^^^^^^^^^^^^^^^^^^^^^
+------------------------
 
 The Request Manager raises the following events. These come in handy if your application requires global UI interactions e.g a Modal popup if network communication fails, or notification messages on success.
 
@@ -284,57 +363,3 @@ Example of using ``goog.events.EventHandler`` to listen to the Failure event:
     this.eventHandler_.listen(pdemo.GLOBALS.API_CLIENT, prestans.rest.json.Client.EventType.FAILURE, this.handleFailure_);
 
 The ``event`` object passed to the end points is of type ``prestans.rest.json.Client.Event`` a subclass of ``goog.events.Event``. Call ``getResponse`` method on the event to get the ``Response`` object, this will give you access all the information about the request and it's outcome.
-
-Composing a Request
--------------------
-
-Requests ``prestans.rest.Request``
-
-``prestans.rest.json.Request``
-
-* ``identifier`` unique string identifier for this request type
-* ``cancelable`` boolean value to determine if this request can be canceled
-* ``httpMethod`` a ``prestans.net.HttpMethod`` constant
-* ``parameters`` an array of key value pairs send as part of the URL
-* ``requestFilter`` optional instance of ``prestans.types.Filter``
-* ``requestModel`` optional instance of ``prestans.types.Model``, this will be used to parse the response message body
-* ``responseFilter`` optional instance of ``prestans.types.Filter``, used to ignore fields in the response
-* ``responseModel`` Used to unpack the returned response
-* ``arrayElementTemplate`` Used if response model is an array
-* ``responseModelElementTemplates`` 
-* ``urlFormat`` sprintf like string used internally with `goog.string.format <http://closure-library.googlecode.com/svn/docs/namespace_goog_string.html>`_
-* ``urlArgs`` a JavaScript array of parameters used with ``urlFormat``
-
-``prestans.net.HttpMethod`` encapsulate HTTP verbs as constants, currently supported verbs are:
-
-* ``prestans.net.HttpMethod.GET``
-* ``prestans.net.HttpMethod.PUT``
-* ``prestans.net.HttpMethod.POST``
-* ``prestans.net.HttpMethod.DELETE``
-* ``prestans.net.HttpMethod.PATCH``
-
-Example of a GET request:
-
-.. code-block:: javascript
-
-    var config_ = {
-        identifier: "AlbumFetch",
-        httpMethod: prestans.net.HttpMethod.GET,
-        responseFilter: opt_filter,
-        responseModel: pdemo.data.model.Album,
-        urlFormat: "/album/%i",
-        urlArgs: [id]
-    };
-
-
-Reading a Response
-------------------
-
-* ``requestIdentifier`` The string identifier for the request type,
-* ``statusCode`` HTTP status code,
-* ``responseModel`` Class used to unpack response body,
-* ``arrayElementTemplate`` prestans.types.Model,
-* ``responseModelElementTemplates``
-* ``responseBody`` JSON Object (Optional)
-
-
