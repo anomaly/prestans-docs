@@ -27,35 +27,22 @@ This document assumes that you have a working knowledge of REST and WSGI.
    api_design
    reference_material
 
-Getting Help
-------------
+Feedback
+--------
+
+If you find any inconsistencies in our documentation please feel free to lodge an issue via our `Issue Tracker <https://github.com/anomaly/prestans-docs/issues>`_ on Github.
+
+Discussions
+-----------
 
 We encourge the use of our mailing lists (run on Google Groups) as the primary method of getting help. You can also write the developers through contact information `our website <https://anomaly.net.au>`_.
 
 * `Discuss <http://groups.google.com/group/prestans-discuss>`_ general discussion, help, suggest a new feature.
 * `Announcements <http://groups.google.com/group/prestans-announce>`_ security / release announcements.
 
-Reporting Issues
-^^^^^^^^^^^^^^^^
-
-We prefer the use of our `Issue Tracker <https://github.com/anomaly/prestans/issues>`_ on Github, to triage feature requests, bug reports. Code patches are very welcome.
-
-Before you lodge a lodge a ticket:
-
-* Ensure that you ask a question on our list, there might already be answer out there or we might have already acknowledged the issue
-* Seek wisdom from our beautifully written documentation 
-* Google to see that it's not something to do with your server environment (versions of Web server, WSGI connectors, etc)
-* Check to ensure that you are *not* lodging a duplicate request.
-
-When reporting issues:
-
-* Include as much detail as you can about your environment (e.g Server OS, Web Server and it's Version, WSGI connector)
-* Steps that we can use to replicate the bug
-* Share a bit of your application code with us, it goes a long way to replicate issues
-
 License
 -------
 
-prestans's documentation is distributed under terms outlined by `Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License <http://creativecommons.org/licenses/by-nc-sa/3.0/deed.en_US>`_. `Source avialable on GitHub <https://github.com/prestans/prestans-docs/>`_.
+Prestans's documentation is distributed under terms outlined by `Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License <http://creativecommons.org/licenses/by-nc-sa/3.0/deed.en_US>`_. `Source avialable on GitHub <https://github.com/prestans/prestans-docs/>`_.
 
 .. image:: http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png
