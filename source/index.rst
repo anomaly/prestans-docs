@@ -8,7 +8,7 @@ Prestans 2.0, a Python WSGI REST micro-framework
 
 Prestans is a WSGI (`PEP-333 <http://www.python.org/dev/peps/pep-0333/>`_) complaint micro-framework that allows you to rapidly build quality REST services by introducing a pattern of models, parsers and handlers and in turn taking care of boilerplate code. Prestans sits better with complex Ajax applications written with JavaScript infrastructure like `Google Closure <https://developers.google.com/closure/>`_, or native mobile apps.
 
-Prestans is currently hosted on `Github <http://github.com/anomaly/prestans.git>`_ and distributed under the terms defined by the `New BSD license <http://opensource.org/licenses/bsd-license.php>`_. A list of current downloads is `available here <https://github.com/anomaly/prestans/tags>`_.  We highly recommend using `PyPI <http://pypi.python.org/pypi/prestans>`_ to install Prestans.
+Prestans is currently hosted on `Github <https://github.com/anomaly/prestans.git>`_ and distributed under the terms defined by the `New BSD license <https://opensource.org/licenses/bsd-license.php>`_. A list of current downloads is `available here <https://github.com/anomaly/prestans/tags>`_.  We highly recommend using `PyPI <https://pypi.python.org/pypi/prestans>`_ to install Prestans.
 
 This document assumes that you have a working knowledge of REST and WSGI.
 
@@ -47,4 +47,4 @@ Prestans's documentation is distributed under terms outlined by `Creative Common
 
 Sphinx `Source available on GitHub <https://github.com/anomaly/prestans-docs.git>`_.
 
-.. image:: http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png
+.. image:: https://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png
