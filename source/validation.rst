@@ -43,7 +43,7 @@ Setting up validation rules
 
 Validation rules are set up per HTTP verb your handler intends to service. By default there are no validation rules defined for any HTTP verb, this does not mean that your handler can't respond to a particular verb, it simply means that Prestans takes no responsibility of validating incoming or outgoing data. By design if you wish to send data back to the client Prestans insist on validating what a handler sends down, however it's perfectly valid for a handler to return no content (which is what Prestans expects if you aren't specific).
 
-Each handler has a meta attribute called __verb_config__ this must be an instance of ``prestans.parser.Config`` which accepts six named parameters one for each supported HTTP verb (``HEAD``, ``GET``, ``POST``, ``PUT``, ``DELETE``, ``PATCH``) each one of which must be an instance of ``prestans.parser.VerbConfig``. A ``VerbConfig`` accepts the following named parameters (not all of them are supported across all HTTP verbs):
+Each handler has a meta attribute called __parser_config__ this must be an instance of ``prestans.parser.Config`` which accepts six named parameters one for each supported HTTP verb (``HEAD``, ``GET``, ``POST``, ``PUT``, ``DELETE``, ``PATCH``) each one of which must be an instance of ``prestans.parser.VerbConfig``. A ``VerbConfig`` accepts the following named parameters (not all of them are supported across all HTTP verbs):
 
 * ``response_template`` an instance of a ``prestans.types.DataCollection`` subclass i.e a Model or an Array of Prestans ``DataType``. This is what Prestans will use to validate the response your handler sends back to the client.
 * ``response_attribute_filter_default_value`` Prestans automatically creates an attribute filter based on the ``response_template`` by default Prestans exposes all it's attributes in the response, setting this to ``False`` will hide all attributes be default. Your handler code is responsible for toggling visibility in either instance.
@@ -61,7 +61,7 @@ Each handler has a meta attribute called __verb_config__ this must be an instanc
 
     class CollectionRequestHandler(prestans.rest.RequestHandler):
 
-        __verb_config__ = prestans.parser.Config(
+        __parser_config__ = prestans.parser.Config(
             GET =  prestans.parser.VerbConfig(
                 body_template=prestans.types.Array(element_template=musicdb.rest.models.Album())
             ),            
@@ -85,7 +85,7 @@ Prestans is aggressive when it comes to validating requests and responses. Howev
 
     class EntityRequestHandler(prestans.rest.RequestHandler):
 
-        __verb_config__ = prestans.parser.Config( 
+        __parser_config__ = prestans.parser.Config( 
             GET = prestans.parser.VerbConfig(
                 response_template=musicdb.rest.models.Album(),
                 response_attribute_filter_default_value=False,
@@ -140,7 +140,7 @@ these would then be assigned to your handler's ``VerbConfig`` as follows:
 
 .. code-block:: python
 
-    __verb_config__ = prestans.parser.Config( 
+    __parser_config__ = prestans.parser.Config( 
         GET = prestans.parser.VerbConfig(
             response_template=musicdb.rest.models.Album(),
             response_attribute_filter_default_value=False,
