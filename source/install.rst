@@ -8,7 +8,7 @@ For a typical server production deployment, we recommend installing Prestans via
 
 this will build and install Prestans for your default Python interpreter. To keep up-to-date; use the ``---upgrade`` option::
 
-	$ sudo pip install Prestans --upgrade
+	$ sudo pip install prestans --upgrade
 
 If you need to run multiple versions of Prestans on a server, consider using `Virtualenv <http://www.virtualenv.org/en/latest/>`_.
 
