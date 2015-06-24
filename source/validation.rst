@@ -46,10 +46,12 @@ Validation rules are set up per HTTP verb your handler intends to service. By de
 Each handler has a meta attribute called __parser_config__ this must be an instance of ``prestans.parser.Config`` which accepts six named parameters one for each supported HTTP verb (``HEAD``, ``GET``, ``POST``, ``PUT``, ``DELETE``, ``PATCH``) each one of which must be an instance of ``prestans.parser.VerbConfig``. A ``VerbConfig`` accepts the following named parameters (not all of them are supported across all HTTP verbs):
 
 * ``response_template`` an instance of a ``prestans.types.DataCollection`` subclass i.e a Model or an Array of Prestans ``DataType``. This is what Prestans will use to validate the response your handler sends back to the client.
-* ``response_attribute_filter_default_value`` Prestans automatically creates an attribute filter based on the ``response_template`` by default Prestans exposes all it's attributes in the response, setting this to ``False`` will hide all attributes be default. Your handler code is responsible for toggling visibility in either instance.
+* ``response_attribute_filter_default_value`` Prestans automatically creates an attribute filter based on the ``response_template``.
 * ``parameter_sets`` an array of ``prestans.parser.ParameterSet`` instances (see :ref:`parameter_sets`)
 * ``body_template`` an instance of a ``prestans.types.DataCollection`` subclass i.e a Model or an Array of Prestans ``DataType``, this is what Prestans will use to validate the request sent to your handler. If validation of the incoming data fails, Prestans will not execute the associated verb in your handler.
 * ``request_attribute_filter`` is an attribute filter used to relax or tighten rules for the incoming data. This is particularly useful if you want to use portions of a model. Particularly useful for ``UPDATE`` requests.
+
+.. warning:: By default Prestans exposes _none_ of the attributes in the response, setting this to ``True`` will show all attributes in the response. Your handler code is responsible for toggling visibility in either instance.
 
 .. code-block:: python
 
