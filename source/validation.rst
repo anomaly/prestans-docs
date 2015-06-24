@@ -51,7 +51,7 @@ Each handler has a meta attribute called __parser_config__ this must be an insta
 * ``body_template`` an instance of a ``prestans.types.DataCollection`` subclass i.e a Model or an Array of Prestans ``DataType``, this is what Prestans will use to validate the request sent to your handler. If validation of the incoming data fails, Prestans will not execute the associated verb in your handler.
 * ``request_attribute_filter`` is an attribute filter used to relax or tighten rules for the incoming data. This is particularly useful if you want to use portions of a model. Particularly useful for ``UPDATE`` requests.
 
-.. warning:: By default Prestans exposes _none_ of the attributes in the response, setting this to ``True`` will show all attributes in the response. Your handler code is responsible for toggling visibility in either instance.
+.. warning:: By default Prestans exposes none of the attributes in the response, setting the ``response_attribute_filter_default_value`` parameter to ``True`` will show all attributes in the response. Your handler code is responsible for toggling visibility in either instance.
 
 .. code-block:: python
 
