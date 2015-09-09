@@ -143,7 +143,7 @@ Each ``DataAdapter`` provides two convenience methods:
 
             bands = musicdb.models.Band().query()
         
-            self.response.http_status = prestans.rest.STATUS.OK
+            self.response.http_status = prestans.http.STATUS.OK
             self.response.body = prestans.ext.data.adapters.ndb.adapt_persistent_collection(
                 collection=bands, 
                 target_rest_instance=musicdb.rest.models.Band
@@ -160,7 +160,7 @@ If you are using ``AttributeFilters``, you should pass the filter along to the a
 
             bands = musicdb.models.Band().query()
         
-            self.response.http_status = prestans.rest.STATUS.OK
+            self.response.http_status = prestans.http.STATUS.OK
             self.response.body = prestans.ext.data.adapters.ndb.adapt_persistent_collection(
                 collection=bands, 
                 target_rest_instance=musicdb.rest.models.Band,
@@ -174,7 +174,7 @@ If you are using ``AttributeFilters``, you should pass the filter along to the a
 
             .. use the appropriate query to get the appropriate instance
 
-            self.response.http_status = prestans.rest.STATUS.OK
+            self.response.http_status = prestans.http.STATUS.OK
             self.response.body = prestans.ext.data.adapters.ndb.adapt_persistent_instance(
                 collection=band, 
                 target_rest_instance=musicdb.rest.models.Band,

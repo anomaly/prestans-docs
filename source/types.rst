@@ -221,7 +221,7 @@ Models are a great way of constructing sound responses. They are also serializab
 
             ... and so on until you copy all the values across
 
-            self.response.http_status = prestans.rest.STATUS.OK
+            self.response.http_status = prestans.http.STATUS.OK
             self.response.body = album
 
 From the above example it's clear that code to convert persistent objects into REST models becomes repetitive, and as a result error prone. Prestans provides ``DataAdapters``, that automate the conversion of persistent models to REST models. Read about it in the :doc:`data_adapters` chapter.
