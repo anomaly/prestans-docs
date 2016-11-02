@@ -37,13 +37,13 @@ URL patterns are described using Regular expression, this section provides a qui
 
 Most URL patters either refer to collections or entities, consider the following URL scheme requirements:
 
-* ``/api/album/`` - refers to a collection of type album
-* ``/api/album/{id}`` - refers to a specific album entity
+* ``/album/`` - refers to a collection of type album
+* ``/album/{id}`` - refers to a specific album entity
 
 Notice no trailing slashes at the end of the entity URL. Collection URLs may or may not have a URL slash. The above patterns can would be represented in like Regex as: 
 
-* ``/api/album/*`` - For collection of albums
-* ``/api/album/([0-9]+)`` - For a specific album
+* ``/album/(.*)`` - For collection of albums
+* ``/album/([0-9]+)`` - For a specific album
 
 If you have entities that exclusively belong to a parent object, e.g. Albums have Tracks, we suggest prefixing their URLs with a parent entity id. This will ensure your handler has access to the {id} of the parent object, easing operations like:
 
@@ -53,11 +53,32 @@ If you have entities that exclusively belong to a parent object, e.g. Albums hav
 
 A Regex example of these URL patterns would look like:
 
-* ``/api/album/([0-9]+)/track/*``
-* ``/api/album/([0-9]+)/track/([0-9]+)``
+* ``/album/([0-9]+)/track/(.*)``
+* ``/album/([0-9]+)/track/([0-9]+)``
 
 Using Request Router
 --------------------
+
+.. warning::
+    *since Prestans 2.1, URL's are matched according to the WSGI environment variable* ``'PATH_INFO'``\ *, this allows for the creation of mount-point agnostic paths. Users of Prestans versions < 2.1 who rely on the* ``WSGIScriptAliasMatch`` *directive should replace them with WSGIScriptAlias and remove pattern matching from the first argument and adjust their URL route regex definitions to truncate the mount-point path*
+
+    example upgrade to **Prestans>=2.1**:
+
+    .. code-block:: apache
+
+        WSGIScriptAliasMatch ^/api/(.*) /scripts/my_app.wsgi  # replace with...
+        WSGIScriptAlias /api /scripts/my_app.wsgi
+
+    .. code-block:: python
+
+        application = RequestRouter([
+            (r'/api/things', my.Handler),  # replace with...
+            (r'/things', my.Handler)
+        ])
+
+
+
+
 
 The router is provided by the ``prestans.rest`` package. It's the keeper of all Prestans API requests, it (with the help of other members of the ``prestans.rest`` package) parases the HTTP request, setups the appropriate handler and hands over control.
 
@@ -65,7 +86,7 @@ The router also handles error states raised by the API and informs the requestin
 
 The constructor takes the following parameters:
 
-* ``routes`` a list of tuples that maps a URL with 
+* ``routes`` a list of tuples that maps a URL with a request handler
 * ``serializers`` takes a list of serializer instances, if you omit this parameter Prestans will assign JSON as serializer to the API.
 * ``default_serializer`` takes a serializer instance which it uses if the client does not provide an ``Accept`` header.
 * ``deserializers``, a set of deserializers that the clients use via the ``Content-Type`` header, this default to ``None`` and will result in Prestans using JSON as the default deserializer. 
@@ -103,9 +124,11 @@ Once your router is setup, Prestans is ready to route requests to nominated hand
 
 If were deploying under mod_wsgi, your the above would be the contents of your WSGI file. mod_wsgi requires the endpoint to be called ``application``. The WSGI configuration variable might look something like.
 
+.. note:: *since 2.1*
+
 .. code-block:: apache
 
-    WSGIScriptAliasMatch    ^/api/(.*)  /srv/musicdb/api.wsgi
+    WSGIScriptAlias    /api  /srv/musicdb/api.wsgi
 
 Under AppEngine, if this above was declared under a script named ``entry.py``, you would reference it in ``app.yaml`` as follows:
 
@@ -133,8 +156,8 @@ Your handler must accept an equal number of parameters as defined the router reg
 
 Our Regex premier highlights the use of two handlers per entity, one deals with collections the other entities. APIs generally let clients get a collection of entities, add to a collection and get a particular entity, update an entity or delete an entity. The later require an identifier for the entity, where as the collection does not.
 
-* ``/api/album/([0-9]+)/track/*``
-* ``/api/album/([0-9]+)/track/([0-9]+)``
+* ``/album/([0-9]+)/track/(.*)``
+* ``/album/([0-9]+)/track/([0-9]+)``
 
 This is no way says that your API can't provide an endpoint to delete all entities of a type or update a collection of entities, in which instances your collection handler would implement the appropriate HTTP verb handlers.
 
